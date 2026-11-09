@@ -1,0 +1,107 @@
+// Curated reading list for the HTML & SCSS stage.
+// level: 'required' | 'skim'
+// Each entry becomes one Markdown page under html&css/reading/<module>/.
+
+const W = (path) => `https://web.dev/learn/${path}`;
+const MDN = (slug) => `https://developer.mozilla.org/en-US/docs/${slug}`;
+const SASS = (path) => `https://sass-lang.com/${path}/`;
+
+export const modules = [
+  {
+    dir: '01-semantic-html-and-accessibility',
+    label: '1. Semantic HTML & accessibility',
+    pages: [
+      { url: W('html/document-structure'), level: 'required' },
+      { url: W('html/metadata'), level: 'skim' },
+      { url: W('html/semantic-html'), level: 'required' },
+      { url: W('html/headings-and-sections'), level: 'required' },
+      { url: W('html/attributes'), level: 'skim' },
+      { url: W('html/text-basics'), level: 'skim' },
+      { url: W('html/lists'), level: 'skim' },
+      { url: W('html/links'), level: 'skim' },
+      { url: W('html/navigation'), level: 'required', note: 'You will build a top navigation bar in the feed.' },
+      { url: W('html/images'), level: 'required', note: 'Focus on alt text and srcset.' },
+      { url: W('html/forms'), level: 'skim', note: 'Only needed for the comment input in the feed.' },
+      { url: W('html/focus'), level: 'required' },
+      { url: MDN('Learn_web_development/Core/Accessibility/HTML'), name: 'mdn-html-accessibility', level: 'required' },
+    ],
+  },
+  {
+    dir: '02-css-fundamentals-and-layout',
+    label: '2. CSS fundamentals & layout',
+    pages: [
+      { url: W('css/box-model'), level: 'required' },
+      { url: W('css/selectors'), level: 'required', note: 'Then play CSS Diner (levels 15-32 for everyone; 1-14 if the placement quiz said so).' },
+      { url: W('css/the-cascade'), level: 'required' },
+      { url: W('css/specificity'), level: 'required' },
+      { url: W('css/inheritance'), level: 'required' },
+      { url: W('css/sizing'), level: 'required' },
+      { url: W('css/layout'), level: 'required' },
+      { url: W('css/flexbox'), level: 'required', note: 'Then play Flexbox Froggy (all 24 levels).' },
+      { url: W('css/grid'), level: 'required', note: 'Then play Grid Garden (all 28 levels; 18-28 matter most for the feed layout).' },
+      { url: W('css/spacing'), level: 'required' },
+      { url: W('css/pseudo-classes'), level: 'required' },
+      { url: W('css/pseudo-elements'), level: 'required' },
+      { url: W('css/z-index'), level: 'required', note: 'Relevant for the sticky top nav.' },
+      { url: W('css/overflow'), level: 'required', note: 'Relevant for the horizontally scrolling stories strip.' },
+      { url: W('css/typography'), level: 'required' },
+      { url: W('css/color'), level: 'skim' },
+      { url: W('css/borders'), level: 'skim' },
+      { url: W('css/shadows'), level: 'skim' },
+      { url: W('css/backgrounds'), level: 'skim' },
+      { url: W('css/gradients'), level: 'skim', note: 'Useful for the story ring around avatars.' },
+      { url: W('css/transitions'), level: 'skim', note: 'Useful for the bonus micro-interactions.' },
+      { url: W('design/media-queries'), level: 'required' },
+      { url: W('design/macro-layouts'), level: 'required', note: 'The feed + sidebar layout that collapses on mobile.' },
+      { url: W('design/micro-layouts'), level: 'required', note: 'The post card.' },
+      { url: W('design/typography'), name: 'responsive-typography', level: 'required' },
+      { url: W('design/responsive-images'), level: 'skim' },
+      { url: W('design/theming'), level: 'skim', note: 'Useful for the bonus dark mode.' },
+      { url: W('design/interaction'), level: 'skim' },
+      { url: W('design/accessibility'), name: 'responsive-accessibility', level: 'skim' },
+    ],
+  },
+  {
+    dir: '03-modern-css',
+    label: '3. Modern CSS',
+    pages: [
+      { url: W('css/logical-properties'), level: 'required' },
+      { url: W('css/functions'), level: 'required', note: 'clamp(), min(), max(), calc().' },
+      { url: MDN('Web/CSS/Guides/Cascading_variables/Using_custom_properties'), level: 'required', note: 'Needed for design tokens and dark mode.' },
+      { url: MDN('Web/CSS/Guides/Nesting/Using'), name: 'css-nesting', level: 'required', note: 'Know that native nesting exists, and how it differs from SCSS nesting.' },
+      { url: MDN('Web/CSS/Guides/Containment/Container_queries'), level: 'required' },
+      { url: MDN('Web/CSS/Reference/Selectors/:has'), name: 'has-selector', level: 'required' },
+      { url: MDN('Web/CSS/Reference/Properties/aspect-ratio'), level: 'required', note: 'Square post images, round avatars.' },
+      { url: MDN('Web/CSS/Reference/Values/clamp'), level: 'skim', note: 'Already covered by the Functions page; use as reference.' },
+    ],
+  },
+  {
+    dir: '04-scss',
+    label: '4. SCSS',
+    pages: [
+      { url: SASS('guide'), name: 'sass-basics', level: 'required', note: 'One-page introduction. We only use the SCSS syntax.' },
+      { url: SASS('documentation/style-rules'), level: 'required' },
+      { url: SASS('documentation/style-rules/parent-selector'), level: 'required' },
+      { url: SASS('documentation/variables'), level: 'required' },
+      { url: SASS('documentation/at-rules/use'), level: 'required' },
+      { url: SASS('documentation/at-rules/forward'), level: 'required' },
+      { url: SASS('documentation/at-rules/import'), level: 'skim', note: 'Read only the deprecation warning at the top. We use @use, never @import.' },
+      { url: SASS('documentation/at-rules/mixin'), level: 'required' },
+      { url: SASS('documentation/at-rules/function'), level: 'skim' },
+      { url: SASS('documentation/at-rules/extend'), level: 'skim', note: 'In our code, prefer mixins over @extend.' },
+      { url: SASS('documentation/at-rules/control/each'), level: 'required', note: 'Looping over token maps.' },
+      { url: SASS('documentation/values/maps'), level: 'required' },
+      { url: SASS('documentation/at-rules/control/if'), level: 'skim' },
+      { url: SASS('documentation/modules/map'), name: 'sass-map-module', level: 'skim' },
+      { url: SASS('documentation/modules/math'), name: 'sass-math-module', level: 'skim', note: 'Mainly math.div().' },
+      { url: SASS('documentation/interpolation'), level: 'skim' },
+    ],
+  },
+  {
+    dir: '05-design-to-code',
+    label: '5. From design to code',
+    pages: [
+      { url: MDN('Web/Accessibility/Guides/Understanding_WCAG/Perceivable/Color_contrast'), level: 'required' },
+    ],
+  },
+];

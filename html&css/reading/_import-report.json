@@ -1,0 +1,947 @@
+{
+  "importedAt": "2026-11-09T14:18:51.594Z",
+  "sources": [
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/01-document-structure.md",
+      "title": "Document structure",
+      "url": "https://web.dev/learn/html/document-structure",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/02-metadata.md",
+      "title": "Metadata",
+      "url": "https://web.dev/learn/html/metadata",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/03-semantic-html.md",
+      "title": "Semantic HTML",
+      "url": "https://web.dev/learn/html/semantic-html",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/04-headings-and-sections.md",
+      "title": "Headings and sections",
+      "url": "https://web.dev/learn/html/headings-and-sections",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/05-attributes.md",
+      "title": "Attributes",
+      "url": "https://web.dev/learn/html/attributes",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/06-text-basics.md",
+      "title": "Text basics",
+      "url": "https://web.dev/learn/html/text-basics",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/07-lists.md",
+      "title": "Lists",
+      "url": "https://web.dev/learn/html/lists",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/08-links.md",
+      "title": "Links",
+      "url": "https://web.dev/learn/html/links",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/09-navigation.md",
+      "title": "Navigation",
+      "url": "https://web.dev/learn/html/navigation",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/10-images.md",
+      "title": "Images",
+      "url": "https://web.dev/learn/html/images",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/11-forms.md",
+      "title": "Forms",
+      "url": "https://web.dev/learn/html/forms",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/12-focus.md",
+      "title": "Focus",
+      "url": "https://web.dev/learn/html/focus",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "1. Semantic HTML & accessibility",
+      "file": "01-semantic-html-and-accessibility/13-mdn-html-accessibility.md",
+      "title": "HTML: A good basis for accessibility",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML",
+      "site": "MDN Web Docs",
+      "license": "CC BY-SA 2.5",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/01-box-model.md",
+      "title": "Box Model",
+      "url": "https://web.dev/learn/css/box-model",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/02-selectors.md",
+      "title": "Selectors",
+      "url": "https://web.dev/learn/css/selectors",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/03-the-cascade.md",
+      "title": "The cascade",
+      "url": "https://web.dev/learn/css/the-cascade",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/04-specificity.md",
+      "title": "Specificity",
+      "url": "https://web.dev/learn/css/specificity",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/05-inheritance.md",
+      "title": "Inheritance",
+      "url": "https://web.dev/learn/css/inheritance",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/06-sizing.md",
+      "title": "Sizing Units",
+      "url": "https://web.dev/learn/css/sizing",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/07-layout.md",
+      "title": "Layout",
+      "url": "https://web.dev/learn/css/layout",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/08-flexbox.md",
+      "title": "Flexbox",
+      "url": "https://web.dev/learn/css/flexbox",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/09-grid.md",
+      "title": "Grid",
+      "url": "https://web.dev/learn/css/grid",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/10-spacing.md",
+      "title": "Spacing",
+      "url": "https://web.dev/learn/css/spacing",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/11-pseudo-classes.md",
+      "title": "Pseudo-classes",
+      "url": "https://web.dev/learn/css/pseudo-classes",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/12-pseudo-elements.md",
+      "title": "Pseudo-elements",
+      "url": "https://web.dev/learn/css/pseudo-elements",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/13-z-index.md",
+      "title": "Z-index and stacking contexts",
+      "url": "https://web.dev/learn/css/z-index",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/14-overflow.md",
+      "title": "Overflow",
+      "url": "https://web.dev/learn/css/overflow",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/15-typography.md",
+      "title": "Text and typography",
+      "url": "https://web.dev/learn/css/typography",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/16-color.md",
+      "title": "Color",
+      "url": "https://web.dev/learn/css/color",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/17-borders.md",
+      "title": "Borders",
+      "url": "https://web.dev/learn/css/borders",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/18-shadows.md",
+      "title": "Shadows",
+      "url": "https://web.dev/learn/css/shadows",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/19-backgrounds.md",
+      "title": "Backgrounds",
+      "url": "https://web.dev/learn/css/backgrounds",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/20-gradients.md",
+      "title": "Gradients",
+      "url": "https://web.dev/learn/css/gradients",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/21-transitions.md",
+      "title": "Transitions",
+      "url": "https://web.dev/learn/css/transitions",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/22-media-queries.md",
+      "title": "Media queries",
+      "url": "https://web.dev/learn/design/media-queries",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/23-macro-layouts.md",
+      "title": "Macro layouts",
+      "url": "https://web.dev/learn/design/macro-layouts",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/24-micro-layouts.md",
+      "title": "Micro layouts",
+      "url": "https://web.dev/learn/design/micro-layouts",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/25-responsive-typography.md",
+      "title": "Typography",
+      "url": "https://web.dev/learn/design/typography",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/26-responsive-images.md",
+      "title": "Responsive images",
+      "url": "https://web.dev/learn/design/responsive-images",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/27-theming.md",
+      "title": "Theming",
+      "url": "https://web.dev/learn/design/theming",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/28-interaction.md",
+      "title": "Interaction",
+      "url": "https://web.dev/learn/design/interaction",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "2. CSS fundamentals & layout",
+      "file": "02-css-fundamentals-and-layout/29-responsive-accessibility.md",
+      "title": "Accessibility",
+      "url": "https://web.dev/learn/design/accessibility",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "skim"
+    },
+    {
+      "module": "3. Modern CSS",
+      "file": "03-modern-css/01-logical-properties.md",
+      "title": "Logical Properties",
+      "url": "https://web.dev/learn/css/logical-properties",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "3. Modern CSS",
+      "file": "03-modern-css/02-functions.md",
+      "title": "Functions",
+      "url": "https://web.dev/learn/css/functions",
+      "site": "web.dev",
+      "license": "CC BY 4.0",
+      "level": "required"
+    },
+    {
+      "module": "3. Modern CSS",
+      "file": "03-modern-css/03-using-custom-properties.md",
+      "title": "Using CSS custom properties (variables)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties",
+      "site": "MDN Web Docs",
+      "license": "CC BY-SA 2.5",
+      "level": "required"
+    },
+    {
+      "module": "3. Modern CSS",
+      "file": "03-modern-css/04-css-nesting.md",
+      "title": "Using CSS nesting",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Nesting/Using",
+      "site": "MDN Web Docs",
+      "license": "CC BY-SA 2.5",
+      "level": "required"
+    },
+    {
+      "module": "3. Modern CSS",
+      "file": "03-modern-css/05-container-queries.md",
+      "title": "CSS container queries",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries",
+      "site": "MDN Web Docs",
+      "license": "CC BY-SA 2.5",
+      "level": "required"
+    },
+    {
+      "module": "3. Modern CSS",
+      "file": "03-modern-css/06-has-selector.md",
+      "title": ":has() CSS pseudo-class",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:has",
+      "site": "MDN Web Docs",
+      "license": "CC BY-SA 2.5",
+      "level": "required"
+    },
+    {
+      "module": "3. Modern CSS",
+      "file": "03-modern-css/07-aspect-ratio.md",
+      "title": "aspect-ratio CSS property",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/aspect-ratio",
+      "site": "MDN Web Docs",
+      "license": "CC BY-SA 2.5",
+      "level": "required"
+    },
+    {
+      "module": "3. Modern CSS",
+      "file": "03-modern-css/08-clamp.md",
+      "title": "clamp() CSS function",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/clamp",
+      "site": "MDN Web Docs",
+      "license": "CC BY-SA 2.5",
+      "level": "skim"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/01-sass-basics.md",
+      "title": "Sass Basics",
+      "url": "https://sass-lang.com/guide/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/02-style-rules.md",
+      "title": "Style Rules",
+      "url": "https://sass-lang.com/documentation/style-rules/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/03-parent-selector.md",
+      "title": "Parent Selector",
+      "url": "https://sass-lang.com/documentation/style-rules/parent-selector/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/04-variables.md",
+      "title": "Variables",
+      "url": "https://sass-lang.com/documentation/variables/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/05-use.md",
+      "title": "@use",
+      "url": "https://sass-lang.com/documentation/at-rules/use/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/06-forward.md",
+      "title": "@forward",
+      "url": "https://sass-lang.com/documentation/at-rules/forward/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/07-import.md",
+      "title": "@import",
+      "url": "https://sass-lang.com/documentation/at-rules/import/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/08-mixin.md",
+      "title": "@mixin and @include",
+      "url": "https://sass-lang.com/documentation/at-rules/mixin/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/09-function.md",
+      "title": "@function",
+      "url": "https://sass-lang.com/documentation/at-rules/function/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/10-extend.md",
+      "title": "@extend",
+      "url": "https://sass-lang.com/documentation/at-rules/extend/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/11-each.md",
+      "title": "@each",
+      "url": "https://sass-lang.com/documentation/at-rules/control/each/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/12-maps.md",
+      "title": "Maps",
+      "url": "https://sass-lang.com/documentation/values/maps/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/13-if.md",
+      "title": "@if and @else",
+      "url": "https://sass-lang.com/documentation/at-rules/control/if/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/14-sass-map-module.md",
+      "title": "sass:map",
+      "url": "https://sass-lang.com/documentation/modules/map/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/15-sass-math-module.md",
+      "title": "sass:math",
+      "url": "https://sass-lang.com/documentation/modules/math/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "4. SCSS",
+      "file": "04-scss/16-interpolation.md",
+      "title": "Interpolation",
+      "url": "https://sass-lang.com/documentation/interpolation/",
+      "site": "Sass documentation",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "5. From design to code",
+      "file": "05-design-to-code/01-color-contrast.md",
+      "title": "Color contrast",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/Guides/Understanding_WCAG/Perceivable/Color_contrast",
+      "site": "MDN Web Docs",
+      "license": "CC BY-SA 2.5",
+      "level": "required"
+    }
+  ],
+  "reports": [
+    {
+      "url": "https://web.dev/learn/html/document-structure",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/metadata",
+      "assets": 4,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/semantic-html",
+      "assets": 4,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/headings-and-sections",
+      "assets": 2,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/attributes",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/text-basics",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/lists",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/links",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/navigation",
+      "assets": 6,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/images",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/forms",
+      "assets": 7,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/html/focus",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML",
+      "assets": 4,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/box-model",
+      "assets": 3,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/selectors",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/the-cascade",
+      "assets": 2,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/specificity",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/inheritance",
+      "assets": 0,
+      "warnings": [
+        "asset skipped (too large (19980221 bytes) https://web.dev/static/learn/css/inheritance/video/VbAJIREinuYvovrBzzvEyZOpw5w1/OvoYqOMcdFZL7wJQIL2C.mp4)"
+      ]
+    },
+    {
+      "url": "https://web.dev/learn/css/sizing",
+      "assets": 2,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/layout",
+      "assets": 2,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/flexbox",
+      "assets": 5,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/grid",
+      "assets": 12,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/spacing",
+      "assets": 6,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/pseudo-classes",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/pseudo-elements",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/z-index",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/overflow",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/typography",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/color",
+      "assets": 2,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/borders",
+      "assets": 3,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/shadows",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/backgrounds",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/gradients",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/transitions",
+      "assets": 2,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/design/media-queries",
+      "assets": 4,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/design/macro-layouts",
+      "assets": 2,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/design/micro-layouts",
+      "assets": 7,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/design/typography",
+      "assets": 6,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/design/responsive-images",
+      "assets": 10,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/design/theming",
+      "assets": 10,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/design/interaction",
+      "assets": 3,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/design/accessibility",
+      "assets": 7,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/logical-properties",
+      "assets": 3,
+      "warnings": []
+    },
+    {
+      "url": "https://web.dev/learn/css/functions",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Nesting/Using",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:has",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/aspect-ratio",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/clamp",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/guide/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/style-rules/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/style-rules/parent-selector/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/variables/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/at-rules/use/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/at-rules/forward/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/at-rules/import/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/at-rules/mixin/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/at-rules/function/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/at-rules/extend/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/at-rules/control/each/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/values/maps/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/at-rules/control/if/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/modules/map/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/modules/math/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://sass-lang.com/documentation/interpolation/",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/Guides/Understanding_WCAG/Perceivable/Color_contrast",
+      "assets": 0,
+      "warnings": []
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'Exo 2';
+  font-style: italic;
+  font-weight: 400;
+  src: url(./exo2-v26-7cH3v4okm5zmbtYtMeA0FKq0Jjg2drF0feC9hpo.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Exo 2';
+  font-style: italic;
+  font-weight: 600;
+  src: url(./exo2-v26-7cH3v4okm5zmbtYtMeA0FKq0Jjg2drGqeuC9hpo.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Exo 2';
+  font-style: normal;
+  font-weight: 200;
+  src: url(./exo2-v26-7cH1v4okm5zmbvwkAx_sfcEuiD8jPvKsOdC6.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Exo 2';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./exo2-v26-7cH1v4okm5zmbvwkAx_sfcEuiD8jvvKsOdC6.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Exo 2';
+  font-style: normal;
+  font-weight: 600;
+  src: url(./exo2-v26-7cH1v4okm5zmbvwkAx_sfcEuiD8jYPWsOdC6.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Satisfy';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./satisfy-v22-rP2Hp2yn6lkG50LoCZOIGA.ttf) format('truetype');
+}
+

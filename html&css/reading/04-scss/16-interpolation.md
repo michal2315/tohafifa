@@ -1,7 +1,8 @@
 ---
 title: "Interpolation"
 sidebar_position: 16
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: "Using CSS custom properties (variables)"
 sidebar_position: 3
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

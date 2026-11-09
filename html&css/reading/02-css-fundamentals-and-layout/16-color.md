@@ -1,7 +1,8 @@
 ---
 title: "Color"
 sidebar_position: 16
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

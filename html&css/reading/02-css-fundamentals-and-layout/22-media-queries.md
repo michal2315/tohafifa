@@ -1,7 +1,8 @@
 ---
 title: "Media queries"
 sidebar_position: 22
-format: md
+mdx:
+  format: mdx
 tags: [required]
 ---
 
@@ -131,7 +132,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/22-media-queries/gtBzPVsBu5mtnX8RuSqJ.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/22-media-queries/gtBzPVsBu5mtnX8RuSqJ.mp4').default} />
 
 While using separate stylesheets for different media *types*—like `print`—might be okay, it's probably not a good idea to use a separate stylesheet for every media *query*. Use `@media` at-rules instead.
 
@@ -191,7 +192,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/22-media-queries/eDf5v1QMwLX19pcJAgYE.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/22-media-queries/eDf5v1QMwLX19pcJAgYE.mp4').default} />
 
 ## Choose breakpoints based on the content
 
@@ -213,7 +214,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/22-media-queries/mrQlcyih7IcZxswI1lMx.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/22-media-queries/mrQlcyih7IcZxswI1lMx.mp4').default} />
 
 ## Combinations
 
@@ -235,7 +236,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/22-media-queries/oKRBxhrHzAzebYwxptsv.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/22-media-queries/oKRBxhrHzAzebYwxptsv.mp4').default} />
 
 You can also use the `or` and `not` keywords to express more complex situations when you want to apply styles. These can be logically tricky to reason about, so make sure to test that they are working and interacting as you expect.
 

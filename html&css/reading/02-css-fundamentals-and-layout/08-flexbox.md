@@ -1,7 +1,8 @@
 ---
 title: "Flexbox"
 sidebar_position: 8
-format: md
+mdx:
+  format: mdx
 tags: [required]
 ---
 
@@ -117,7 +118,7 @@ You should be cautious when using any properties that reorder the visual display
 
 You can see in the following video how in a reversed row layout, tabbing between links becomes disconnected as the keyboard navigation follows the DOM not the visual display.
 
-<video controls="" style="max-width:100%"><source src="./img/08-flexbox/IgpaIRZd7kOq8sd46eaR.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/08-flexbox/IgpaIRZd7kOq8sd46eaR.mp4').default} />
 
 Anything which can change the order of items in flexbox or grid can cause this problem. Therefore any reordering should include thorough testing to check that it will not make your site hard to use for some people.
 

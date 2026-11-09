@@ -1,7 +1,8 @@
 ---
 title: "Navigation"
 sidebar_position: 9
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

@@ -33,9 +33,11 @@ Each page starts with:
 
 1. Copy the module folders from `reading/` into your docs folder, e.g. `docs/html-scss/`.
 2. Each folder has a `_category_.json` (sidebar label and order), and each page has `sidebar_position`, so the sidebar builds itself.
-3. Pages use `format: md` in their front matter, so Docusaurus 3 parses them as plain Markdown, not MDX. This keeps code samples with `<` and `{` from breaking the build.
+3. Most pages set `mdx: format: md` in their front matter, so Docusaurus parses them as plain Markdown, not MDX. This keeps code samples with `<` and `{` from breaking the build. The 11 pages with demo videos use MDX instead, so the video files get bundled into the build.
 4. Callouts use Docusaurus admonitions (`:::note`, `:::warning`, `:::tip`, `:::info`).
 5. `_import-report.json` is for tracking only. You don't need to copy it into the docs.
+
+**Tested** on 2026-11-09 with a fresh Docusaurus 3.10.2 site: the build passes with no errors or warnings, all 67 pages render, and every image (104), video (26) and link between pages loads.
 
 If your Docusaurus is version 2, tell Claude. The front matter and admonition titles need small changes.
 

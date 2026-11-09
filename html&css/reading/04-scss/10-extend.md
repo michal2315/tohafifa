@@ -1,7 +1,8 @@
 ---
 title: "@extend"
 sidebar_position: 10
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

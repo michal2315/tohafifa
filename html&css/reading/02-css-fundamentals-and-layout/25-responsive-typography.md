@@ -1,7 +1,8 @@
 ---
 title: "Typography"
 sidebar_position: 25
-format: md
+mdx:
+  format: mdx
 tags: [required]
 ---
 
@@ -69,7 +70,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/25-responsive-typography/cH8IU9hV7FGCgN0roNiU.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/25-responsive-typography/cH8IU9hV7FGCgN0roNiU.mp4').default} />
 
 ## Scaling text
 
@@ -105,7 +106,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/25-responsive-typography/x5h7TqkGHJIPa61wPvAs.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/25-responsive-typography/x5h7TqkGHJIPa61wPvAs.mp4').default} />
 
 But now there's a possibility that the text will get *too* small on narrow screens and *too* big on wide screens.
 
@@ -129,7 +130,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 Now the text size shrinks and grows in proportion to the user's screen but the text size will never be smaller than `1rem` or larger than `2rem`.
 
-<video controls="" style="max-width:100%"><source src="./img/25-responsive-typography/vVwP2L0z90zXL28iPYL4.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/25-responsive-typography/vVwP2L0z90zXL28iPYL4.mp4').default} />
 
 ## Line length
 
@@ -167,7 +168,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/25-responsive-typography/9Nxi6HuU28aQhxtzXq7l.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/25-responsive-typography/9Nxi6HuU28aQhxtzXq7l.mp4').default} />
 
 ## Line height
 
@@ -192,7 +193,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/25-responsive-typography/di6psFbT6JhlwjtMm68j.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/25-responsive-typography/di6psFbT6JhlwjtMm68j.mp4').default} />
 
 Use unitless values for your `line-height` declarations. This ensures that the line height is relative to the `font-size`.
 

@@ -1,7 +1,8 @@
 ---
 title: "HTML: A good basis for accessibility"
 sidebar_position: 13
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

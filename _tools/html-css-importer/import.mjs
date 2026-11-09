@@ -148,12 +148,15 @@ async function processImages($, root, pageUrl, imgDir, imgRel, report) {
       else $el.closest('video').replaceWith('<em>[Video not available offline]</em>');
     }
   }
-  // Videos are kept as raw HTML so Docusaurus renders a player.
+  // Videos become a marker that is turned into an MDX <video> with require(),
+  // so Docusaurus bundles the file (it does not process src in raw HTML).
   root.find('video').each((_, v) => {
     const $v = $(v);
-    $v.attr('controls', '').removeAttr('autoplay').removeAttr('loop').removeAttr('muted').removeAttr('playsinline');
-    $v.attr('style', 'max-width:100%');
-    $v.wrap('<div data-raw=""></div>');
+    const srcs = [$v.attr('src'), ...$v.find('source').toArray().map((s) => $(s).attr('src'))].filter((s) => s && s.startsWith('./'));
+    const src = srcs.find((s) => s.endsWith('.mp4')) || srcs[0];
+    if (!src) { $v.remove(); return; }
+    report.videos++;
+    $v.replaceWith(`<div data-raw="">@@VIDEO@@${src}@@</div>`);
   });
 }
 
@@ -283,14 +286,40 @@ function convertSass($, root) {
   root.find('.sl-c-toc, .sl-l-medium-holy-grail__complementary, .sl-l-large-holy-grail__complementary, .sl-c-pagination, footer').remove();
 }
 
+// Pages are plain Markdown (mdx.format: md) unless they contain videos. Video
+// pages must be MDX so the player can require() the file; their text is
+// escaped so MDX does not read { } or < as code.
+const MDX_ALLOWED_TAGS = /^<\/?(details|summary|p|strong|em|code|ul|ol|li|br|kbd|sub|sup|div|span|b|i|a)\b[^>]*>/;
+function mdxEscape(md) {
+  const out = [];
+  let inFence = null;
+  for (const line of md.split('\n')) {
+    const fence = line.match(/^\s{0,3}(```|~~~~)/);
+    if (fence) { inFence = inFence ? (fence[1] === inFence ? null : inFence) : fence[1]; out.push(line); continue; }
+    if (inFence || line.startsWith('@@VIDEO@@')) { out.push(line); continue; }
+    // Leave inline code spans untouched; escape everything else.
+    out.push(line.split(/(`+[^`]*`+)/).map((seg, i) => {
+      if (i % 2 === 1) return seg;
+      let s = seg.replace(/[{}]/g, (c) => `\\${c}`);
+      s = s.replace(/<br\s*>/g, '<br />');
+      s = s.replace(/<!--/g, '\\<!--');
+      s = s.replace(/<(?![/a-zA-Z])/g, '\\<');
+      s = s.replace(/<\/?[a-zA-Z][^>]*>?/g, (m) => (MDX_ALLOWED_TAGS.test(m) ? m : `\\${m}`));
+      return s;
+    }).join(''));
+  }
+  return out.join('\n');
+}
+const videoJsx = (src) => `<video controls style={{maxWidth: '100%'}} src={require('${src}').default} />`;
+
 function frontMatter(o) {
   const esc = (s) => JSON.stringify(s);
-  return `---\ntitle: ${esc(o.title)}\nsidebar_position: ${o.position}\nformat: md\ntags: [${o.level}]\n---\n\n`;
+  return `---\ntitle: ${esc(o.title)}\nsidebar_position: ${o.position}\nmdx:\n  format: ${o.mdx ? 'mdx' : 'md'}\ntags: [${o.level}]\n---\n\n`;
 }
 
 async function importPage(mod, page, position, sources) {
   const [siteKey, site] = siteOf(page.url);
-  const report = { url: page.url, assets: 0, warnings: [] };
+  const report = { url: page.url, assets: 0, videos: 0, warnings: [] };
   const html = await fetchCached(page.url);
   const $ = cheerio.load(html);
   const title = site.title($).replace(/\s+/g, ' ');
@@ -317,11 +346,13 @@ async function importPage(mod, page, position, sources) {
   let quizNo = 0;
   const quizCount = (md.match(/^## Check your understanding$/gm) || []).length;
   if (quizCount > 1) md = md.replace(/^## Check your understanding$/gm, () => `## Check your understanding (${++quizNo})`);
+  const isMdx = report.videos > 0;
+  if (isMdx) md = mdxEscape(md).replace(/@@VIDEO@@(.+?)@@/g, (_, src) => videoJsx(src));
 
   const badge = page.level === 'required' ? '**Required reading**' : '**Skim**: read the headings and examples, come back when you need it.';
   const attribution = `:::info[Source]\n\nAdapted from [${title}](${page.url}) by ${site.authors()}, ${site.name}, licensed under [${site.license}](${site.licenseUrl}). Changes: converted to Markdown for offline use; interactive embeds, browser-compatibility tables and site navigation removed.${site.license.includes('SA') ? ' This adapted page is shared under the same license.' : ''}\n\n:::`;
   const note = page.note ? `\n\n> **Trainer note:** ${page.note}` : '';
-  const out = `${frontMatter({ title, position, level: page.level })}${badge}${note}\n\n${attribution}\n\n${md}\n`;
+  const out = `${frontMatter({ title, position, level: page.level, mdx: isMdx })}${badge}${note}\n\n${attribution}\n\n${md}\n`;
 
   fs.mkdirSync(path.join(OUT, mod.dir), { recursive: true });
   fs.writeFileSync(path.join(OUT, mod.dir, page.file), out);

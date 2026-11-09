@@ -1,7 +1,8 @@
 ---
 title: "Theming"
 sidebar_position: 27
-format: md
+mdx:
+  format: mdx
 tags: [skim]
 ---
 
@@ -82,7 +83,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/27-theming/hpMyDvtHUyLPz0ltO6SS.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/27-theming/hpMyDvtHUyLPz0ltO6SS.mp4').default} />
 
 Specify theme colors with the `prefers-color-scheme` media feature within the `meta` element.
 
@@ -214,7 +215,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/27-theming/8Sz0XmotUrwnbprrHtoZ.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/27-theming/8Sz0XmotUrwnbprrHtoZ.mp4').default} />
 
 ![Two maps of Broolyn, one using light colors and the other using dark colors.](./img/27-theming/two-maps-broolyn-using-5ab9d5d846e67.png)
 
@@ -249,7 +250,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/27-theming/6YuAM0ZCNhGNAjpI8fyT.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/27-theming/6YuAM0ZCNhGNAjpI8fyT.mp4').default} />
 
 Use the [`accent-color`](https://web.dev/articles/accent-color) property in CSS to style checkboxes, radio buttons, and some other form fields.
 
@@ -304,7 +305,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/27-theming/Dl00EnG4mwTbSQIkYBF9.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/27-theming/Dl00EnG4mwTbSQIkYBF9.mp4').default} />
 
 :::note
 
@@ -348,4 +349,4 @@ So you support dark theme, but all the form inputs are still light themed. What 
 - Add `<meta name="supported-color-schemes" content="light dark">` to your HTML `<head>` tag.
 - Write a bunch of CSS to change all the defaults of the input.
 
-<details><summary>Show answer</summary><p><strong>Add <code translate="no" dir="ltr">html { color-scheme: light dark; }</code> to your CSS.</strong>: This signals from CSS that the form inputs should match the system color scheme.</p></details>
+<details><summary>Show answer</summary><p><strong>Add <code translate="no" dir="ltr">html \{ color-scheme: light dark; \}</code> to your CSS.</strong>: This signals from CSS that the form inputs should match the system color scheme.</p></details>

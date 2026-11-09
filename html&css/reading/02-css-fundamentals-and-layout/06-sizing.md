@@ -1,7 +1,8 @@
 ---
 title: "Sizing Units"
 sidebar_position: 6
-format: md
+mdx:
+  format: mdx
 tags: [required]
 ---
 
@@ -239,7 +240,7 @@ You can use the dimensions of an element's [container](https://developer.mozilla
 
 **Objective:** By sizing text with relative units like `em` or `rem`, rather than an absolute unit, like `px`, the size of your text can respond to user preferences. This can include the system font size or parent element's font size, such as the `<body>`. The base size of the `em` is the element's parent and the base size of the `rem` is the base font size of the document. If you don't define a `font-size` on your `html` element, this user-preferred system font size will be honoured if you use relative lengths, such as `em` and `rem`. If you use `px` units for sizing text, this preference will be ignored.
 
-<video controls="" style="max-width:100%"><source src="./img/06-sizing/cUEl77VN4ZtAdElV4fd6.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/06-sizing/cUEl77VN4ZtAdElV4fd6.mp4').default} />
 
 :::
 

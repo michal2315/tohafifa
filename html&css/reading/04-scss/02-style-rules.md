@@ -1,7 +1,8 @@
 ---
 title: "Style Rules"
 sidebar_position: 2
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

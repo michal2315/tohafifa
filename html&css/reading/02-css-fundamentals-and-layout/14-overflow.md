@@ -1,7 +1,8 @@
 ---
 title: "Overflow"
 sidebar_position: 14
-format: md
+mdx:
+  format: mdx
 tags: [required]
 ---
 
@@ -169,7 +170,7 @@ You may notice that some scrollers have a pull-to-refresh behavior and other spe
 
 To create a root scroller, you can use something called *scroller promotion* by positioning a container as fixed, ensuring it covers the entire viewport and is z-index on top with a scroller. Experience a root scroller versus a nested implicit scroller [here](https://cdpn.io/web-dot-dev/debug/dyzPzwz).
 
-<video width="380" controls="" style="max-width:100%"><source src="./img/14-overflow/sn1cOusFy18gRkZroAET.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/14-overflow/sn1cOusFy18gRkZroAET.mp4').default} />
 
 *The video shows a root scroller with bounce behavior and new styling features,
 compared to scrolling an implicit scroller with no enhanced scroll behavior.*

@@ -1,7 +1,8 @@
 ---
 title: "Transitions"
 sidebar_position: 21
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

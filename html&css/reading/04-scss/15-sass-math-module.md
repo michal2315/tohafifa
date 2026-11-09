@@ -1,7 +1,8 @@
 ---
 title: "sass:math"
 sidebar_position: 15
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

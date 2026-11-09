@@ -1,7 +1,8 @@
 ---
 title: "@forward"
 sidebar_position: 6
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

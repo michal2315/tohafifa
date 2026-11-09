@@ -1,7 +1,8 @@
 ---
 title: "Interaction"
 sidebar_position: 28
-format: md
+mdx:
+  format: mdx
 tags: [skim]
 ---
 
@@ -206,7 +207,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/28-interaction/xdbqHZ1fp2O8FpwXWQAH.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/28-interaction/xdbqHZ1fp2O8FpwXWQAH.mp4').default} />
 
 ### Input modes
 
@@ -232,7 +233,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/28-interaction/gr0tQXIZDgRNFcExwN8W.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/28-interaction/gr0tQXIZDgRNFcExwN8W.mp4').default} />
 
 ### Autocomplete
 
@@ -259,7 +260,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/28-interaction/6CvIrXjmzMbXX4CNuzCe.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/28-interaction/6CvIrXjmzMbXX4CNuzCe.mp4').default} />
 
 These HTML attributes—`type`, `inputmode`, and `autocomplete`—are small additions to your form fields, but they can make a big difference to the user experience. By anticipating and responding to your user's device capabilities, you are empowering your users. For more in-depth information, there's a course dedicated to helping you [learn forms](https://web.dev/learn/forms).
 

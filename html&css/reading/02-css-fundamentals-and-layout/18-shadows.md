@@ -1,7 +1,8 @@
 ---
 title: "Shadows"
 sidebar_position: 18
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

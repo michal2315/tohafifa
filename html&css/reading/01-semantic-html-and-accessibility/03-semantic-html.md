@@ -1,7 +1,8 @@
 ---
 title: "Semantic HTML"
 sidebar_position: 3
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

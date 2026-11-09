@@ -1,7 +1,8 @@
 ---
 title: "@each"
 sidebar_position: 11
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

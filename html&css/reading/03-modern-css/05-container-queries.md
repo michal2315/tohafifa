@@ -1,7 +1,8 @@
 ---
 title: "CSS container queries"
 sidebar_position: 5
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

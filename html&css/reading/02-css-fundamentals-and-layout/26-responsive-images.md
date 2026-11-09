@@ -1,7 +1,8 @@
 ---
 title: "Responsive images"
 sidebar_position: 26
-format: md
+mdx:
+  format: mdx
 tags: [skim]
 ---
 
@@ -130,9 +131,9 @@ If you know your image's dimensions, always include `width` and `height` attribu
 >
 ```
 
-<video controls="" style="max-width:100%"><source src="./img/26-responsive-images/WOQn6K6OQcoElRw0NCkZ.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/26-responsive-images/WOQn6K6OQcoElRw0NCkZ.mp4').default} />
 
-<video controls="" style="max-width:100%"><source src="./img/26-responsive-images/sFxDb36aEMvTPIyZHz1O.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/26-responsive-images/sFxDb36aEMvTPIyZHz1O.mp4').default} />
 
 *The first video shows a layout without defined image dimensions. Notice how the text jumps when the images load. In the second video, image dimensions have been provided, so the browser leaves space for the image and text doesn't jump around when the image loads.*
 
@@ -150,7 +151,7 @@ Use the `loading` attribute to tell the browser whether to delay loading the ima
 >
 ```
 
-<video controls="" style="max-width:100%"><source src="./img/26-responsive-images/jazsyaOjXfHS0g8yUijR.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/26-responsive-images/jazsyaOjXfHS0g8yUijR.mp4').default} />
 
 *Lazy loaded images wait to load until the user is about to scroll to them.*
 
@@ -278,7 +279,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 :::
 
-<video controls="" style="max-width:100%"><source src="./img/26-responsive-images/MkUAq5XQyjlUXLvkT4jL.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/26-responsive-images/MkUAq5XQyjlUXLvkT4jL.mp4').default} />
 
 *Use size descriptors to change how your page is laid out on different screen sizes.*
 

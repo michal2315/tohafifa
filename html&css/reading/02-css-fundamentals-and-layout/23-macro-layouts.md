@@ -1,7 +1,8 @@
 ---
 title: "Macro layouts"
 sidebar_position: 23
-format: md
+mdx:
+  format: mdx
 tags: [required]
 ---
 
@@ -40,7 +41,7 @@ This lesson has an interactive CodePen demo here. CodePen is not reachable from 
 
 When you arrange these individual page-level components, you're designing a macro layout: a high-level view of your page. Using media queries, you can supply rules in CSS describing how this view should adjust to different screen sizes.
 
-<video controls="" style="max-width:100%"><source src="./img/23-macro-layouts/3KENjI9FiNARctTiKDak.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/23-macro-layouts/3KENjI9FiNARctTiKDak.mp4').default} />
 
 ## Grid
 

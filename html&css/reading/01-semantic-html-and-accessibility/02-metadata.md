@@ -1,7 +1,8 @@
 ---
 title: "Metadata"
 sidebar_position: 2
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

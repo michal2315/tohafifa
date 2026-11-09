@@ -1,7 +1,8 @@
 ---
 title: "Parent Selector"
 sidebar_position: 3
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: "sass:map"
 sidebar_position: 14
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

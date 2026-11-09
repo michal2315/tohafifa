@@ -1,7 +1,8 @@
 ---
 title: "Focus"
 sidebar_position: 12
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: "Backgrounds"
 sidebar_position: 19
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

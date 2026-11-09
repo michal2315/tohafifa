@@ -1,7 +1,8 @@
 ---
 title: "Gradients"
 sidebar_position: 20
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: "Accessibility"
 sidebar_position: 29
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

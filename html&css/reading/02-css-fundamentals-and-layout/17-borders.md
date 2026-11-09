@@ -1,7 +1,8 @@
 ---
 title: "Borders"
 sidebar_position: 17
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

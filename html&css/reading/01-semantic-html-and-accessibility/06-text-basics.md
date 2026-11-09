@@ -1,7 +1,8 @@
 ---
 title: "Text basics"
 sidebar_position: 6
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

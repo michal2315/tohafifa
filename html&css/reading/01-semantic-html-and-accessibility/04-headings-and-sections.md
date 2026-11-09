@@ -1,7 +1,8 @@
 ---
 title: "Headings and sections"
 sidebar_position: 4
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: "Text and typography"
 sidebar_position: 15
-format: md
+mdx:
+  format: mdx
 tags: [required]
 ---
 
@@ -502,7 +503,7 @@ Check out [the `text-shadow` section of our module on Shadows](./18-shadows.md) 
 
 Typically, "normal" fonts require importing different files for different versions of the typeface, like bold, italic, or condensed. Variable fonts are fonts that can contain many different variants of a typeface in one file.
 
-<video controls="" style="max-width:100%"><source src="./img/15-typography/roboto-dance.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/15-typography/roboto-dance.mp4').default} />
 
 *Roboto Flex in random combinations of Width and Weight*
 

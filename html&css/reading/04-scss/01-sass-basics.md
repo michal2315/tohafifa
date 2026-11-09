@@ -1,7 +1,8 @@
 ---
 title: "Sass Basics"
 sidebar_position: 1
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

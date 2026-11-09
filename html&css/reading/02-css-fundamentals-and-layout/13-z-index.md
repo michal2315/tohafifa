@@ -1,7 +1,8 @@
 ---
 title: "Z-index and stacking contexts"
 sidebar_position: 13
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

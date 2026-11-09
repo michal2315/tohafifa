@@ -1,7 +1,8 @@
 ---
 title: "clamp() CSS function"
 sidebar_position: 8
-format: md
+mdx:
+  format: md
 tags: [skim]
 ---
 

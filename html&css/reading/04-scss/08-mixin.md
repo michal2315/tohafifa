@@ -1,7 +1,8 @@
 ---
 title: "@mixin and @include"
 sidebar_position: 8
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

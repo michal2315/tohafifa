@@ -1,7 +1,8 @@
 ---
 title: ":has() CSS pseudo-class"
 sidebar_position: 6
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

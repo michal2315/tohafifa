@@ -1,5 +1,5 @@
 {
-  "importedAt": "2026-11-09T14:18:51.594Z",
+  "importedAt": "2026-11-09T15:10:52.100Z",
   "sources": [
     {
       "module": "1. Semantic HTML & accessibility",
@@ -609,91 +609,109 @@
     {
       "url": "https://web.dev/learn/html/document-structure",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/metadata",
       "assets": 4,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/semantic-html",
       "assets": 4,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/headings-and-sections",
       "assets": 2,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/attributes",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/text-basics",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/lists",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/links",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/navigation",
       "assets": 6,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/images",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/forms",
       "assets": 7,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/html/focus",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML",
       "assets": 4,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/box-model",
       "assets": 3,
+      "videos": 1,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/selectors",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/the-cascade",
       "assets": 2,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/specificity",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/inheritance",
       "assets": 0,
+      "videos": 0,
       "warnings": [
         "asset skipped (too large (19980221 bytes) https://web.dev/static/learn/css/inheritance/video/VbAJIREinuYvovrBzzvEyZOpw5w1/OvoYqOMcdFZL7wJQIL2C.mp4)"
       ]
@@ -701,246 +719,295 @@
     {
       "url": "https://web.dev/learn/css/sizing",
       "assets": 2,
+      "videos": 1,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/layout",
       "assets": 2,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/flexbox",
       "assets": 5,
+      "videos": 1,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/grid",
       "assets": 12,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/spacing",
       "assets": 6,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/pseudo-classes",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/pseudo-elements",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/z-index",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/overflow",
       "assets": 1,
+      "videos": 1,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/typography",
       "assets": 1,
+      "videos": 1,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/color",
       "assets": 2,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/borders",
       "assets": 3,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/shadows",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/backgrounds",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/gradients",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/transitions",
       "assets": 2,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/design/media-queries",
       "assets": 4,
+      "videos": 4,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/design/macro-layouts",
       "assets": 2,
+      "videos": 1,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/design/micro-layouts",
       "assets": 7,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/design/typography",
       "assets": 6,
+      "videos": 5,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/design/responsive-images",
       "assets": 10,
+      "videos": 4,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/design/theming",
       "assets": 10,
+      "videos": 4,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/design/interaction",
       "assets": 3,
+      "videos": 3,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/design/accessibility",
       "assets": 7,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/logical-properties",
       "assets": 3,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://web.dev/learn/css/functions",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Nesting/Using",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries",
       "assets": 1,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:has",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/aspect-ratio",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/clamp",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/guide/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/style-rules/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/style-rules/parent-selector/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/variables/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/at-rules/use/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/at-rules/forward/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/at-rules/import/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/at-rules/mixin/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/at-rules/function/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/at-rules/extend/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/at-rules/control/each/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/values/maps/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/at-rules/control/if/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/modules/map/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/modules/math/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://sass-lang.com/documentation/interpolation/",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     },
     {
       "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/Guides/Understanding_WCAG/Perceivable/Color_contrast",
       "assets": 0,
+      "videos": 0,
       "warnings": []
     }
   ]

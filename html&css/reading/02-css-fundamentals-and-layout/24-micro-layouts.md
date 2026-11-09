@@ -1,7 +1,8 @@
 ---
 title: "Micro layouts"
 sidebar_position: 24
-format: md
+mdx:
+  format: md
 tags: [required]
 ---
 

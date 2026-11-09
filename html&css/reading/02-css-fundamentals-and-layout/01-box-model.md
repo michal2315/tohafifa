@@ -1,7 +1,8 @@
 ---
 title: "Box Model"
 sidebar_position: 1
-format: md
+mdx:
+  format: mdx
 tags: [required]
 ---
 
@@ -138,7 +139,7 @@ To try this in Chrome:
 2. [Select an element](https://developer.chrome.com/docs/devtools/css/reference#select).
 3. Show the box model debugger.
 
-<video controls="" style="max-width:100%"><source src="./img/01-box-model/sKdHrAfqahgWfDVQEBBT.mp4" type="video/mp4"></video>
+<video controls style={{maxWidth: '100%'}} src={require('./img/01-box-model/sKdHrAfqahgWfDVQEBBT.mp4').default} />
 
 *The box model debugger for the soutline demo.*
 

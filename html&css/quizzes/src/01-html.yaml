@@ -1,0 +1,169 @@
+module: 01-semantic-html-and-accessibility
+title: 1. HTML
+questions:
+  - id: html-01
+    type: spot-the-bug
+    topic: markup
+    difficulty: 2
+    placement: false
+    prompt: 'In the browser, the second post shows up **inside** the first post card instead of below it. Click the line with the bug.'
+    code:
+      lang: html
+      label: feed.component.html
+      source: |
+        <div class="feed">
+          <div class="post-card">
+            <div class="post-header">
+              <img class="avatar" src="noa.jpg">
+              <span class="username">noa_k</span>
+            </div>
+            <img class="post-image" src="beach.jpg">
+            <div class="caption">Sunset at the beach
+          </div>
+          <div class="post-card">
+            ...
+          </div>
+        </div>
+    answer: 8
+    explanation: 'The caption `<div>` on line 8 is never closed. The `</div>` on line 9 closes the caption instead of the card, so the first `.post-card` is still open and the next card is nested inside it. Fix: `<div class="caption">Sunset at the beach</div>`. Your editor can highlight matching tags, and the DevTools Elements panel shows how the browser actually nested things.'
+
+  - id: html-02
+    type: spot-the-bug
+    topic: forms
+    difficulty: 2
+    placement: true
+    prompt: 'Clicking the emoji button reloads the page and the comment is lost. Click the line with the bug.'
+    code:
+      lang: html
+      label: comment-form.component.html
+      source: |
+        <form class="comment-form">
+          <input class="comment-input" placeholder="Add a comment...">
+          <button class="emoji-btn">😊</button>
+          <button class="post-btn" type="submit">Post</button>
+        </form>
+    answer: 3
+    explanation: 'A `<button>` inside a `<form>` is `type="submit"` by default, so clicking the emoji button submits the form, which reloads the page. Any button that does not submit needs `type="button"`: `<button class="emoji-btn" type="button">`.'
+    reference: 01-semantic-html-and-accessibility/11-forms.md
+
+  - id: html-03
+    type: spot-the-bug
+    topic: forms
+    difficulty: 1
+    placement: true
+    prompt: 'Clicking the text "Remember me" should toggle the checkbox, but nothing happens. Click the line with the bug.'
+    code:
+      lang: html
+      label: login.component.html
+      source: |
+        <div class="login-options">
+          <input class="checkbox" type="checkbox" id="remember-me">
+          <label class="checkbox-label" for="remember">Remember me</label>
+        </div>
+    answer: 3
+    explanation: 'The label''s `for` must match the input''s `id` exactly. `for="remember"` points to an element that does not exist. Fix: `for="remember-me"`.'
+    reference: 01-semantic-html-and-accessibility/11-forms.md
+
+  - id: html-04
+    type: predict
+    topic: inline-vs-block
+    difficulty: 2
+    placement: true
+    prompt: 'The design has 12px of space above the caption. What do you see in the browser?'
+    context:
+      lang: scss
+      label: post-card.component.scss
+      source: |
+        :host {
+          .caption {
+            margin-top: 12px;
+          }
+        }
+    code:
+      lang: html
+      label: post-card.component.html
+      source: |
+        <img class="post-image" src="beach.jpg">
+        <span class="caption">Sunset at the beach</span>
+    options:
+      - { text: 'No space at all: vertical margin has no effect on an inline element like `<span>`', correct: true }
+      - { text: '12px of space above the caption', correct: false }
+      - { text: '24px of space, because the margin is added on both sides', correct: false }
+      - { text: 'The caption moves 12px down and overlaps the next post', correct: false }
+    explanation: '`<span>` is `display: inline` by default, and inline elements ignore `margin-top`, `margin-bottom` and `height`. Use a `<div>` (block) or set `display: block` on `.caption`.'
+    reference: 02-css-fundamentals-and-layout/01-box-model.md
+
+  - id: html-05
+    type: single
+    topic: images
+    difficulty: 2
+    placement: true
+    prompt: 'There is a thin gap of a few pixels **under** the post image, between the image and the action icons. No margin or padding is set. What causes it?'
+    code:
+      lang: html
+      label: post-card.component.html
+      source: |
+        <div class="post-card">
+          <img class="post-image" src="beach.jpg">
+          <div class="post-actions">...</div>
+        </div>
+    options:
+      - { text: '`<img>` is inline, so it sits on the text baseline and leaves room below for letters like g and y. Fix: `.post-image { display: block; }`', correct: true }
+      - { text: 'Browsers add a default `margin-bottom` to images. Fix: `margin: 0`', correct: false }
+      - { text: 'The image file has transparent pixels at the bottom', correct: false }
+      - { text: 'The line break between the tags in the HTML adds a `<br>`', correct: false }
+    explanation: 'Images are inline by default and are aligned to the baseline of the line they are on. The space under the baseline (for letters like g and y) shows up as a gap. `display: block` on the image class removes it.'
+    reference: 01-semantic-html-and-accessibility/10-images.md
+
+  - id: html-06
+    type: predict
+    topic: inline-vs-block
+    difficulty: 3
+    placement: false
+    prompt: 'Four stories should fit in one row. What happens?'
+    context:
+      lang: scss
+      label: stories.component.scss
+      source: |
+        :host {
+          .story {
+            display: inline-block;
+            width: 25%;
+          }
+        }
+    code:
+      lang: html
+      label: stories.component.html
+      source: |
+        <div class="stories">
+          <img class="story" src="noa.jpg">
+          <img class="story" src="dan.jpg">
+          <img class="story" src="maya.jpg">
+          <img class="story" src="avi.jpg">
+        </div>
+    options:
+      - { text: 'Only three fit; the fourth wraps to a new line, because the line breaks between the tags become spaces between inline-block elements', correct: true }
+      - { text: 'All four fit exactly in one row', correct: false }
+      - { text: 'They stack vertically, one per line', correct: false }
+      - { text: 'They overflow to the right of `.stories` in one row', correct: false }
+    explanation: 'Inline and inline-block elements behave like words: the whitespace between the tags becomes a space character (about 4px). 4 × 25% plus three spaces is more than 100%, so the last one wraps. Use flexbox instead: `.stories { display: flex; }` and the whitespace no longer matters.'
+    reference: 02-css-fundamentals-and-layout/08-flexbox.md
+
+  - id: html-07
+    type: predict
+    topic: attributes
+    difficulty: 1
+    placement: false
+    prompt: 'Which classes does this element end up with?'
+    code:
+      lang: html
+      label: post-card.component.html
+      source: |
+        <div class="post-card" class="selected">...</div>
+    options:
+      - { text: 'Only `post-card`; the browser ignores the second `class` attribute', correct: true }
+      - { text: 'Both `post-card` and `selected`', correct: false }
+      - { text: 'Only `selected`; the last one wins', correct: false }
+      - { text: 'None; the element is invalid and gets no classes', correct: false }
+    explanation: 'When an attribute appears twice, the browser keeps the first one and ignores the rest. Put all classes in one attribute, separated by spaces: `class="post-card selected"`.'
+    reference: 01-semantic-html-and-accessibility/05-attributes.md

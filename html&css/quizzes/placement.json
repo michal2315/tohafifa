@@ -1,0 +1,690 @@
+{
+  "title": "HTML & SCSS placement quiz",
+  "scoring": {
+    "skim": 0.8,
+    "requiredOnly": 0.5,
+    "note": ">= 80% per module: module becomes skim. 50-79%: required pages only. < 50%: full module."
+  },
+  "modules": [
+    {
+      "module": "01-semantic-html-and-accessibility",
+      "title": "1. HTML",
+      "questions": [
+        {
+          "id": "html-02",
+          "type": "spot-the-bug",
+          "topic": "forms",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "Clicking the emoji button reloads the page and the comment is lost. Click the line with the bug.",
+          "code": {
+            "lang": "html",
+            "label": "comment-form.component.html",
+            "source": "<form class=\"comment-form\">\n  <input class=\"comment-input\" placeholder=\"Add a comment...\">\n  <button class=\"emoji-btn\">😊</button>\n  <button class=\"post-btn\" type=\"submit\">Post</button>\n</form>\n"
+          },
+          "answer": 3,
+          "explanation": "A `<button>` inside a `<form>` is `type=\"submit\"` by default, so clicking the emoji button submits the form, which reloads the page. Any button that does not submit needs `type=\"button\"`: `<button class=\"emoji-btn\" type=\"button\">`.",
+          "reference": "01-semantic-html-and-accessibility/11-forms.md"
+        },
+        {
+          "id": "html-03",
+          "type": "spot-the-bug",
+          "topic": "forms",
+          "difficulty": 1,
+          "placement": true,
+          "prompt": "Clicking the text \"Remember me\" should toggle the checkbox, but nothing happens. Click the line with the bug.",
+          "code": {
+            "lang": "html",
+            "label": "login.component.html",
+            "source": "<div class=\"login-options\">\n  <input class=\"checkbox\" type=\"checkbox\" id=\"remember-me\">\n  <label class=\"checkbox-label\" for=\"remember\">Remember me</label>\n</div>\n"
+          },
+          "answer": 3,
+          "explanation": "The label's `for` must match the input's `id` exactly. `for=\"remember\"` points to an element that does not exist. Fix: `for=\"remember-me\"`.",
+          "reference": "01-semantic-html-and-accessibility/11-forms.md"
+        },
+        {
+          "id": "html-04",
+          "type": "predict",
+          "topic": "inline-vs-block",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "The design has 12px of space above the caption. What do you see in the browser?",
+          "context": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .caption {\n    margin-top: 12px;\n  }\n}\n"
+          },
+          "code": {
+            "lang": "html",
+            "label": "post-card.component.html",
+            "source": "<img class=\"post-image\" src=\"beach.jpg\">\n<span class=\"caption\">Sunset at the beach</span>\n"
+          },
+          "options": [
+            {
+              "text": "No space at all: vertical margin has no effect on an inline element like `<span>`",
+              "correct": true
+            },
+            {
+              "text": "12px of space above the caption",
+              "correct": false
+            },
+            {
+              "text": "24px of space, because the margin is added on both sides",
+              "correct": false
+            },
+            {
+              "text": "The caption moves 12px down and overlaps the next post",
+              "correct": false
+            }
+          ],
+          "explanation": "`<span>` is `display: inline` by default, and inline elements ignore `margin-top`, `margin-bottom` and `height`. Use a `<div>` (block) or set `display: block` on `.caption`.",
+          "reference": "02-css-fundamentals-and-layout/01-box-model.md"
+        },
+        {
+          "id": "html-05",
+          "type": "single",
+          "topic": "images",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "There is a thin gap of a few pixels **under** the post image, between the image and the action icons. No margin or padding is set. What causes it?",
+          "code": {
+            "lang": "html",
+            "label": "post-card.component.html",
+            "source": "<div class=\"post-card\">\n  <img class=\"post-image\" src=\"beach.jpg\">\n  <div class=\"post-actions\">...</div>\n</div>\n"
+          },
+          "options": [
+            {
+              "text": "`<img>` is inline, so it sits on the text baseline and leaves room below for letters like g and y. Fix: `.post-image { display: block; }`",
+              "correct": true
+            },
+            {
+              "text": "Browsers add a default `margin-bottom` to images. Fix: `margin: 0`",
+              "correct": false
+            },
+            {
+              "text": "The image file has transparent pixels at the bottom",
+              "correct": false
+            },
+            {
+              "text": "The line break between the tags in the HTML adds a `<br>`",
+              "correct": false
+            }
+          ],
+          "explanation": "Images are inline by default and are aligned to the baseline of the line they are on. The space under the baseline (for letters like g and y) shows up as a gap. `display: block` on the image class removes it.",
+          "reference": "01-semantic-html-and-accessibility/10-images.md"
+        }
+      ]
+    },
+    {
+      "module": "02-css-fundamentals-and-layout",
+      "title": "2. CSS fundamentals & layout",
+      "questions": [
+        {
+          "id": "css-01",
+          "type": "spot-the-bug",
+          "topic": "syntax",
+          "difficulty": 1,
+          "placement": true,
+          "prompt": "The build fails with `expected \";\"`, and the error points at line 5. Click the line with the bug.",
+          "code": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .post-card {\n    display: flex;\n    padding: 12px\n    border: 1px solid #dbdbdb;\n    border-radius: 8px;\n  }\n}\n"
+          },
+          "answer": 4,
+          "explanation": "The `;` is missing at the end of line 4, but Sass only notices on line 5, when it reaches `border:` and sees that the declaration never ended. Compiler errors often point at the line **after** the real mistake, so always check the line above too. (In plain CSS the browser would silently drop both declarations.)",
+          "reference": "02-css-fundamentals-and-layout/02-selectors.md"
+        },
+        {
+          "id": "css-02",
+          "type": "predict",
+          "topic": "specificity",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "A trainee adds `caption-highlight` to make one caption dark, but it stays gray. What color is the caption, and why?",
+          "context": {
+            "lang": "html",
+            "label": "feed.component.html",
+            "source": "<div class=\"feed\">\n  <div class=\"post-card\">\n    <div class=\"caption caption-highlight\">Sunset at the beach</div>\n  </div>\n</div>\n"
+          },
+          "code": {
+            "lang": "scss",
+            "label": "feed.component.scss",
+            "source": ":host {\n  .feed .post-card .caption {\n    color: #8e8e8e;\n  }\n\n  .caption-highlight {\n    color: #262626;\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "Gray (`#8e8e8e`): `.feed .post-card .caption` has more classes and beats `.caption-highlight`, even though the dark rule comes later",
+              "correct": true
+            },
+            {
+              "text": "Dark (`#262626`): the later rule always wins",
+              "correct": false
+            },
+            {
+              "text": "Dark (`#262626`): the class written last in the `class` attribute wins",
+              "correct": false
+            },
+            {
+              "text": "Gray (`#8e8e8e`): the first rule in the file always wins",
+              "correct": false
+            }
+          ],
+          "explanation": "Specificity is compared before order. `:host .feed .post-card .caption` has 4 classes, `:host .caption-highlight` has 2. The order of classes inside `class=\"...\"` never matters. Fix: keep selectors short (`.caption` instead of `.feed .post-card .caption`).",
+          "reference": "02-css-fundamentals-and-layout/04-specificity.md"
+        },
+        {
+          "id": "css-03",
+          "type": "single",
+          "topic": "box-model",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "On mobile the feed has a horizontal scrollbar. What is the cause?",
+          "code": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .post-card {\n    width: 100%;\n    padding: 16px;\n    border: 1px solid #dbdbdb;\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "The card is 100% + 32px + 2px wide, because the default `box-sizing: content-box` adds padding and border to the width",
+              "correct": true
+            },
+            {
+              "text": "`padding` cannot be used together with `width`",
+              "correct": false
+            },
+            {
+              "text": "The border makes the image inside overflow",
+              "correct": false
+            },
+            {
+              "text": "`width: 100%` should be in `px`",
+              "correct": false
+            }
+          ],
+          "explanation": "With `content-box`, `width` is only the content area. Fix: `box-sizing: border-box` on `.post-card`, so padding and border are inside the width.",
+          "reference": "02-css-fundamentals-and-layout/01-box-model.md"
+        },
+        {
+          "id": "css-04",
+          "type": "predict",
+          "topic": "selectors",
+          "difficulty": 1,
+          "placement": true,
+          "prompt": "The action icons are stacked vertically instead of in a row. Why?",
+          "context": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .post-actions {\n    display: flex;\n    gap: 16px;\n  }\n}\n"
+          },
+          "code": {
+            "lang": "html",
+            "label": "post-card.component.html",
+            "source": "<div class=\"post-action\">\n  <img class=\"icon-like\" src=\"like.svg\">\n  <img class=\"icon-comment\" src=\"comment.svg\">\n</div>\n"
+          },
+          "options": [
+            {
+              "text": "The class names do not match (`post-action` in the HTML, `post-actions` in the SCSS), so the rule never applies",
+              "correct": true
+            },
+            {
+              "text": "An `<img>` cannot be a flex item",
+              "correct": false
+            },
+            {
+              "text": "`gap` only works with grid",
+              "correct": false
+            },
+            {
+              "text": "`flex-direction: row` is missing",
+              "correct": false
+            }
+          ],
+          "explanation": "A typo in a class name is one of the most common bugs, and the browser gives no error. Check in DevTools: select the element and look at the Styles panel. If your rule is not listed there, the selector does not match.",
+          "reference": "02-css-fundamentals-and-layout/02-selectors.md"
+        },
+        {
+          "id": "css-06",
+          "type": "single",
+          "topic": "z-index",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "The \"...\" menu of a post opens **under** the post image, even with `z-index: 100`. The menu's parent is not flex or grid. Why?",
+          "code": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .post-menu {\n    z-index: 100;\n    background: #ffffff;\n    margin-bottom: -40px;\n  }\n\n  .post-image {\n    position: relative;\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "`z-index` has no effect on an element without `position` (other than `static`), so the positioned image is painted on top",
+              "correct": true
+            },
+            {
+              "text": "`z-index` must be at least 1000 to beat an image",
+              "correct": false
+            },
+            {
+              "text": "Images are always painted above text",
+              "correct": false
+            },
+            {
+              "text": "Negative margins disable `z-index`",
+              "correct": false
+            }
+          ],
+          "explanation": "`z-index` only works on positioned elements (and on flex and grid items). Add `position: relative` to `.post-menu` and its `z-index` starts working.",
+          "reference": "02-css-fundamentals-and-layout/13-z-index.md"
+        },
+        {
+          "id": "css-08",
+          "type": "predict",
+          "topic": "media-queries",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "How wide is `.feed` on a 1200px wide screen?",
+          "code": {
+            "lang": "scss",
+            "label": "feed.component.scss",
+            "source": ":host {\n  .feed {\n    width: 100%;\n  }\n\n  @media (min-width: 1024px) {\n    .feed {\n      width: 630px;\n    }\n  }\n\n  @media (min-width: 768px) {\n    .feed {\n      width: 470px;\n    }\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "470px",
+              "correct": true
+            },
+            {
+              "text": "630px",
+              "correct": false
+            },
+            {
+              "text": "100%",
+              "correct": false
+            }
+          ],
+          "explanation": "At 1200px **both** media queries match. The rules have the same specificity, so the later one wins: 470px. With `min-width` queries, write them from small to large (768 before 1024).",
+          "reference": "02-css-fundamentals-and-layout/22-media-queries.md"
+        },
+        {
+          "id": "css-11",
+          "type": "single",
+          "topic": "flexbox",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "In the design, like, comment and share are together on one side, and the bookmark is alone on the other side. With this SCSS all four icons are spread evenly. What is the best fix?",
+          "context": {
+            "lang": "html",
+            "label": "post-card.component.html",
+            "source": "<div class=\"post-actions\">\n  <img class=\"icon\" src=\"like.svg\">\n  <img class=\"icon\" src=\"comment.svg\">\n  <img class=\"icon\" src=\"share.svg\">\n  <img class=\"icon icon-bookmark\" src=\"bookmark.svg\">\n</div>\n"
+          },
+          "code": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .post-actions {\n    display: flex;\n    gap: 16px;\n    justify-content: space-between;\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "Remove `justify-content` and add `.icon-bookmark { margin-inline-start: auto; }`",
+              "correct": true
+            },
+            {
+              "text": "Change to `justify-content: flex-end`",
+              "correct": false
+            },
+            {
+              "text": "Add `.icon-bookmark { float: right; }`",
+              "correct": false
+            },
+            {
+              "text": "Add `.icon-bookmark { align-self: flex-end; }`",
+              "correct": false
+            }
+          ],
+          "explanation": "An `auto` margin in a flex container takes all the free space, so it pushes the bookmark to the far side and the other icons stay together. `margin-inline-start` works in both English and Hebrew. `float` is ignored on flex items, and `align-self` works on the cross axis (vertical here).",
+          "reference": "02-css-fundamentals-and-layout/24-micro-layouts.md"
+        },
+        {
+          "id": "css-19",
+          "type": "single",
+          "topic": "positioning",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "The top bar should stay at the top while the feed scrolls, but it scrolls away with the page. What is missing?",
+          "code": {
+            "lang": "scss",
+            "label": "top-bar.component.scss",
+            "source": ":host {\n  .top-bar {\n    position: sticky;\n    background: #ffffff;\n    z-index: 10;\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "`top: 0`",
+              "correct": true
+            },
+            {
+              "text": "`display: block`",
+              "correct": false
+            },
+            {
+              "text": "`overflow: hidden` on `.top-bar`",
+              "correct": false
+            },
+            {
+              "text": "`width: 100%`",
+              "correct": false
+            }
+          ],
+          "explanation": "`position: sticky` needs a threshold to stick at, like `top: 0`. Without one it acts like `relative`. Also note: sticky stops working if an ancestor has `overflow: hidden` or `auto`.",
+          "reference": "02-css-fundamentals-and-layout/07-layout.md"
+        }
+      ]
+    },
+    {
+      "module": "03-modern-css",
+      "title": "3. Modern CSS",
+      "questions": [
+        {
+          "id": "mod-01",
+          "type": "spot-the-bug",
+          "topic": "custom-properties",
+          "difficulty": 1,
+          "placement": true,
+          "prompt": "The Follow button should be blue, but it has no background. Click the line with the bug.",
+          "code": {
+            "lang": "scss",
+            "label": "profile-header.component.scss",
+            "source": ":host {\n  --primary: #0095f6;\n\n  .follow-btn {\n    background: --primary;\n    color: #ffffff;\n  }\n}\n"
+          },
+          "answer": 5,
+          "explanation": "To read a custom property you must wrap it in `var()`: `background: var(--primary);`. On its own, `--primary` is not a valid value, so the line is ignored.",
+          "reference": "03-modern-css/03-using-custom-properties.md"
+        },
+        {
+          "id": "mod-02",
+          "type": "predict",
+          "topic": "custom-properties",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "No element sets `--story-color`. What color is the story ring?",
+          "code": {
+            "lang": "scss",
+            "label": "story.component.scss",
+            "source": ":host {\n  .story-ring {\n    border: 2px solid var(--story-color, #c13584);\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "`#c13584`, the fallback",
+              "correct": true
+            },
+            {
+              "text": "No border at all, because the variable is missing",
+              "correct": false
+            },
+            {
+              "text": "Black, the default border color",
+              "correct": false
+            },
+            {
+              "text": "The build fails",
+              "correct": false
+            }
+          ],
+          "explanation": "The second argument of `var()` is the fallback. It is used when the custom property is not set on the element or any of its ancestors.",
+          "reference": "03-modern-css/03-using-custom-properties.md"
+        },
+        {
+          "id": "mod-03",
+          "type": "predict",
+          "topic": "custom-properties",
+          "difficulty": 3,
+          "placement": true,
+          "prompt": "How much padding does the story bar get?",
+          "context": {
+            "lang": "html",
+            "label": "feed.component.html",
+            "source": "<div class=\"story-bar\">...</div>\n<div class=\"post-card\">...</div>\n"
+          },
+          "code": {
+            "lang": "scss",
+            "label": "feed.component.scss",
+            "source": ":host {\n  .post-card {\n    --card-padding: 16px;\n  }\n\n  .story-bar {\n    padding: var(--card-padding);\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "0, because `.story-bar` is not inside `.post-card`, so it does not inherit `--card-padding`",
+              "correct": true
+            },
+            {
+              "text": "16px",
+              "correct": false
+            },
+            {
+              "text": "The browser default padding",
+              "correct": false
+            }
+          ],
+          "explanation": "A custom property only reaches the element it is set on and its descendants. `.story-bar` is a sibling, so `var(--card-padding)` has no value and no fallback, and `padding` falls back to its initial value, 0. Set shared values on `:host` so the whole component sees them.",
+          "reference": "03-modern-css/03-using-custom-properties.md"
+        },
+        {
+          "id": "mod-04",
+          "type": "single",
+          "topic": "aspect-ratio",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "Profile grid images should be squares. With this SCSS they are squares, but the photos look stretched. What is missing?",
+          "code": {
+            "lang": "scss",
+            "label": "profile-grid.component.scss",
+            "source": ":host {\n  .grid-image {\n    width: 100%;\n    aspect-ratio: 1;\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "`object-fit: cover;`",
+              "correct": true
+            },
+            {
+              "text": "`overflow: hidden;`",
+              "correct": false
+            },
+            {
+              "text": "`background-size: cover;`",
+              "correct": false
+            },
+            {
+              "text": "`height: auto;`",
+              "correct": false
+            }
+          ],
+          "explanation": "When an `<img>` box has a different shape from the photo, the photo is stretched to fill it. `object-fit: cover` keeps the photo's proportions and crops it to fill the box. `background-size` is only for background images.",
+          "reference": "03-modern-css/07-aspect-ratio.md"
+        },
+        {
+          "id": "mod-05",
+          "type": "predict",
+          "topic": "functions",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "The feed's parent is 400px wide. How wide is the feed?",
+          "code": {
+            "lang": "scss",
+            "label": "feed.component.scss",
+            "source": ":host {\n  .feed {\n    width: min(100%, 630px);\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "400px",
+              "correct": true
+            },
+            {
+              "text": "630px",
+              "correct": false
+            },
+            {
+              "text": "100% of the window",
+              "correct": false
+            },
+            {
+              "text": "230px",
+              "correct": false
+            }
+          ],
+          "explanation": "`min()` uses the smaller value. 100% of 400px is 400px, which is smaller than 630px. On a wide parent the feed stops at 630px. It is the same as `width: 100%; max-width: 630px;`.",
+          "reference": "03-modern-css/02-functions.md"
+        },
+        {
+          "id": "mod-06",
+          "type": "spot-the-bug",
+          "topic": "calc",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "The search box should be the full width minus 32px for the icon, but the build fails. Click the line with the bug.",
+          "code": {
+            "lang": "scss",
+            "label": "top-bar.component.scss",
+            "source": ":host {\n  .search-input {\n    height: 36px;\n    width: calc(100%-32px);\n  }\n}\n"
+          },
+          "answer": 4,
+          "explanation": "Inside `calc()`, `+` and `-` need a space on both sides. Sass stops with `\"+\" and \"-\" must be surrounded by whitespace in calculations` (in plain CSS the browser would silently ignore the line). Fix: `calc(100% - 32px)`.",
+          "reference": "03-modern-css/02-functions.md"
+        }
+      ]
+    },
+    {
+      "module": "04-scss",
+      "title": "4. SCSS",
+      "questions": [
+        {
+          "id": "scss-01",
+          "type": "spot-the-bug",
+          "topic": "parent-selector",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "The like button never turns red on hover. Click the line with the bug.",
+          "code": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .like-btn {\n    color: #262626;\n\n    & :hover {\n      color: #ed4956;\n    }\n  }\n}\n"
+          },
+          "answer": 5,
+          "explanation": "`& :hover` has a space, so it compiles to `:host .like-btn :hover`, meaning \"any hovered element **inside** the button\". Without the space, `&:hover` compiles to `:host .like-btn:hover`.",
+          "reference": "04-scss/03-parent-selector.md"
+        },
+        {
+          "id": "scss-02",
+          "type": "spot-the-bug",
+          "topic": "use",
+          "difficulty": 1,
+          "placement": true,
+          "prompt": "The build fails with `Undefined variable`. `_colors.scss` defines `$text-primary`. Click the line with the bug.",
+          "code": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": "@use 'colors';\n\n:host {\n  .username {\n    font-weight: 600;\n    color: $text-primary;\n  }\n}\n"
+          },
+          "answer": 6,
+          "explanation": "Members loaded with `@use` have a namespace, which is the file name by default: `colors.$text-primary`. This is different from the old `@import`, where everything was global.",
+          "reference": "04-scss/05-use.md"
+        },
+        {
+          "id": "scss-03",
+          "type": "predict",
+          "topic": "nesting",
+          "difficulty": 1,
+          "placement": true,
+          "prompt": "What CSS does this compile to?",
+          "code": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .actions, .caption {\n    font-size: 14px;\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "`:host .actions, :host .caption { font-size: 14px; }`",
+              "correct": true
+            },
+            {
+              "text": "`:host .actions, .caption { font-size: 14px; }`",
+              "correct": false
+            },
+            {
+              "text": "`:host.actions, :host.caption { font-size: 14px; }`",
+              "correct": false
+            },
+            {
+              "text": "`:host .actions .caption { font-size: 14px; }`",
+              "correct": false
+            }
+          ],
+          "explanation": "Sass puts the parent selector in front of **each** selector in the list, with a space (descendant), unless you use `&` to glue them.",
+          "reference": "04-scss/02-style-rules.md"
+        },
+        {
+          "id": "scss-04",
+          "type": "predict",
+          "topic": "parent-selector",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "What selector does the inner rule compile to?",
+          "code": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .post-card {\n    border: 1px solid #dbdbdb;\n\n    &.selected {\n      border-color: #0095f6;\n    }\n  }\n}\n"
+          },
+          "options": [
+            {
+              "text": "`:host .post-card.selected`",
+              "correct": true
+            },
+            {
+              "text": "`:host .post-card .selected`",
+              "correct": false
+            },
+            {
+              "text": "`:host.selected`",
+              "correct": false
+            },
+            {
+              "text": "`.selected .post-card`",
+              "correct": false
+            }
+          ],
+          "explanation": "`&` is replaced by the whole parent selector (`:host .post-card`). With no space after `&`, the class is glued on: one element that has both classes.",
+          "reference": "04-scss/03-parent-selector.md"
+        },
+        {
+          "id": "scss-05",
+          "type": "spot-the-bug",
+          "topic": "variables",
+          "difficulty": 2,
+          "placement": true,
+          "prompt": "The build fails with `Undefined variable`. Click the line with the bug.",
+          "code": {
+            "lang": "scss",
+            "label": "post-card.component.scss",
+            "source": ":host {\n  .post-card {\n    $card-radius: 8px;\n    border-radius: $card-radius;\n  }\n\n  .post-image {\n    border-radius: $card-radius $card-radius 0 0;\n  }\n}\n"
+          },
+          "answer": 8,
+          "explanation": "A variable declared inside a rule only exists inside that rule (between its `{ }`). `.post-image` cannot see it. Declare `$card-radius: 8px;` at the top of the file, before `:host`.",
+          "reference": "04-scss/04-variables.md"
+        },
+        {
+          "id": "scss-06",
+          "type": "spot-the-bug",
+          "topic": "mixins",
+          "difficulty": 1,
+          "placement": true,
+          "prompt": "The build passes with no errors, but the story avatar is not centered. Click the line with the bug.",
+          "code": {
+            "lang": "scss",
+            "label": "story.component.scss",
+            "source": "@mixin flex-center {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n:host {\n  .story-avatar {\n    @flex-center;\n    width: 56px;\n  }\n}\n"
+          },
+          "answer": 9,
+          "explanation": "A mixin is used with `@include`: `@include flex-center;`. Sass treats `@flex-center` as an unknown CSS at-rule and copies it to the output as is, so there is no error, and the browser ignores it. Check the compiled CSS when styles are missing.",
+          "reference": "04-scss/08-mixin.md"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,648 @@
+{
+  "module": "02-css-fundamentals-and-layout",
+  "title": "2. CSS fundamentals & layout",
+  "questions": [
+    {
+      "id": "css-01",
+      "type": "spot-the-bug",
+      "topic": "syntax",
+      "difficulty": 1,
+      "placement": true,
+      "prompt": "The build fails with `expected \";\"`, and the error points at line 5. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-card {\n    display: flex;\n    padding: 12px\n    border: 1px solid #dbdbdb;\n    border-radius: 8px;\n  }\n}\n"
+      },
+      "answer": 4,
+      "explanation": "The `;` is missing at the end of line 4, but Sass only notices on line 5, when it reaches `border:` and sees that the declaration never ended. Compiler errors often point at the line **after** the real mistake, so always check the line above too. (In plain CSS the browser would silently drop both declarations.)",
+      "reference": "02-css-fundamentals-and-layout/02-selectors.md"
+    },
+    {
+      "id": "css-02",
+      "type": "predict",
+      "topic": "specificity",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "A trainee adds `caption-highlight` to make one caption dark, but it stays gray. What color is the caption, and why?",
+      "context": {
+        "lang": "html",
+        "label": "feed.component.html",
+        "source": "<div class=\"feed\">\n  <div class=\"post-card\">\n    <div class=\"caption caption-highlight\">Sunset at the beach</div>\n  </div>\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "feed.component.scss",
+        "source": ":host {\n  .feed .post-card .caption {\n    color: #8e8e8e;\n  }\n\n  .caption-highlight {\n    color: #262626;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Gray (`#8e8e8e`): `.feed .post-card .caption` has more classes and beats `.caption-highlight`, even though the dark rule comes later",
+          "correct": true
+        },
+        {
+          "text": "Dark (`#262626`): the later rule always wins",
+          "correct": false
+        },
+        {
+          "text": "Dark (`#262626`): the class written last in the `class` attribute wins",
+          "correct": false
+        },
+        {
+          "text": "Gray (`#8e8e8e`): the first rule in the file always wins",
+          "correct": false
+        }
+      ],
+      "explanation": "Specificity is compared before order. `:host .feed .post-card .caption` has 4 classes, `:host .caption-highlight` has 2. The order of classes inside `class=\"...\"` never matters. Fix: keep selectors short (`.caption` instead of `.feed .post-card .caption`).",
+      "reference": "02-css-fundamentals-and-layout/04-specificity.md"
+    },
+    {
+      "id": "css-03",
+      "type": "single",
+      "topic": "box-model",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "On mobile the feed has a horizontal scrollbar. What is the cause?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-card {\n    width: 100%;\n    padding: 16px;\n    border: 1px solid #dbdbdb;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "The card is 100% + 32px + 2px wide, because the default `box-sizing: content-box` adds padding and border to the width",
+          "correct": true
+        },
+        {
+          "text": "`padding` cannot be used together with `width`",
+          "correct": false
+        },
+        {
+          "text": "The border makes the image inside overflow",
+          "correct": false
+        },
+        {
+          "text": "`width: 100%` should be in `px`",
+          "correct": false
+        }
+      ],
+      "explanation": "With `content-box`, `width` is only the content area. Fix: `box-sizing: border-box` on `.post-card`, so padding and border are inside the width.",
+      "reference": "02-css-fundamentals-and-layout/01-box-model.md"
+    },
+    {
+      "id": "css-04",
+      "type": "predict",
+      "topic": "selectors",
+      "difficulty": 1,
+      "placement": true,
+      "prompt": "The action icons are stacked vertically instead of in a row. Why?",
+      "context": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-actions {\n    display: flex;\n    gap: 16px;\n  }\n}\n"
+      },
+      "code": {
+        "lang": "html",
+        "label": "post-card.component.html",
+        "source": "<div class=\"post-action\">\n  <img class=\"icon-like\" src=\"like.svg\">\n  <img class=\"icon-comment\" src=\"comment.svg\">\n</div>\n"
+      },
+      "options": [
+        {
+          "text": "The class names do not match (`post-action` in the HTML, `post-actions` in the SCSS), so the rule never applies",
+          "correct": true
+        },
+        {
+          "text": "An `<img>` cannot be a flex item",
+          "correct": false
+        },
+        {
+          "text": "`gap` only works with grid",
+          "correct": false
+        },
+        {
+          "text": "`flex-direction: row` is missing",
+          "correct": false
+        }
+      ],
+      "explanation": "A typo in a class name is one of the most common bugs, and the browser gives no error. Check in DevTools: select the element and look at the Styles panel. If your rule is not listed there, the selector does not match.",
+      "reference": "02-css-fundamentals-and-layout/02-selectors.md"
+    },
+    {
+      "id": "css-05",
+      "type": "spot-the-bug",
+      "topic": "flexbox",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The avatar, username and time should be in one row, centered vertically. They are stacked instead. Click the line with the bug.",
+      "context": {
+        "lang": "html",
+        "label": "post-header.component.html",
+        "source": "<div class=\"post-header\">\n  <img class=\"avatar\" src=\"noa.jpg\">\n  <span class=\"username\">noa_k</span>\n  <span class=\"time\">2h</span>\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "post-header.component.scss",
+        "source": ":host {\n  .avatar {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n  }\n}\n"
+      },
+      "answer": 2,
+      "explanation": "`display: flex` goes on the **parent** of the items you want to line up. Here it is on the avatar, which has no children. Fix: put these three declarations on `.post-header`.",
+      "reference": "02-css-fundamentals-and-layout/08-flexbox.md"
+    },
+    {
+      "id": "css-06",
+      "type": "single",
+      "topic": "z-index",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "The \"...\" menu of a post opens **under** the post image, even with `z-index: 100`. The menu's parent is not flex or grid. Why?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-menu {\n    z-index: 100;\n    background: #ffffff;\n    margin-bottom: -40px;\n  }\n\n  .post-image {\n    position: relative;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`z-index` has no effect on an element without `position` (other than `static`), so the positioned image is painted on top",
+          "correct": true
+        },
+        {
+          "text": "`z-index` must be at least 1000 to beat an image",
+          "correct": false
+        },
+        {
+          "text": "Images are always painted above text",
+          "correct": false
+        },
+        {
+          "text": "Negative margins disable `z-index`",
+          "correct": false
+        }
+      ],
+      "explanation": "`z-index` only works on positioned elements (and on flex and grid items). Add `position: relative` to `.post-menu` and its `z-index` starts working.",
+      "reference": "02-css-fundamentals-and-layout/13-z-index.md"
+    },
+    {
+      "id": "css-07",
+      "type": "single",
+      "topic": "positioning",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "On double-click, a heart should appear in the middle of the post image. Instead it appears in the middle of the page. What is the fix?",
+      "context": {
+        "lang": "html",
+        "label": "post-card.component.html",
+        "source": "<div class=\"post-media\">\n  <img class=\"post-image\" src=\"beach.jpg\">\n  <img class=\"like-heart\" src=\"heart.svg\">\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .like-heart {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Add `position: relative` to `.post-media`",
+          "correct": true
+        },
+        {
+          "text": "Add `position: relative` to `.like-heart`",
+          "correct": false
+        },
+        {
+          "text": "Change `position: absolute` to `position: fixed`",
+          "correct": false
+        },
+        {
+          "text": "Add `display: flex` to `.post-media`",
+          "correct": false
+        }
+      ],
+      "explanation": "An absolutely positioned element is placed relative to its nearest **positioned** ancestor. No ancestor here has a position, so it uses the page. `position: relative` on `.post-media` makes it the reference box without moving it.",
+      "reference": "02-css-fundamentals-and-layout/07-layout.md"
+    },
+    {
+      "id": "css-08",
+      "type": "predict",
+      "topic": "media-queries",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "How wide is `.feed` on a 1200px wide screen?",
+      "code": {
+        "lang": "scss",
+        "label": "feed.component.scss",
+        "source": ":host {\n  .feed {\n    width: 100%;\n  }\n\n  @media (min-width: 1024px) {\n    .feed {\n      width: 630px;\n    }\n  }\n\n  @media (min-width: 768px) {\n    .feed {\n      width: 470px;\n    }\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "470px",
+          "correct": true
+        },
+        {
+          "text": "630px",
+          "correct": false
+        },
+        {
+          "text": "100%",
+          "correct": false
+        }
+      ],
+      "explanation": "At 1200px **both** media queries match. The rules have the same specificity, so the later one wins: 470px. With `min-width` queries, write them from small to large (768 before 1024).",
+      "reference": "02-css-fundamentals-and-layout/22-media-queries.md"
+    },
+    {
+      "id": "css-09",
+      "type": "single",
+      "topic": "flexbox",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "A long comment should be cut with \"…\". Instead it pushes the card wider than the screen. What is the fix?",
+      "context": {
+        "lang": "html",
+        "label": "comment.component.html",
+        "source": "<div class=\"comment\">\n  <span class=\"username\">noa_k</span>\n  <span class=\"comment-text\">This is a very very long comment that goes on and on...</span>\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "comment.component.scss",
+        "source": ":host {\n  .comment {\n    display: flex;\n    gap: 8px;\n  }\n\n  .comment-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Add `min-width: 0` to `.comment-text`",
+          "correct": true
+        },
+        {
+          "text": "Add `flex-wrap: wrap` to `.comment`",
+          "correct": false
+        },
+        {
+          "text": "Add `overflow: hidden` to `.username`",
+          "correct": false
+        },
+        {
+          "text": "Change `white-space: nowrap` to `white-space: normal`",
+          "correct": false
+        }
+      ],
+      "explanation": "Flex items have `min-width: auto` by default, so they refuse to shrink below the width of their content. `min-width: 0` lets the text shrink, and then `overflow` and `text-overflow` can cut it. Changing `white-space` would wrap the text instead of cutting it.",
+      "reference": "02-css-fundamentals-and-layout/08-flexbox.md"
+    },
+    {
+      "id": "css-10",
+      "type": "spot-the-bug",
+      "topic": "syntax",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The story avatar is not centered inside its ring. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "story.component.scss",
+        "source": ":host {\n  .story-ring {\n    width: 66px;\n    height: 66px;\n    border-radius: 50%;\n    border: 2px solid #c13584;\n    align-items: center;\n    justify-content: center;\n    dispaly: flex;\n  }\n}\n"
+      },
+      "answer": 9,
+      "explanation": "`dispaly` is a typo, so the browser ignores the line and the element is not a flex container. Without flex, `align-items` and `justify-content` do nothing. DevTools shows unknown properties crossed out.",
+      "reference": "02-css-fundamentals-and-layout/08-flexbox.md"
+    },
+    {
+      "id": "css-11",
+      "type": "single",
+      "topic": "flexbox",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "In the design, like, comment and share are together on one side, and the bookmark is alone on the other side. With this SCSS all four icons are spread evenly. What is the best fix?",
+      "context": {
+        "lang": "html",
+        "label": "post-card.component.html",
+        "source": "<div class=\"post-actions\">\n  <img class=\"icon\" src=\"like.svg\">\n  <img class=\"icon\" src=\"comment.svg\">\n  <img class=\"icon\" src=\"share.svg\">\n  <img class=\"icon icon-bookmark\" src=\"bookmark.svg\">\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-actions {\n    display: flex;\n    gap: 16px;\n    justify-content: space-between;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Remove `justify-content` and add `.icon-bookmark { margin-inline-start: auto; }`",
+          "correct": true
+        },
+        {
+          "text": "Change to `justify-content: flex-end`",
+          "correct": false
+        },
+        {
+          "text": "Add `.icon-bookmark { float: right; }`",
+          "correct": false
+        },
+        {
+          "text": "Add `.icon-bookmark { align-self: flex-end; }`",
+          "correct": false
+        }
+      ],
+      "explanation": "An `auto` margin in a flex container takes all the free space, so it pushes the bookmark to the far side and the other icons stay together. `margin-inline-start` works in both English and Hebrew. `float` is ignored on flex items, and `align-self` works on the cross axis (vertical here).",
+      "reference": "02-css-fundamentals-and-layout/24-micro-layouts.md"
+    },
+    {
+      "id": "css-12",
+      "type": "spot-the-bug",
+      "topic": "grid",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The profile grid should have 3 columns, but all posts are in one column. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "profile-grid.component.scss",
+        "source": ":host {\n  .profile-grid {\n    display: grid;\n    grid-template-columns: 3fr;\n    gap: 4px;\n  }\n}\n"
+      },
+      "answer": 4,
+      "explanation": "`3fr` is **one** column that takes 3 parts of the space. For three equal columns write `repeat(3, 1fr)` or `1fr 1fr 1fr`.",
+      "reference": "02-css-fundamentals-and-layout/09-grid.md"
+    },
+    {
+      "id": "css-13",
+      "type": "text",
+      "topic": "grid",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "Write the CSS declaration that gives `.profile-grid` **3 equal columns**.",
+      "answer": {
+        "accept": [
+          "grid-template-columns: repeat(3, 1fr)",
+          "grid-template-columns: 1fr 1fr 1fr"
+        ],
+        "normalized": [
+          "grid-template-columns:repeat(3,1fr)",
+          "grid-template-columns:1fr 1fr 1fr"
+        ]
+      },
+      "explanation": "`repeat(3, 1fr)` and `1fr 1fr 1fr` are the same. `fr` is a share of the free space, so the columns stay equal at any width.",
+      "reference": "02-css-fundamentals-and-layout/09-grid.md"
+    },
+    {
+      "id": "css-14",
+      "type": "spot-the-bug",
+      "topic": "selectors",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The selected post should get a blue border, but nothing changes. Click the line with the bug.",
+      "context": {
+        "lang": "html",
+        "label": "post-card.component.html",
+        "source": "<div class=\"post-card selected\">\n  <img class=\"post-image\" src=\"beach.jpg\">\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-card .selected {\n    border: 2px solid #0095f6;\n  }\n}\n"
+      },
+      "answer": 2,
+      "explanation": "The space matters. `.post-card .selected` means \"a `.selected` element **inside** a `.post-card`\". For one element with both classes, write them together without a space: `.post-card.selected` (in SCSS: `&.selected` inside `.post-card`).",
+      "reference": "02-css-fundamentals-and-layout/02-selectors.md"
+    },
+    {
+      "id": "css-15",
+      "type": "single",
+      "topic": "overflow",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The card has `border-radius: 12px`, but the image at the top of the card still has sharp corners that stick out. What is the fix?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-card {\n    border-radius: 12px;\n    border: 1px solid #dbdbdb;\n  }\n\n  .post-image {\n    display: block;\n    width: 100%;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Add `overflow: hidden` to `.post-card`",
+          "correct": true
+        },
+        {
+          "text": "Add `border-radius: inherit` to `.post-card`",
+          "correct": false
+        },
+        {
+          "text": "Add `box-sizing: border-box` to `.post-image`",
+          "correct": false
+        },
+        {
+          "text": "Add `z-index: -1` to `.post-image`",
+          "correct": false
+        }
+      ],
+      "explanation": "`border-radius` rounds the card's own background and border, but children are still drawn as rectangles on top. `overflow: hidden` clips the children to the rounded shape.",
+      "reference": "02-css-fundamentals-and-layout/14-overflow.md"
+    },
+    {
+      "id": "css-16",
+      "type": "single",
+      "topic": "inheritance",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "`.post-card` sets `font-family` and `font-size`. All the text in the card uses them, except the \"Follow\" button, which shows a different, smaller font. Why?",
+      "options": [
+        {
+          "text": "Buttons and inputs get their own font from the browser styles, so they do not inherit it. Fix: `.follow-btn { font: inherit; }`",
+          "correct": true
+        },
+        {
+          "text": "`font-family` is not an inherited property",
+          "correct": false
+        },
+        {
+          "text": "Buttons can only use system fonts",
+          "correct": false
+        },
+        {
+          "text": "The button needs `display: block` to inherit fonts",
+          "correct": false
+        }
+      ],
+      "explanation": "Fonts are inherited, but the browser's default styles set a font directly on form controls (buttons, inputs, selects, textareas), and that beats inheritance. Set `font: inherit` on the control's class.",
+      "reference": "02-css-fundamentals-and-layout/05-inheritance.md"
+    },
+    {
+      "id": "css-17",
+      "type": "predict",
+      "topic": "transitions",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "What happens when you hover the like button?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .like-btn {\n    color: #262626;\n    transition: color 0.2s;\n\n    &:hover {\n      color: #ed4956;\n      transform: scale(1.2);\n    }\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "The color fades over 0.2s, but the button jumps to the bigger size at once",
+          "correct": true
+        },
+        {
+          "text": "Both the color and the size change smoothly over 0.2s",
+          "correct": false
+        },
+        {
+          "text": "Nothing changes; `transform` is not allowed on hover",
+          "correct": false
+        },
+        {
+          "text": "Only the size changes smoothly",
+          "correct": false
+        }
+      ],
+      "explanation": "`transition` animates only the properties you list. Fix: `transition: color 0.2s, transform 0.2s;`. `transition: all 0.2s` also works but can animate things you did not mean to.",
+      "reference": "02-css-fundamentals-and-layout/21-transitions.md"
+    },
+    {
+      "id": "css-18",
+      "type": "spot-the-bug",
+      "topic": "units",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The avatar is 32px tall but much wider than 32px. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "post-header.component.scss",
+        "source": ":host {\n  .avatar {\n    width: 32;\n    height: 32px;\n    border-radius: 50%;\n  }\n}\n"
+      },
+      "answer": 3,
+      "explanation": "Lengths need a unit. `width: 32` is invalid and ignored (only `0` can be written without a unit). With no width, the image keeps its natural width.",
+      "reference": "02-css-fundamentals-and-layout/06-sizing.md"
+    },
+    {
+      "id": "css-19",
+      "type": "single",
+      "topic": "positioning",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "The top bar should stay at the top while the feed scrolls, but it scrolls away with the page. What is missing?",
+      "code": {
+        "lang": "scss",
+        "label": "top-bar.component.scss",
+        "source": ":host {\n  .top-bar {\n    position: sticky;\n    background: #ffffff;\n    z-index: 10;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`top: 0`",
+          "correct": true
+        },
+        {
+          "text": "`display: block`",
+          "correct": false
+        },
+        {
+          "text": "`overflow: hidden` on `.top-bar`",
+          "correct": false
+        },
+        {
+          "text": "`width: 100%`",
+          "correct": false
+        }
+      ],
+      "explanation": "`position: sticky` needs a threshold to stick at, like `top: 0`. Without one it acts like `relative`. Also note: sticky stops working if an ancestor has `overflow: hidden` or `auto`.",
+      "reference": "02-css-fundamentals-and-layout/07-layout.md"
+    },
+    {
+      "id": "css-20",
+      "type": "single",
+      "topic": "units",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "A trainee writes `.post-card { width: 100vw; }` inside the post card component. On Windows the feed gets a horizontal scrollbar, even with `box-sizing: border-box`. Why?",
+      "options": [
+        {
+          "text": "`100vw` is the whole window including the vertical scrollbar, so the card is wider than the space it has. Inside a component use `width: 100%`",
+          "correct": true
+        },
+        {
+          "text": "`vw` units are rounded up on Windows",
+          "correct": false
+        },
+        {
+          "text": "`100vw` adds the page margin to the width",
+          "correct": false
+        },
+        {
+          "text": "`vw` does not work on block elements",
+          "correct": false
+        }
+      ],
+      "explanation": "`vw` and `vh` measure the window, not the parent, so a component using them ignores the layout around it. That is why we use `vh`/`vw` only once, in the top-level app container, and `%` inside components.",
+      "reference": "02-css-fundamentals-and-layout/06-sizing.md"
+    },
+    {
+      "id": "css-21",
+      "type": "single",
+      "topic": "sizing",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The app container has `height: 100vh`. Inside it is `.layout`, and inside that is the side panel with `height: 100%`. The side panel is only as tall as its content. What is the fix?",
+      "context": {
+        "lang": "html",
+        "label": "layout.component.html",
+        "source": "<div class=\"layout\">\n  <div class=\"side-panel\">...</div>\n  <div class=\"feed\">...</div>\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "layout.component.scss",
+        "source": ":host {\n  .side-panel {\n    height: 100%;\n    background: #fafafa;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Give `.layout` (and `:host`, if it is between them) `height: 100%` too, so every parent in the chain has a height",
+          "correct": true
+        },
+        {
+          "text": "Change the side panel to `height: 100vh`",
+          "correct": false
+        },
+        {
+          "text": "Add `display: block` to the side panel",
+          "correct": false
+        },
+        {
+          "text": "Add `position: relative` to the side panel",
+          "correct": false
+        }
+      ],
+      "explanation": "A `%` height is a percentage of the parent's height. If the parent's height is `auto` (decided by content), `100%` cannot be calculated and is ignored. Pass the height down from the top-level `100vh` with `100%` at each level (or make `.layout` a flex container, whose items stretch). Using `100vh` inside a component breaks as soon as there is a top bar.",
+      "reference": "02-css-fundamentals-and-layout/06-sizing.md"
+    },
+    {
+      "id": "css-22",
+      "type": "predict",
+      "topic": "selectors",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The like, comment and share icons should all be 24px. Which icons actually get 24px?",
+      "context": {
+        "lang": "html",
+        "label": "post-card.component.html",
+        "source": "<div class=\"post-actions\">\n  <img class=\"icon-like\" src=\"like.svg\">\n  <img class=\"icon-comment\" src=\"comment.svg\">\n  <img class=\"icon-share\" src=\"share.svg\">\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .icon-like, .icon-comment .icon-share {\n    width: 24px;\n    height: 24px;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Only the like icon",
+          "correct": true
+        },
+        {
+          "text": "All three",
+          "correct": false
+        },
+        {
+          "text": "Like and comment",
+          "correct": false
+        },
+        {
+          "text": "Like and share",
+          "correct": false
+        }
+      ],
+      "explanation": "A comma is missing between `.icon-comment` and `.icon-share`. Without it, `.icon-comment .icon-share` means \"a `.icon-share` inside a `.icon-comment`\", which matches nothing here. Fix: `.icon-like, .icon-comment, .icon-share`.",
+      "reference": "02-css-fundamentals-and-layout/02-selectors.md"
+    }
+  ]
+}

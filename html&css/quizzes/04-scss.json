@@ -1,0 +1,406 @@
+{
+  "module": "04-scss",
+  "title": "4. SCSS",
+  "questions": [
+    {
+      "id": "scss-01",
+      "type": "spot-the-bug",
+      "topic": "parent-selector",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "The like button never turns red on hover. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .like-btn {\n    color: #262626;\n\n    & :hover {\n      color: #ed4956;\n    }\n  }\n}\n"
+      },
+      "answer": 5,
+      "explanation": "`& :hover` has a space, so it compiles to `:host .like-btn :hover`, meaning \"any hovered element **inside** the button\". Without the space, `&:hover` compiles to `:host .like-btn:hover`.",
+      "reference": "04-scss/03-parent-selector.md"
+    },
+    {
+      "id": "scss-02",
+      "type": "spot-the-bug",
+      "topic": "use",
+      "difficulty": 1,
+      "placement": true,
+      "prompt": "The build fails with `Undefined variable`. `_colors.scss` defines `$text-primary`. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": "@use 'colors';\n\n:host {\n  .username {\n    font-weight: 600;\n    color: $text-primary;\n  }\n}\n"
+      },
+      "answer": 6,
+      "explanation": "Members loaded with `@use` have a namespace, which is the file name by default: `colors.$text-primary`. This is different from the old `@import`, where everything was global.",
+      "reference": "04-scss/05-use.md"
+    },
+    {
+      "id": "scss-03",
+      "type": "predict",
+      "topic": "nesting",
+      "difficulty": 1,
+      "placement": true,
+      "prompt": "What CSS does this compile to?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .actions, .caption {\n    font-size: 14px;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`:host .actions, :host .caption { font-size: 14px; }`",
+          "correct": true
+        },
+        {
+          "text": "`:host .actions, .caption { font-size: 14px; }`",
+          "correct": false
+        },
+        {
+          "text": "`:host.actions, :host.caption { font-size: 14px; }`",
+          "correct": false
+        },
+        {
+          "text": "`:host .actions .caption { font-size: 14px; }`",
+          "correct": false
+        }
+      ],
+      "explanation": "Sass puts the parent selector in front of **each** selector in the list, with a space (descendant), unless you use `&` to glue them.",
+      "reference": "04-scss/02-style-rules.md"
+    },
+    {
+      "id": "scss-04",
+      "type": "predict",
+      "topic": "parent-selector",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "What selector does the inner rule compile to?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-card {\n    border: 1px solid #dbdbdb;\n\n    &.selected {\n      border-color: #0095f6;\n    }\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`:host .post-card.selected`",
+          "correct": true
+        },
+        {
+          "text": "`:host .post-card .selected`",
+          "correct": false
+        },
+        {
+          "text": "`:host.selected`",
+          "correct": false
+        },
+        {
+          "text": "`.selected .post-card`",
+          "correct": false
+        }
+      ],
+      "explanation": "`&` is replaced by the whole parent selector (`:host .post-card`). With no space after `&`, the class is glued on: one element that has both classes.",
+      "reference": "04-scss/03-parent-selector.md"
+    },
+    {
+      "id": "scss-05",
+      "type": "spot-the-bug",
+      "topic": "variables",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "The build fails with `Undefined variable`. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-card {\n    $card-radius: 8px;\n    border-radius: $card-radius;\n  }\n\n  .post-image {\n    border-radius: $card-radius $card-radius 0 0;\n  }\n}\n"
+      },
+      "answer": 8,
+      "explanation": "A variable declared inside a rule only exists inside that rule (between its `{ }`). `.post-image` cannot see it. Declare `$card-radius: 8px;` at the top of the file, before `:host`.",
+      "reference": "04-scss/04-variables.md"
+    },
+    {
+      "id": "scss-06",
+      "type": "spot-the-bug",
+      "topic": "mixins",
+      "difficulty": 1,
+      "placement": true,
+      "prompt": "The build passes with no errors, but the story avatar is not centered. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "story.component.scss",
+        "source": "@mixin flex-center {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n:host {\n  .story-avatar {\n    @flex-center;\n    width: 56px;\n  }\n}\n"
+      },
+      "answer": 9,
+      "explanation": "A mixin is used with `@include`: `@include flex-center;`. Sass treats `@flex-center` as an unknown CSS at-rule and copies it to the output as is, so there is no error, and the browser ignores it. Check the compiled CSS when styles are missing.",
+      "reference": "04-scss/08-mixin.md"
+    },
+    {
+      "id": "scss-07",
+      "type": "multiple",
+      "topic": "mixins",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "This fails with `Missing argument $size`. Which changes fix it? Select all that apply.",
+      "code": {
+        "lang": "scss",
+        "label": "post-header.component.scss",
+        "source": "@mixin avatar($size) {\n  width: $size;\n  height: $size;\n  border-radius: 50%;\n}\n\n:host {\n  .avatar-small {\n    @include avatar;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Change the include to `@include avatar(32px);`",
+          "correct": true
+        },
+        {
+          "text": "Give the argument a default: `@mixin avatar($size: 32px)`",
+          "correct": true
+        },
+        {
+          "text": "Change the include to `@include avatar();`",
+          "correct": false
+        },
+        {
+          "text": "Change the include to `@include avatar($size);`",
+          "correct": false
+        }
+      ],
+      "explanation": "A mixin argument without a default must be passed. Either pass it, or give it a default value so it becomes optional. `avatar()` passes nothing, and `avatar($size)` fails because there is no `$size` variable outside the mixin.",
+      "reference": "04-scss/08-mixin.md"
+    },
+    {
+      "id": "scss-08",
+      "type": "multiple",
+      "topic": "use",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "`styles/main.scss` needs the partial `styles/_colors.scss` (same folder, no extra load paths). Which lines load it? Select all that apply.",
+      "options": [
+        {
+          "text": "`@use 'colors';`",
+          "correct": true
+        },
+        {
+          "text": "`@use '_colors';`",
+          "correct": true
+        },
+        {
+          "text": "`@use 'colors.scss';`",
+          "correct": true
+        },
+        {
+          "text": "`@use 'styles/colors';`",
+          "correct": false
+        }
+      ],
+      "explanation": "Paths in `@use` are relative to the current file. You can leave out the `_` and the `.scss`, but writing them also works. `'styles/colors'` looks for `styles/styles/_colors.scss`, which does not exist.",
+      "reference": "04-scss/05-use.md"
+    },
+    {
+      "id": "scss-09",
+      "type": "spot-the-bug",
+      "topic": "use",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The build fails with `There is no module with the namespace \"colors\"`. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "profile-header.component.scss",
+        "source": "@use 'colors' as c;\n\n:host {\n  .follow-btn {\n    background: colors.$primary;\n    color: c.$white;\n  }\n}\n"
+      },
+      "answer": 5,
+      "explanation": "`as c` renames the namespace, so the module is now called `c`: `c.$primary`. The name `colors` no longer works in this file. Line 6 already does it right.",
+      "reference": "04-scss/05-use.md"
+    },
+    {
+      "id": "scss-10",
+      "type": "spot-the-bug",
+      "topic": "interpolation",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The build fails. The loop should create `.icon-like`, `.icon-comment` and `.icon-share`. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": "$icons: like, comment, share;\n\n:host {\n  @each $icon in $icons {\n    .icon-$icon {\n      background-image: url('/assets/#{$icon}.svg');\n    }\n  }\n}\n"
+      },
+      "answer": 5,
+      "explanation": "In a selector, a variable must be wrapped in `#{}`: `.icon-#{$icon}`. Line 6 already does it right inside the string.",
+      "reference": "04-scss/16-interpolation.md"
+    },
+    {
+      "id": "scss-11",
+      "type": "predict",
+      "topic": "each",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "Which of these rules is in the compiled CSS?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": "$icons: like, comment, share;\n\n:host {\n  @each $icon in $icons {\n    .icon-#{$icon} {\n      background-image: url('/assets/#{$icon}.svg');\n    }\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`:host .icon-comment { background-image: url(\"/assets/comment.svg\"); }`",
+          "correct": true
+        },
+        {
+          "text": "`:host .icon-$icon { background-image: url(\"/assets/$icon.svg\"); }`",
+          "correct": false
+        },
+        {
+          "text": "`:host .icon-like, :host .icon-comment, :host .icon-share { background-image: url(\"/assets/icons.svg\"); }`",
+          "correct": false
+        },
+        {
+          "text": "`:host .icons { background-image: url(\"/assets/like.svg\"); }`",
+          "correct": false
+        }
+      ],
+      "explanation": "`@each` repeats the block once per item, so you get three separate rules: `.icon-like`, `.icon-comment` and `.icon-share`, each with its own file.",
+      "reference": "04-scss/11-each.md"
+    },
+    {
+      "id": "scss-12",
+      "type": "single",
+      "topic": "maps",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The build fails with `There is no module with the namespace \"map\"`. What is the fix?",
+      "code": {
+        "lang": "scss",
+        "label": "profile-header.component.scss",
+        "source": "$colors: (primary: #0095f6, danger: #ed4956);\n\n:host {\n  .follow-btn {\n    background: map.get($colors, primary);\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Add `@use 'sass:map';` at the top of the file",
+          "correct": true
+        },
+        {
+          "text": "Write `$colors.primary` instead",
+          "correct": false
+        },
+        {
+          "text": "Write `map.get($colors, 'primary')` with quotes",
+          "correct": false
+        },
+        {
+          "text": "Write `$colors[primary]`",
+          "correct": false
+        }
+      ],
+      "explanation": "Sass's built-in modules (`sass:map`, `sass:math`, `sass:color`…) must be loaded with `@use` before you can call their functions.",
+      "reference": "04-scss/14-sass-map-module.md"
+    },
+    {
+      "id": "scss-13",
+      "type": "predict",
+      "topic": "nesting",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "A trainee nests everything to match the HTML. Then they add `.verified` to make one username blue. What color is the username?",
+      "code": {
+        "lang": "scss",
+        "label": "feed.component.scss",
+        "source": ":host {\n  .feed {\n    .post-card {\n      .post-header {\n        .username {\n          color: #262626;\n        }\n      }\n    }\n  }\n\n  .verified {\n    color: #0095f6;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`#262626`: the nested rule compiles to `:host .feed .post-card .post-header .username`, which has more classes than `:host .verified`",
+          "correct": true
+        },
+        {
+          "text": "`#0095f6`: `.verified` comes later",
+          "correct": false
+        },
+        {
+          "text": "`#0095f6`: nested rules always lose to rules that are less nested",
+          "correct": false
+        }
+      ],
+      "explanation": "Nesting is short to write, but every level adds a class to the compiled selector and makes it harder to override. Nest only what you need (usually 1–2 levels under `:host`, plus `&:hover` and similar).",
+      "reference": "04-scss/02-style-rules.md"
+    },
+    {
+      "id": "scss-14",
+      "type": "spot-the-bug",
+      "topic": "if",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The build fails. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "buttons.scss",
+        "source": "@mixin button($variant) {\n  @if $variant = primary {\n    background: #0095f6;\n  } @else {\n    background: #efefef;\n  }\n}\n"
+      },
+      "answer": 2,
+      "explanation": "To compare in Sass, use `==` (two equals signs): `@if $variant == primary`.",
+      "reference": "04-scss/13-if.md"
+    },
+    {
+      "id": "scss-15",
+      "type": "predict",
+      "topic": "mixins",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "What does this compile to?",
+      "code": {
+        "lang": "scss",
+        "label": "feed.component.scss",
+        "source": "@mixin desktop {\n  @media (min-width: 1024px) {\n    @content;\n  }\n}\n\n:host {\n  .feed {\n    width: 100%;\n\n    @include desktop {\n      width: 630px;\n    }\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`:host .feed { width: 100%; }` and `@media (min-width: 1024px) { :host .feed { width: 630px; } }`",
+          "correct": true
+        },
+        {
+          "text": "`:host .feed { width: 100%; width: 630px; }`",
+          "correct": false
+        },
+        {
+          "text": "`@media (min-width: 1024px) { width: 630px; }` with no selector",
+          "correct": false
+        },
+        {
+          "text": "Nothing; a media query cannot be inside a rule",
+          "correct": false
+        }
+      ],
+      "explanation": "`@content` is replaced by the block you pass to `@include`. Sass then moves the media query out to the top level and repeats the current selector inside it. This is a clean way to keep breakpoints in one place.",
+      "reference": "04-scss/08-mixin.md"
+    },
+    {
+      "id": "scss-16",
+      "type": "predict",
+      "topic": "math",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "What is the compiled width?",
+      "code": {
+        "lang": "scss",
+        "label": "profile-grid.component.scss",
+        "source": "@use 'sass:math';\n\n:host {\n  .grid-item {\n    width: math.div(100%, 3);\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`33.3333333333%`",
+          "correct": true
+        },
+        {
+          "text": "`100% / 3`",
+          "correct": false
+        },
+        {
+          "text": "`calc(100% / 3)`",
+          "correct": false
+        },
+        {
+          "text": "`33%`",
+          "correct": false
+        }
+      ],
+      "explanation": "Sass calculates `math.div` at compile time, so the CSS gets the result. In new Sass, use `math.div()` for division, not `/`, which is deprecated for division.",
+      "reference": "04-scss/15-sass-math-module.md"
+    }
+  ]
+}

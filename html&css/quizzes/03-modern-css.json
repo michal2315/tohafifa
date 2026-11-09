@@ -1,0 +1,337 @@
+{
+  "module": "03-modern-css",
+  "title": "3. Modern CSS",
+  "questions": [
+    {
+      "id": "mod-01",
+      "type": "spot-the-bug",
+      "topic": "custom-properties",
+      "difficulty": 1,
+      "placement": true,
+      "prompt": "The Follow button should be blue, but it has no background. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "profile-header.component.scss",
+        "source": ":host {\n  --primary: #0095f6;\n\n  .follow-btn {\n    background: --primary;\n    color: #ffffff;\n  }\n}\n"
+      },
+      "answer": 5,
+      "explanation": "To read a custom property you must wrap it in `var()`: `background: var(--primary);`. On its own, `--primary` is not a valid value, so the line is ignored.",
+      "reference": "03-modern-css/03-using-custom-properties.md"
+    },
+    {
+      "id": "mod-02",
+      "type": "predict",
+      "topic": "custom-properties",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "No element sets `--story-color`. What color is the story ring?",
+      "code": {
+        "lang": "scss",
+        "label": "story.component.scss",
+        "source": ":host {\n  .story-ring {\n    border: 2px solid var(--story-color, #c13584);\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`#c13584`, the fallback",
+          "correct": true
+        },
+        {
+          "text": "No border at all, because the variable is missing",
+          "correct": false
+        },
+        {
+          "text": "Black, the default border color",
+          "correct": false
+        },
+        {
+          "text": "The build fails",
+          "correct": false
+        }
+      ],
+      "explanation": "The second argument of `var()` is the fallback. It is used when the custom property is not set on the element or any of its ancestors.",
+      "reference": "03-modern-css/03-using-custom-properties.md"
+    },
+    {
+      "id": "mod-03",
+      "type": "predict",
+      "topic": "custom-properties",
+      "difficulty": 3,
+      "placement": true,
+      "prompt": "How much padding does the story bar get?",
+      "context": {
+        "lang": "html",
+        "label": "feed.component.html",
+        "source": "<div class=\"story-bar\">...</div>\n<div class=\"post-card\">...</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "feed.component.scss",
+        "source": ":host {\n  .post-card {\n    --card-padding: 16px;\n  }\n\n  .story-bar {\n    padding: var(--card-padding);\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "0, because `.story-bar` is not inside `.post-card`, so it does not inherit `--card-padding`",
+          "correct": true
+        },
+        {
+          "text": "16px",
+          "correct": false
+        },
+        {
+          "text": "The browser default padding",
+          "correct": false
+        }
+      ],
+      "explanation": "A custom property only reaches the element it is set on and its descendants. `.story-bar` is a sibling, so `var(--card-padding)` has no value and no fallback, and `padding` falls back to its initial value, 0. Set shared values on `:host` so the whole component sees them.",
+      "reference": "03-modern-css/03-using-custom-properties.md"
+    },
+    {
+      "id": "mod-04",
+      "type": "single",
+      "topic": "aspect-ratio",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "Profile grid images should be squares. With this SCSS they are squares, but the photos look stretched. What is missing?",
+      "code": {
+        "lang": "scss",
+        "label": "profile-grid.component.scss",
+        "source": ":host {\n  .grid-image {\n    width: 100%;\n    aspect-ratio: 1;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`object-fit: cover;`",
+          "correct": true
+        },
+        {
+          "text": "`overflow: hidden;`",
+          "correct": false
+        },
+        {
+          "text": "`background-size: cover;`",
+          "correct": false
+        },
+        {
+          "text": "`height: auto;`",
+          "correct": false
+        }
+      ],
+      "explanation": "When an `<img>` box has a different shape from the photo, the photo is stretched to fill it. `object-fit: cover` keeps the photo's proportions and crops it to fill the box. `background-size` is only for background images.",
+      "reference": "03-modern-css/07-aspect-ratio.md"
+    },
+    {
+      "id": "mod-05",
+      "type": "predict",
+      "topic": "functions",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "The feed's parent is 400px wide. How wide is the feed?",
+      "code": {
+        "lang": "scss",
+        "label": "feed.component.scss",
+        "source": ":host {\n  .feed {\n    width: min(100%, 630px);\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "400px",
+          "correct": true
+        },
+        {
+          "text": "630px",
+          "correct": false
+        },
+        {
+          "text": "100% of the window",
+          "correct": false
+        },
+        {
+          "text": "230px",
+          "correct": false
+        }
+      ],
+      "explanation": "`min()` uses the smaller value. 100% of 400px is 400px, which is smaller than 630px. On a wide parent the feed stops at 630px. It is the same as `width: 100%; max-width: 630px;`.",
+      "reference": "03-modern-css/02-functions.md"
+    },
+    {
+      "id": "mod-06",
+      "type": "spot-the-bug",
+      "topic": "calc",
+      "difficulty": 2,
+      "placement": true,
+      "prompt": "The search box should be the full width minus 32px for the icon, but the build fails. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "top-bar.component.scss",
+        "source": ":host {\n  .search-input {\n    height: 36px;\n    width: calc(100%-32px);\n  }\n}\n"
+      },
+      "answer": 4,
+      "explanation": "Inside `calc()`, `+` and `-` need a space on both sides. Sass stops with `\"+\" and \"-\" must be surrounded by whitespace in calculations` (in plain CSS the browser would silently ignore the line). Fix: `calc(100% - 32px)`.",
+      "reference": "03-modern-css/02-functions.md"
+    },
+    {
+      "id": "mod-07",
+      "type": "single",
+      "topic": "container-queries",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The post card should switch to a side-by-side layout when its column is wider than 500px. The rule inside the container query never applies. Why?",
+      "code": {
+        "lang": "scss",
+        "label": "feed.component.scss",
+        "source": ":host {\n  .post-column {\n    width: 100%;\n  }\n\n  @container (min-width: 500px) {\n    .post-card {\n      flex-direction: row;\n    }\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "No ancestor is a container; `.post-column` needs `container-type: inline-size`",
+          "correct": true
+        },
+        {
+          "text": "Container queries must use `max-width`",
+          "correct": false
+        },
+        {
+          "text": "`@container` must be written inside the `.post-card` rule",
+          "correct": false
+        },
+        {
+          "text": "Container queries only work with grid",
+          "correct": false
+        }
+      ],
+      "explanation": "`@container` looks for the nearest ancestor that is declared as a container. Without `container-type`, there is none, so the query never matches.",
+      "reference": "03-modern-css/05-container-queries.md"
+    },
+    {
+      "id": "mod-08",
+      "type": "text",
+      "topic": "has",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "Write a selector for `.post-card` elements that **contain** an element with the class `post-video`.",
+      "answer": {
+        "accept": [
+          ".post-card:has(.post-video)"
+        ],
+        "normalized": [
+          ".post-card:has(.post-video)"
+        ]
+      },
+      "explanation": "`:has()` matches an element based on what is inside it. `.post-card:has(.post-video)` selects the card, not the video.",
+      "reference": "03-modern-css/06-has-selector.md"
+    },
+    {
+      "id": "mod-09",
+      "type": "single",
+      "topic": "logical-properties",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The app is in Hebrew (`dir=\"rtl\"`). The icon should have 8px of space between it and the text after it, but the space is on the wrong side. What is the best fix?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .icon {\n    margin-right: 8px;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`margin-inline-end: 8px;`",
+          "correct": true
+        },
+        {
+          "text": "`margin-left: 8px;`",
+          "correct": false
+        },
+        {
+          "text": "`margin: 0 8px;`",
+          "correct": false
+        },
+        {
+          "text": "`direction: ltr;` on `.icon`",
+          "correct": false
+        }
+      ],
+      "explanation": "`margin-inline-end` means \"after the element, in the reading direction\": on the right in English and on the left in Hebrew. `margin-left` would fix Hebrew but break English. Logical properties work in both.",
+      "reference": "03-modern-css/01-logical-properties.md"
+    },
+    {
+      "id": "mod-10",
+      "type": "predict",
+      "topic": "logical-properties",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "The page is `dir=\"rtl\"`. The bookmark is the last icon and should be alone at the far **left**. Where does it end up?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-actions {\n    display: flex;\n    gap: 16px;\n  }\n\n  .icon-bookmark {\n    margin-left: auto;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Right next to the other icons, because in RTL the free space is already on the left and the margin pushes the bookmark toward them",
+          "correct": true
+        },
+        {
+          "text": "At the far left",
+          "correct": false
+        },
+        {
+          "text": "At the far right",
+          "correct": false
+        },
+        {
+          "text": "In the middle of the row",
+          "correct": false
+        }
+      ],
+      "explanation": "In RTL, flex items start on the right, so the bookmark (last item) is the leftmost. `margin-left: auto` puts the free space on its left, which keeps it next to the others. `margin-inline-start: auto` works in both directions.",
+      "reference": "03-modern-css/01-logical-properties.md"
+    },
+    {
+      "id": "mod-11",
+      "type": "spot-the-bug",
+      "topic": "custom-properties",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "The stories have no space between them. Click the line with the bug.",
+      "code": {
+        "lang": "scss",
+        "label": "stories.component.scss",
+        "source": ":host {\n  .story-bar {\n    --gap: 8;\n    display: flex;\n    gap: var(--gap)px;\n  }\n}\n"
+      },
+      "answer": 5,
+      "explanation": "`var()` cannot be glued to a unit. `var(--gap)px` becomes `8 px` (two separate pieces), which is invalid, so `gap` falls back to its default. Fix: keep the unit in the variable (`--gap: 8px;` and `gap: var(--gap);`).",
+      "reference": "03-modern-css/03-using-custom-properties.md"
+    },
+    {
+      "id": "mod-12",
+      "type": "single",
+      "topic": "theming",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The app sets `--text-color` globally and changes it in dark mode. Everything changes color except the username, which stays dark on a dark background. What is the cause?",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .caption {\n    color: var(--text-color);\n  }\n\n  .username {\n    color: #262626;\n    font-weight: 600;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "The username uses a hard-coded color instead of `var(--text-color)`",
+          "correct": true
+        },
+        {
+          "text": "`font-weight` blocks color changes",
+          "correct": false
+        },
+        {
+          "text": "The dark mode class must be on the username itself",
+          "correct": false
+        },
+        {
+          "text": "Custom properties cannot be used inside `:host`",
+          "correct": false
+        }
+      ],
+      "explanation": "A theme only changes the elements that read the variables. Any hard-coded color stays the same in every theme. Use the variable everywhere: `color: var(--text-color);`.",
+      "reference": "02-css-fundamentals-and-layout/27-theming.md"
+    }
+  ]
+}

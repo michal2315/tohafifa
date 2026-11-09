@@ -1,0 +1,8 @@
+{
+  "name": "quiz-build",
+  "private": true,
+  "type": "module",
+  "description": "Validates the quiz YAML sources and compiles them to JSON for the Docusaurus quiz component.",
+  "scripts": { "build": "node build.mjs" },
+  "dependencies": { "js-yaml": "4.1.0" }
+}

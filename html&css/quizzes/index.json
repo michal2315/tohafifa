@@ -1,0 +1,76 @@
+[
+  {
+    "module": "01-semantic-html-and-accessibility",
+    "title": "1. HTML",
+    "file": "01-html.json",
+    "questions": 7,
+    "placement": 4,
+    "byType": {
+      "spot-the-bug": 3,
+      "predict": 3,
+      "single": 1
+    }
+  },
+  {
+    "module": "02-css-fundamentals-and-layout",
+    "title": "2. CSS fundamentals & layout",
+    "file": "02-css-fundamentals-and-layout.json",
+    "questions": 22,
+    "placement": 8,
+    "byType": {
+      "spot-the-bug": 6,
+      "predict": 5,
+      "single": 10,
+      "text": 1
+    }
+  },
+  {
+    "module": "03-modern-css",
+    "title": "3. Modern CSS",
+    "file": "03-modern-css.json",
+    "questions": 12,
+    "placement": 6,
+    "byType": {
+      "spot-the-bug": 3,
+      "predict": 4,
+      "single": 4,
+      "text": 1
+    }
+  },
+  {
+    "module": "04-scss",
+    "title": "4. SCSS",
+    "file": "04-scss.json",
+    "questions": 16,
+    "placement": 6,
+    "byType": {
+      "spot-the-bug": 7,
+      "predict": 6,
+      "multiple": 2,
+      "single": 1
+    }
+  },
+  {
+    "module": "05-design-to-code",
+    "title": "5. From design to code",
+    "file": "05-design-to-code.json",
+    "questions": 8,
+    "placement": 0,
+    "byType": {
+      "single": 7,
+      "text": 1
+    }
+  },
+  {
+    "module": "06-team-conventions",
+    "title": "6. Our conventions (code review)",
+    "file": "06-team-conventions.json",
+    "questions": 12,
+    "placement": 0,
+    "byType": {
+      "spot-the-bug": 9,
+      "multiple": 2,
+      "single": 1
+    }
+  }
+]

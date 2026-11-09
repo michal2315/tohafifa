@@ -1,0 +1,222 @@
+{
+  "module": "05-design-to-code",
+  "title": "5. From design to code",
+  "questions": [
+    {
+      "id": "des-01",
+      "type": "single",
+      "topic": "xd-typography",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "In XD, the username text is 14px with **Character spacing: 20**. What do you write in CSS?",
+      "options": [
+        {
+          "text": "`letter-spacing: 0.28px;`",
+          "correct": true
+        },
+        {
+          "text": "`letter-spacing: 20px;`",
+          "correct": false
+        },
+        {
+          "text": "`letter-spacing: 2px;`",
+          "correct": false
+        },
+        {
+          "text": "`word-spacing: 20px;`",
+          "correct": false
+        }
+      ],
+      "explanation": "XD character spacing is measured in thousandths of the font size: 14px × 20 / 1000 = 0.28px. `20px` would spread the letters far apart.",
+      "reference": "02-css-fundamentals-and-layout/15-typography.md"
+    },
+    {
+      "id": "des-02",
+      "type": "single",
+      "topic": "xd-typography",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "In XD, the caption is 14px with **Line spacing: 18**. What do you write in CSS?",
+      "options": [
+        {
+          "text": "`line-height: 18px;`",
+          "correct": true
+        },
+        {
+          "text": "`line-height: 18;`",
+          "correct": false
+        },
+        {
+          "text": "`margin-bottom: 18px;`",
+          "correct": false
+        },
+        {
+          "text": "`letter-spacing: 18px;`",
+          "correct": false
+        }
+      ],
+      "explanation": "XD line spacing is the full height of a line in pixels, which is what `line-height` sets. Careful: `line-height: 18` without a unit means 18 × the font size (252px). You can also write it as a ratio: 18 / 14 ≈ `1.29`.",
+      "reference": "02-css-fundamentals-and-layout/15-typography.md"
+    },
+    {
+      "id": "des-03",
+      "type": "single",
+      "topic": "xd-weights",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "XD shows the username font as **Semibold**. What do you write in CSS?",
+      "options": [
+        {
+          "text": "`font-weight: 600;`",
+          "correct": true
+        },
+        {
+          "text": "`font-weight: bold;`",
+          "correct": false
+        },
+        {
+          "text": "`font-weight: semibold;`",
+          "correct": false
+        },
+        {
+          "text": "`font-style: semibold;`",
+          "correct": false
+        }
+      ],
+      "explanation": "CSS weights are numbers: Regular 400, Medium 500, Semibold 600, Bold 700. `semibold` is not a valid value, and `bold` is 700. The font file must include that weight, or the browser fakes it.",
+      "reference": "02-css-fundamentals-and-layout/15-typography.md"
+    },
+    {
+      "id": "des-04",
+      "type": "text",
+      "topic": "xd-shadows",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "In XD, the post card has a drop shadow: **X 0, Y 2, B 4, color #00000029**. Write the CSS declaration.",
+      "answer": {
+        "accept": [
+          "box-shadow: 0 2px 4px #00000029",
+          "box-shadow: 0px 2px 4px #00000029"
+        ],
+        "normalized": [
+          "box-shadow:0 2px 4px #00000029",
+          "box-shadow:0px 2px 4px #00000029"
+        ]
+      },
+      "explanation": "XD's X, Y and B (blur) map to the first three `box-shadow` values, in the same order. Copy the color as hex, like all our colors: `#00000029` is black with alpha `29` (about 16%).",
+      "reference": "02-css-fundamentals-and-layout/18-shadows.md"
+    },
+    {
+      "id": "des-05",
+      "type": "single",
+      "topic": "xd-opacity",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "In XD, the overlay on top of a post image is a black rectangle with **50% opacity**, and white text sits on it. The trainee writes `.overlay { background: #000000; opacity: 0.5; }`. What goes wrong?",
+      "options": [
+        {
+          "text": "The white text inside the overlay also becomes 50% transparent. Use `background: #00000080` instead",
+          "correct": true
+        },
+        {
+          "text": "Nothing, it looks the same as the design",
+          "correct": false
+        },
+        {
+          "text": "`opacity` does not work on `background`",
+          "correct": false
+        },
+        {
+          "text": "The overlay becomes invisible, because `opacity` needs a percent value",
+          "correct": false
+        }
+      ],
+      "explanation": "`opacity` fades the whole element, including everything inside it. In XD the opacity was on the rectangle only, so in CSS put the transparency in the background color: 8-digit hex, where the last two digits are the alpha (`80` ≈ 50%).",
+      "reference": "02-css-fundamentals-and-layout/16-color.md"
+    },
+    {
+      "id": "des-06",
+      "type": "single",
+      "topic": "responsive",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The XD artboard is **375px** wide, so a trainee writes `.feed { width: 375px; }`. What is the problem?",
+      "options": [
+        {
+          "text": "Phones are not all 375px wide. On a 360px phone the feed scrolls sideways, and on a 414px phone there is a gap. Use `width: 100%` with a `max-width`",
+          "correct": true
+        },
+        {
+          "text": "There is no problem; all phones show 375 CSS pixels",
+          "correct": false
+        },
+        {
+          "text": "It should be `width: 375pt` to match XD",
+          "correct": false
+        },
+        {
+          "text": "XD measurements must be multiplied by 2 for CSS",
+          "correct": false
+        }
+      ],
+      "explanation": "An artboard is one example screen, not the only one. Measure inner sizes (spacing, font sizes, icon sizes) from XD, but let the page width follow the screen.",
+      "reference": "02-css-fundamentals-and-layout/23-macro-layouts.md"
+    },
+    {
+      "id": "des-07",
+      "type": "single",
+      "topic": "spacing",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "In XD, there is 10px between the avatar, the username and the \"...\" button in the post header. What is the cleanest way to build it?",
+      "options": [
+        {
+          "text": "`.post-header { display: flex; gap: 10px; }`",
+          "correct": true
+        },
+        {
+          "text": "`margin-right: 10px` on every child, then `margin-right: 0` on the last one",
+          "correct": false
+        },
+        {
+          "text": "Add `&nbsp;` between the elements",
+          "correct": false
+        },
+        {
+          "text": "`padding: 10px` on every child",
+          "correct": false
+        }
+      ],
+      "explanation": "`gap` puts space only **between** items, so there is nothing to undo on the last one. Padding would also add space on the outer sides of every item.",
+      "reference": "02-css-fundamentals-and-layout/10-spacing.md"
+    },
+    {
+      "id": "des-08",
+      "type": "single",
+      "topic": "xd-borders",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "In XD, a 300px wide card has a 1px **inner** stroke, and the card is still 300px wide. Which CSS matches it?",
+      "options": [
+        {
+          "text": "`width: 300px; border: 1px solid #dbdbdb; box-sizing: border-box;`",
+          "correct": true
+        },
+        {
+          "text": "`width: 300px; border: 1px solid #dbdbdb;` (with the default `box-sizing`)",
+          "correct": false
+        },
+        {
+          "text": "`width: 302px; border: 1px solid #dbdbdb; box-sizing: border-box;`",
+          "correct": false
+        },
+        {
+          "text": "`width: 300px; outline: 1px solid #dbdbdb;`",
+          "correct": false
+        }
+      ],
+      "explanation": "An inner stroke is drawn inside the shape, so the size does not change. With `border-box` the border is inside the width too. With the default `content-box` the card would be 302px. An `outline` is drawn outside the box, like XD's outer stroke.",
+      "reference": "02-css-fundamentals-and-layout/01-box-model.md"
+    }
+  ]
+}

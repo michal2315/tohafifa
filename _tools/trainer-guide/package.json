@@ -1,0 +1,12 @@
+{
+  "name": "trainer-guide",
+  "private": true,
+  "type": "module",
+  "description": "Builds the trainer guides (Word) from the reading pages, videos.md, the quiz banks and stages.mjs.",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "docx": "9.5.1"
+  }
+}

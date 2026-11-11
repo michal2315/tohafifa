@@ -5,7 +5,7 @@ Material for the Tavor team only. Everything else in this repo is shared by all 
 | Folder | What |
 |---|---|
 | `reading/01-angular-conventions.md` | Our Angular conventions, with examples from the Instagram project and a review checklist |
-| `quizzes/` | Conventions quiz: 24 code-review questions. Same format as the HTML & SCSS quiz bank, see `html&css/quizzes/README.md` |
+| `quizzes/` | Conventions quiz: 24 code-review questions. Same format as the HTML & SCSS quiz bank, see `html&css/quizzes/README.md`. `quizzes/answers.docx` is the answer key in Word, for trainers only. |
 
 Suggested timing: trainees take the conventions quiz in week 1 of the Angular stage, after reading the conventions page, and again before their first mini boss review.
 
@@ -17,6 +17,9 @@ Edit `quizzes/src/*.yaml`, never the JSON. Then rebuild:
 cd _tools/quiz-build
 npm install
 node build.mjs ../../tavor/quizzes
+node answers.mjs ../../tavor/quizzes
 ```
+
+The second command rewrites `quizzes/answers.docx`, the answer key.
 
 Questions that show a convention break on purpose set `lint: false`. Every other code sample is checked automatically: no comments, no `@Input()`/`@Output()` decorators, no NgModules, and the HTML & SCSS rules for templates and styles.

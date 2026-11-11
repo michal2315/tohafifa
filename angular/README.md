@@ -6,9 +6,10 @@ Material for the Angular stage. Trainees rebuild the Instagram feed from the HTM
 
 ```
 angular/
+├── trainer-guide.docx  for trainers: day-by-day plan, what each page and video covers, how long it takes
 ├── guide/        the project: what to build each week, the component tree, store data flow (start here)
 ├── reading/      94 reading pages from angular.dev, NgRx and RxJS docs, grouped in 13 modules
-├── quizzes/      76 questions: an end-of-module quiz per topic and a final review (see quizzes/README.md)
+├── quizzes/      76 questions: an end-of-module quiz per topic and a final review, answer key in answers.docx
 ├── games/        RxMarbles and RxViz, offline (see games/README.md)
 ├── videos.md     recommended videos, with length and what each one covers
 └── SOURCES.md    where every item came from, its version and license

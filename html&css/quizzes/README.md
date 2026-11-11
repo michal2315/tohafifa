@@ -28,6 +28,7 @@ The build checks most of these automatically (all except useless wrappers, which
 | `06-team-conventions.json` | 6. Our conventions (code review) | 14 | 0 |
 | `placement.json` | Placement quiz (day 1) | 24 | – |
 | `index.json` | Summary of all files | – | – |
+| `answers.docx` | Answer key in Word: every question, the right answers and the explanation. **For trainers only.** | – | – |
 
 ## Editing questions
 
@@ -37,10 +38,12 @@ The build checks most of these automatically (all except useless wrappers, which
 cd _tools/quiz-build
 npm install
 node build.mjs "../../html&css/quizzes"
-node review.cjs "../../html&css/quizzes" quiz-review.md
+node answers.mjs "../../html&css/quizzes"
 ```
 
-The second command is optional: it writes `quiz-review.md`, a readable list of all questions with the answers marked, for reviewing the bank.
+The second command rewrites `answers.docx`, the answer key. Run it after every change so the key matches the quizzes. Don't share it with trainees or put it in Docusaurus.
+
+`node review.cjs "../../html&css/quizzes" quiz-review.md` is optional: it writes the same content as Markdown, which is easier to diff when you review a change.
 
 Options have no letters or ids. Each one says whether it's right or wrong (`correct: true` / `correct: false`), so the order in the file doesn't matter and the app can shuffle the options every time.
 

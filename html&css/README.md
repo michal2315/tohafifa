@@ -6,9 +6,10 @@ Material for the HTML & SCSS stage of the training. The stage ends with the Inst
 
 ```
 html&css/
+├── trainer-guide.docx  for trainers: day-by-day plan, what each page and video covers, how long it takes
 ├── reading/        67 reading pages (Markdown, ready for Docusaurus), grouped by module
 ├── games/          Flexbox Froggy, Grid Garden, CSS Diner: cleaned for offline use
-├── quizzes/        89-question bank: placement quiz + one quiz per module (see quizzes/README.md)
+├── quizzes/        89-question bank: placement quiz + one quiz per module, answer key in answers.docx
 ├── videos.md       recommended videos and an optional beginner course (YouTube links, need internet)
 ├── LICENSES/       license texts that must travel with the material
 └── SOURCES.md      where every item came from, its version and license

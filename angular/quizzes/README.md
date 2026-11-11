@@ -15,6 +15,8 @@
 | `08-primeng.json` | 8. PrimeNG | 8 | `guide/06-primeng-styled-mode.md` |
 | `09-final-review.json` | 9. Final review | 8 | Everything: new questions that mix the topics |
 
+`answers.docx` is the answer key in Word: every question, the right answers and the explanation. For trainers only.
+
 There's no placement quiz: Angular is new for most trainees.
 
 The format is the same as the HTML & SCSS quiz bank. See `html&css/quizzes/README.md` for the question types and how to check answers.
@@ -27,8 +29,10 @@ Edit `src/*.yaml`, never the JSON. Then rebuild and validate:
 cd _tools/quiz-build
 npm install
 node build.mjs ../../angular/quizzes
-node review.cjs ../../angular/quizzes quiz-review.md
+node answers.mjs ../../angular/quizzes
 ```
+
+The second command rewrites `answers.docx`, the answer key in Word. It's for trainers only: don't share it with trainees.
 
 The build also lints every code sample:
 - HTML and SCSS follow our conventions.

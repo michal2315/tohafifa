@@ -1,0 +1,2 @@
+import {l as lw,b as au,v as vb,c as cu}from'./main-QM4AHSJJ.js';var c=(()=>{class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=lw({type:e,selectors:[["app-home"]],decls:2,vars:0,template:function(t,a){t&1&&(au(0,"p"),vb(1,` Welcome to Animations in Angular!
+`),cu());},encapsulation:2})}return e})();export{c as HomeComponent};

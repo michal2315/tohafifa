@@ -1,0 +1,3 @@
+import {l as lw,cO as Ut,cP as xt,b as au,v as vb,R as Pb,c as cu,a as iD,f as fu,Y as Fb,bn as jb}from'./main-QM4AHSJJ.js';var C=(()=>{class i{birthday=new Date(1988,3,15);static \u0275fac=function(t){return new(t||i)};static \u0275cmp=lw({type:i,selectors:[["app-birthday-pipe-chaining"]],decls:8,vars:11,template:function(t,m){t&1&&(au(0,"p"),vb(1),Pb(2,"date"),Pb(3,"uppercase"),cu(),au(4,"p"),vb(5),Pb(6,"date"),Pb(7,"uppercase"),cu()),t&2&&(iD(),fu(" The chained hero's uppercase birthday is ",Fb(3,4,Fb(2,2,m.birthday)),`
+`),iD(4),fu(` The chained hero's uppercase birthday in "fullDate" format is `,Fb(7,9,jb(6,6,m.birthday,"fullDate")),`
+`));},dependencies:[Ut,xt],encapsulation:2})}return i})();export{C as BirthdayPipeChainingComponent};

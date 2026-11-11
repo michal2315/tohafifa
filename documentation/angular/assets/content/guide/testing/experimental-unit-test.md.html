@@ -1,0 +1,69 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">Experimental unit testing system</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/guide/testing/experimental-unit-test.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    <p>The Angular CLI provides an experimental unit test system that can use <a href="https://vitest.dev/" target="_blank">Vitest</a> as a test runner.</p>
+
+    <div class="docs-alert docs-alert-important">
+    <p><strong>IMPORTANT:</strong> This experimental unit testing system requires the use of the <code>application</code> build system.
+The <code>application</code> build system is the default for all newly created projects.</p>
+
+    </div>
+    
+  <h2 id="installing-dependencies">
+    <a href="#installing-dependencies" class="docs-anchor" tabindex="-1" aria-label="Link to Installing dependencies">Installing dependencies</a>
+  </h2>
+  <p>Some packages are required for the new builder to work. In order to install the new packages, run the following command :</p>
+<div class="docs-code shell">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> install</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> vitest</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> jsdom</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --save-dev</span></span></code></pre>
+  </div><p>If no other projects in your workspace use Karma, run the following command to uninstall the corresponding packages :</p>
+<div class="docs-code shell">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> uninstall</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> karma</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> karma-chrome-launcher</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> karma-coverage</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> karma-jasmine</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> karma-jasmine-html-reporter</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --save-dev</span></span></code></pre>
+  </div>
+  <h2 id="set-up-testing">
+    <a href="#set-up-testing" class="docs-anchor" tabindex="-1" aria-label="Link to Set up testing">Set up testing</a>
+  </h2>
+  <p>The Angular CLI includes the test system within a new project but must be configured before it can be used.</p>
+<p>The project you create with the CLI is setup to use the <code>karma</code> test system by default.
+To change to the experimental unit test system, update the <code>test</code> target as follows:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"test"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "builder"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"@angular/build:unit-test"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "options"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "tsConfig"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"tsconfig.spec.json"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "runner"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"vitest"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "buildTarget"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"::development"</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div><p>The <code>buildTarget</code> operates similarly to the option available to the development server.
+The <code>build</code> target configures build options for the tests.
+If the <code>development</code> build configuration is missing for a project or you need
+different options for testing, you can create and use a <code>testing</code> or similarly named build configuration.</p>
+<p>To execute the application's testing, just run the <a href="cli/test"><code>ng test</code></a> CLI command as before:</p>
+<div class="docs-code shell">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">ng</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> test</span></span></code></pre>
+  </div><p>The <code>ng test</code> command builds the application in <em>watch mode</em>, and launches the configured runner.</p>
+<p>The console output looks like below:</p>
+<div class="docs-code shell">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">✓</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> spec-app-app.spec.js</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (2 </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">tests</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) 31ms</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">   ✓</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> App</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &gt;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> should</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> create</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> the</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> app</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 22ms</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">   ✓</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> App</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &gt;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> should</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> render</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> title</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 8ms</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">Test</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> Files</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 1</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> passed</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (1)</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">Tests</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 2</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> passed</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (2)</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">Start</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> at</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 14:24:15</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">Duration</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 1.16s</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (transform </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">628ms,</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> setup</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 703ms,</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> collect</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 64ms,</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> tests</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 31ms,</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> environment</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 188ms,</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> prepare</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 33ms</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span></span></code></pre>
+  </div><p>Watch mode is enabled by default when using an interactive terminal and not running on CI.</p>
+
+  <h2 id="configuration">
+    <a href="#configuration" class="docs-anchor" tabindex="-1" aria-label="Link to Configuration">Configuration</a>
+  </h2>
+  <p>The Angular CLI takes care of the Vitest configuration for you. It constructs the full configuration in memory, based on options specified in the <code>angular.json</code> file.
+Directly customizing the underlying test runner configuration is currently not supported.</p>
+
+  <h2 id="bug-reports">
+    <a href="#bug-reports" class="docs-anchor" tabindex="-1" aria-label="Link to Bug reports">Bug reports</a>
+  </h2>
+  <p>Report issues and feature requests on <a href="https://github.com/angular/angular-cli/issues" target="_blank">GitHub</a>.</p>
+<p>Please provide a minimal reproduction where possible to aid the team in addressing issues.</p>

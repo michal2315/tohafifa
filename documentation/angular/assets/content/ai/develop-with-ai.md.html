@@ -1,0 +1,105 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">LLM prompts and AI IDE setup</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/ai/develop-with-ai.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    <p>Generating code with large language models (LLMs) is a rapidly growing area of interest for developers. While LLMs are often capable of generating working code it can be a challenge to generate code for consistently evolving frameworks like Angular.</p>
+<p>Advanced instructions and prompting are an emerging standard for supporting modern code generation with domain specific details. This section contains curated content and resources to support more accurate code generation for Angular and LLMs.</p>
+
+  <h2 id="custom-prompts-and-system-instructions">
+    <a href="#custom-prompts-and-system-instructions" class="docs-anchor" tabindex="-1" aria-label="Link to Custom Prompts and System Instructions">Custom Prompts and System Instructions</a>
+  </h2>
+  <p>Improve your experience generating code with LLMs by using one of the following custom, domain specific files.</p>
+
+    <div class="docs-alert docs-alert-note">
+    <p><strong>NOTE:</strong> These files will be updated on a regular basis staying up to date with Angular's conventions.</p>
+
+    </div>
+    <p>Here is a set of instructions to help LLMs generate correct code that follows Angular best practices. This file can be included as system instructions to your AI tooling or included along with your prompt as context.</p>
+<div class="docs-code compact" path="adev/src/context/best-practices.md">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## TypeScript Best Practices</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use strict type checking</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Prefer type inference when the type is obvious</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Avoid the </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`any`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> type; use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`unknown`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> when type is uncertain</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Angular Best Practices</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Always use standalone components over NgModules</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Must NOT set </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`standalone: true`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> inside Angular decorators. It's the default in Angular v20+.</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use signals for state management</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Implement lazy loading for feature routes</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Do NOT use the </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`@<a href="/api/core/HostBinding">HostBinding</a>`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> and </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`@<a href="/api/core/HostListener">HostListener</a>`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> decorators. Put host bindings inside the </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`host`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> object of the </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`@<a href="/api/core/Component">Component</a>`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> or </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`@<a href="/api/core/Directive">Directive</a>`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> decorator instead</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`<a href="/api/common/NgOptimizedImage">NgOptimizedImage</a>`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> for all static images.</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">  -</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> `<a href="/api/common/NgOptimizedImage">NgOptimizedImage</a>`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> does not work for inline base64 images.</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Accessibility Requirements</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> It MUST pass all AXE checks.</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> It MUST follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes.</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### Components</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Keep components small and focused on a single responsibility</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`<a href="/api/core/input">input</a>()`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> and </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`<a href="/api/core/output">output</a>()`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> functions instead of decorators</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`<a href="/api/core/computed">computed</a>()`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> for derived state</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Set </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`changeDetection: ChangeDetectionStrategy.OnPush`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> in </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`@<a href="/api/core/Component">Component</a>`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> decorator</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Prefer inline templates for small components</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Prefer Reactive forms instead of Template-driven ones</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Do NOT use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`ngClass`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`class`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> bindings instead</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Do NOT use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`ngStyle`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`style`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> bindings instead</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> When using external templates/styles, use paths relative to the component TS file.</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## State Management</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use signals for local component state</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`<a href="/api/core/computed">computed</a>()`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> for derived state</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Keep state transformations pure and predictable</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Do NOT use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`mutate`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> on signals, use </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`update`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> or </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`set`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> instead</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Templates</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Keep templates simple and avoid complex logic</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use native control flow (</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`@if`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`@for`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`@switch`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) instead of </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`*ngIf`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`*ngFor`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`*ngSwitch`</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use the async pipe to handle observables</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Do not assume globals like (</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`new Date()`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) are available.</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Do not write arrow functions in templates (they are not supported).</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Do not write Regular expressions in templates (they are not supported).</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Services</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Design services around a single responsibility</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use the </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`providedIn: 'root'`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> option for singleton services</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Use the </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`inject()`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> function instead of constructor injection</span></span><span class="line"></span></code></pre>
+  </div><p><a download href="/assets/context/best-practices.md" target="_blank">Click here to download the best-practices.md file.</a></p>
+
+  <h2 id="rules-files">
+    <a href="#rules-files" class="docs-anchor" tabindex="-1" aria-label="Link to Rules Files">Rules Files</a>
+  </h2>
+  <p>Several editors, such as <a href="https://studio.firebase.google.com?utm_source=adev&utm_medium=website&utm_campaign=BUILD_WITH_AI_ANGULAR&utm_term=angular_devrel&utm_content=build_with_ai_angular_firebase_studio">Firebase Studio</a> have rules files useful for providing critical context to LLMs.</p>
+
+  <div class="docs-table docs-scroll-track-transparent">
+    <table>
+      <thead>
+        <tr>
+<th align="left">Environment/IDE</th>
+<th align="left">Rules File</th>
+<th align="left">Installation Instructions</th>
+</tr>
+
+      </thead>
+      <tbody>
+        <tr>
+<td align="left">Firebase Studio</td>
+<td align="left"><a download href="/assets/context/airules.md" target="_blank">airules.md</a></td>
+<td align="left"><a href="https://firebase.google.com/docs/studio/set-up-gemini#custom-instructions">Configure <code>airules.md</code></a></td>
+</tr>
+<tr>
+<td align="left">Copilot powered IDEs</td>
+<td align="left"><a download="copilot-instructions.md" href="/assets/context/guidelines.md" target="_blank">copilot-instructions.md</a></td>
+<td align="left"><a href="https://code.visualstudio.com/docs/copilot/copilot-customization#_custom-instructions" target="_blank">Configure <code>.github/copilot-instructions.md</code></a></td>
+</tr>
+<tr>
+<td align="left">Cursor</td>
+<td align="left"><a download href="/assets/context/angular-20.mdc" target="_blank">cursor.md</a></td>
+<td align="left"><a href="https://docs.cursor.com/context/rules" target="_blank">Configure <code>cursorrules.md</code></a></td>
+</tr>
+<tr>
+<td align="left">JetBrains IDEs</td>
+<td align="left"><a download href="/assets/context/guidelines.md" target="_blank">guidelines.md</a></td>
+<td align="left"><a href="https://www.jetbrains.com/help/junie/customize-guidelines.html" target="_blank">Configure <code>guidelines.md</code></a></td>
+</tr>
+<tr>
+<td align="left">VS Code</td>
+<td align="left"><a download=".instructions.md" href="/assets/context/guidelines.md" target="_blank">.instructions.md</a></td>
+<td align="left"><a href="https://code.visualstudio.com/docs/copilot/copilot-customization#_custom-instructions" target="_blank">Configure <code>.instructions.md</code></a></td>
+</tr>
+<tr>
+<td align="left">Windsurf</td>
+<td align="left"><a download href="/assets/context/guidelines.md" target="_blank">guidelines.md</a></td>
+<td align="left"><a href="https://docs.windsurf.com/windsurf/cascade/memories#rules" target="_blank">Configure <code>guidelines.md</code></a></td>
+</tr>
+
+      </tbody>
+    </table>
+  </div>
+  
+  <h2 id="angular-cli-mcp-server-setup">
+    <a href="#angular-cli-mcp-server-setup" class="docs-anchor" tabindex="-1" aria-label="Link to Angular CLI MCP Server setup">Angular CLI MCP Server setup</a>
+  </h2>
+  <p>The Angular CLI includes an experimental <a href="https://modelcontextprotocol.io/" target="_blank">Model Context Protocol (MCP) server</a> that allows AI assistants in your development environment to interact with the Angular CLI.</p>
+<p><a href="/ai/mcp"><strong>Learn how to set up the Angular CLI MCP Server</strong></a></p>
+
+  <h2 id="providing-context-with-llmstxt">
+    <a href="#providing-context-with-llmstxt" class="docs-anchor" tabindex="-1" aria-label="Link to Providing Context with <code>llms.txt</code>">Providing Context with <code>llms.txt</code></a>
+  </h2>
+  <p><code>llms.txt</code> is a proposed standard for websites designed to help LLMs better understand and process their content. The Angular team has developed two versions of this file to help LLMs and tools that use LLMs for code generation to create better modern Angular code.</p>
+
+  <ul class="docs-list">
+    <li><a href="/llms.txt" target="_blank">llms.txt</a> - an index file providing links to key files and resources.</li>
+<li><a href="/context/llm-files/llms-full.txt" target="_blank">llms-full.txt</a> - a more robust compiled set of resources describing how Angular works and how to build Angular applications.</li>
+
+  </ul>
+  <p>Be sure <a href="/ai">to check out the overview page</a> for more information on how to integrate AI into your Angular applications.</p>
+
+  <h2 id="web-codegen-scorer">
+    <a href="#web-codegen-scorer" class="docs-anchor" tabindex="-1" aria-label="Link to Web Codegen Scorer">Web Codegen Scorer</a>
+  </h2>
+  <p>The Angular team developed and open-sourced the <a href="https://github.com/angular/web-codegen-scorer" target="_blank">Web Codegen Scorer</a>, a tool to evaluate and score the quality of AI generated web code. You can use this tool to make evidence-based decisions relating to AI-generated code, such as fine-tuning prompts to improve the accuracy of LLM-generated code for Angular. These prompts can be included as system instructions for your AI tooling or as context with your prompt. You can also use this tool to compare the quality of code produced by different models and monitor quality over time as models and agents evolve.</p>

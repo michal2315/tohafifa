@@ -1,0 +1,272 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">Angular coding style guide</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/best-practices/style-guide.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    
+  <h2 id="introduction">
+    <a href="#introduction" class="docs-anchor" tabindex="-1" aria-label="Link to Introduction">Introduction</a>
+  </h2>
+  <p>This guide covers a range of style conventions for Angular application code. These recommendations
+are not required for Angular to work, but instead establish a set of coding practices that promote
+consistency across the Angular ecosystem. A consistent set of practices makes it easier to share
+code and move between projects.</p>
+<p>This guide does <em>not</em> cover TypeScript or general coding practices unrelated to Angular. For
+TypeScript, check
+out <a href="https://google.github.io/styleguide/tsguide.html" target="_blank">Google's TypeScript style guide</a>.</p>
+
+  <h3 id="when-in-doubt-prefer-consistency">
+    <a href="#when-in-doubt-prefer-consistency" class="docs-anchor" tabindex="-1" aria-label="Link to When in doubt, prefer consistency">When in doubt, prefer consistency</a>
+  </h3>
+  <p>Whenever you encounter a situation in which these rules contradict the style of a particular file,
+prioritize maintaining consistency within a file. Mixing different style conventions in a single
+file creates more confusion than diverging from the recommendations in this guide.</p>
+
+  <h2 id="naming">
+    <a href="#naming" class="docs-anchor" tabindex="-1" aria-label="Link to Naming">Naming</a>
+  </h2>
+  
+  <h3 id="separate-words-in-file-names-with-hyphens">
+    <a href="#separate-words-in-file-names-with-hyphens" class="docs-anchor" tabindex="-1" aria-label="Link to Separate words in file names with hyphens">Separate words in file names with hyphens</a>
+  </h3>
+  <p>Separate words within a file name with hyphens (<code>-</code>). For example, a component named <code>UserProfile</code>
+has a file name <code>user-profile.ts</code>.</p>
+
+  <h3 id="use-the-same-name-for-a-files-tests-with-spec-at-the-end">
+    <a href="#use-the-same-name-for-a-files-tests-with-spec-at-the-end" class="docs-anchor" tabindex="-1" aria-label="Link to Use the same name for a file's tests with <code>.spec</code> at the end">Use the same name for a file's tests with <code>.spec</code> at the end</a>
+  </h3>
+  <p>For unit tests, end file names with <code>.spec.ts</code>. For example, the unit test file for
+the <code>UserProfile</code> component has the file name <code>user-profile.spec.ts</code>.</p>
+
+  <h3 id="match-file-names-to-the-typescript-identifier-within">
+    <a href="#match-file-names-to-the-typescript-identifier-within" class="docs-anchor" tabindex="-1" aria-label="Link to Match file names to the TypeScript identifier within">Match file names to the TypeScript identifier within</a>
+  </h3>
+  <p>File names should generally describe the contents of the code in the file. When the file contains a
+TypeScript class, the file name should reflect that class name. For example, a file containing a
+component named <code>UserProfile</code> has the name <code>user-profile.ts</code>.</p>
+<p>If the file contains more than one primary namable identifier, choose a name that describes the
+common theme to the code within. If the code in a file does not fit within a common theme or feature
+area, consider breaking the code up into different files. Avoid overly generic file names
+like <code>helpers.ts</code>, <code>utils.ts</code>, or <code>common.ts</code>.</p>
+
+  <h3 id="use-the-same-file-name-for-a-components-typescript-template-and-styles">
+    <a href="#use-the-same-file-name-for-a-components-typescript-template-and-styles" class="docs-anchor" tabindex="-1" aria-label="Link to Use the same file name for a component's TypeScript, template, and styles">Use the same file name for a component's TypeScript, template, and styles</a>
+  </h3>
+  <p>Components typically consist of one TypeScript file, one template file, and one style file. These
+files should share the same name with different file extensions. For example, a <code>UserProfile</code>
+component can have the files <code>user-profile.ts</code>, <code>user-profile.html</code>, and <code>user-profile.css</code>.</p>
+<p>If a component has more than one style file, append the name with additional words that describe the
+styles specific to that file. For example, <code>UserProfile</code> might have style
+files <code>user-profile-settings.css</code> and <code>user-profile-subscription.css</code>.</p>
+
+  <h2 id="project-structure">
+    <a href="#project-structure" class="docs-anchor" tabindex="-1" aria-label="Link to Project structure">Project structure</a>
+  </h2>
+  
+  <h3 id="all-the-applications-code-goes-in-a-directory-named-src">
+    <a href="#all-the-applications-code-goes-in-a-directory-named-src" class="docs-anchor" tabindex="-1" aria-label="Link to All the application's code goes in a directory named <code>src</code>">All the application's code goes in a directory named <code>src</code></a>
+  </h3>
+  <p>All of your Angular UI code (TypeScript, HTML, and styles) should live inside a directory
+named <code>src</code>. Code that's not related to UI, such as configuration files or scripts, should live
+outside the <code>src</code> directory.</p>
+<p>This keeps the root application directory consistent between different Angular projects and creates
+a clear separation between UI code and other code in your project.</p>
+
+  <h3 id="bootstrap-your-application-in-a-file-named-maints-directly-inside-src">
+    <a href="#bootstrap-your-application-in-a-file-named-maints-directly-inside-src" class="docs-anchor" tabindex="-1" aria-label="Link to Bootstrap your application in a file named <code>main.ts</code> directly inside <code>src</code>">Bootstrap your application in a file named <code>main.ts</code> directly inside <code>src</code></a>
+  </h3>
+  <p>The code to start up, or <strong>bootstrap</strong>, an Angular application should always live in a file
+named <code>main.ts</code>. This represents the primary entry point to the application.</p>
+
+  <h3 id="group-closely-related-files-together-in-the-same-directory">
+    <a href="#group-closely-related-files-together-in-the-same-directory" class="docs-anchor" tabindex="-1" aria-label="Link to Group closely related files together in the same directory">Group closely related files together in the same directory</a>
+  </h3>
+  <p>Angular components consist of a TypeScript file and, optionally, a template and one or more style
+files. You should group these together in the same directory.</p>
+<p>Unit tests should live in the same directory as the code-under-test. Avoid collecting unrelated
+tests into a single <code>tests</code> directory.</p>
+
+  <h3 id="organize-your-project-by-feature-areas">
+    <a href="#organize-your-project-by-feature-areas" class="docs-anchor" tabindex="-1" aria-label="Link to Organize your project by feature areas">Organize your project by feature areas</a>
+  </h3>
+  <p>Organize your project into subdirectories based on the features of your application or common themes
+to the code in those directories. For example, the project structure for a movie theater site,
+MovieReel, might look like this:</p>
+
+      <div class="docs-code" role="group">
+        <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span>src/</span></span><span class="line"><span>├─ movie-reel/</span></span><span class="line"><span>│ ├─ show-times/</span></span><span class="line"><span>│ │ ├─ film-calendar/</span></span><span class="line"><span>│ │ ├─ film-details/</span></span><span class="line"><span>│ ├─ reserve-tickets/</span></span><span class="line"><span>│ │ ├─ payment-info/</span></span><span class="line"><span>│ │ ├─ purchase-confirmation/</span></span></code></pre>
+      </div>
+    <p>Avoid creating subdirectories based on the type of code that lives in those directories. For
+example, avoid creating directories like <code>components</code>, <code>directives</code>, and <code>services</code>.</p>
+<p>Avoid putting so many files into one directory that it becomes hard to read or navigate. As the
+number of files in a directory grows, consider splitting further into additional sub-directories.</p>
+
+  <h3 id="one-concept-per-file">
+    <a href="#one-concept-per-file" class="docs-anchor" tabindex="-1" aria-label="Link to One concept per file">One concept per file</a>
+  </h3>
+  <p>Prefer focusing source files on a single <em>concept</em>. For Angular classes specifically, this usually
+means one component, directive, or service per file. However, it's okay if a file contains more than
+one component or directive if your classes are relatively small and they tie together as part of a
+single concept.</p>
+<p>When in doubt, go with the approach that leads to smaller files.</p>
+
+  <h2 id="dependency-injection">
+    <a href="#dependency-injection" class="docs-anchor" tabindex="-1" aria-label="Link to Dependency injection">Dependency injection</a>
+  </h2>
+  
+  <h3 id="prefer-the-inject-function-over-constructor-parameter-injection">
+    <a href="#prefer-the-inject-function-over-constructor-parameter-injection" class="docs-anchor" tabindex="-1" aria-label="Link to Prefer the <code>inject</code> function over constructor parameter injection">Prefer the <code>inject</code> function over constructor parameter injection</a>
+  </h3>
+  <p>Prefer using the <code>inject</code> function over injecting constructor parameters. The <code>inject</code> function works the same way as constructor parameter injection, but offers several style advantages:</p>
+
+  <ul class="docs-list">
+    <li><code>inject</code> is generally more readable, especially when a class injects many dependencies.</li>
+<li>It's more syntactically straightforward to add comments to injected dependencies</li>
+<li><code>inject</code> offers better type inference.</li>
+<li>When targeting ES2022+ with <a href="https://www.typescriptlang.org/tsconfig/#useDefineForClassFields" target="_blank"><code>useDefineForClassFields</code></a>, you can avoid separating field declaration and initialization when fields read on injected dependencies.</li>
+
+  </ul>
+  <p><a href="reference/migrations/inject-function">You can refactor existing code to <code>inject</code> with an automatic tool</a>.</p>
+
+  <h2 id="components-and-directives">
+    <a href="#components-and-directives" class="docs-anchor" tabindex="-1" aria-label="Link to Components and directives">Components and directives</a>
+  </h2>
+  
+  <h3 id="choosing-component-selectors">
+    <a href="#choosing-component-selectors" class="docs-anchor" tabindex="-1" aria-label="Link to Choosing component selectors">Choosing component selectors</a>
+  </h3>
+  <p>See
+the <a href="guide/components/selectors#choosing-a-selector">Components guide for details on choosing component selectors</a>.</p>
+
+  <h3 id="naming-component-and-directive-members">
+    <a href="#naming-component-and-directive-members" class="docs-anchor" tabindex="-1" aria-label="Link to Naming component and directive members">Naming component and directive members</a>
+  </h3>
+  <p>See the Components guide for details
+on <a href="guide/components/inputs#choosing-input-names">naming input properties</a>
+and <a href="guide/components/outputs#choosing-event-names">naming output properties</a>.</p>
+
+  <h3 id="choosing-directive-selectors">
+    <a href="#choosing-directive-selectors" class="docs-anchor" tabindex="-1" aria-label="Link to Choosing directive selectors">Choosing directive selectors</a>
+  </h3>
+  <p>Directives should use the
+same <a href="guide/components/selectors#selector-prefixes">application-specific prefix</a>
+as your components.</p>
+<p>When using an attribute selector for a directive, use a camelCase attribute name. For example, if
+your application is named "MovieReel" and you build a directive that adds a tooltip to an element,
+you might use the selector <code>[mrTooltip]</code>.</p>
+
+  <h3 id="group-angular-specific-properties-before-methods">
+    <a href="#group-angular-specific-properties-before-methods" class="docs-anchor" tabindex="-1" aria-label="Link to Group Angular-specific properties before methods">Group Angular-specific properties before methods</a>
+  </h3>
+  <p>Components and directives should group Angular-specific properties together, typically near the top
+of the class declaration. This includes injected dependencies, inputs, outputs, and queries. Define
+these and other properties before the class's methods.</p>
+<p>This practice makes it easier to find the class's template APIs and dependencies.</p>
+
+  <h3 id="keep-components-and-directives-focused-on-presentation">
+    <a href="#keep-components-and-directives-focused-on-presentation" class="docs-anchor" tabindex="-1" aria-label="Link to Keep components and directives focused on presentation">Keep components and directives focused on presentation</a>
+  </h3>
+  <p>Code inside your components and directives should generally relate to the UI shown on the page. For
+code that makes sense on its own, decoupled from the UI, prefer refactoring to other files. For
+example, you can factor form validation rules or data transformations into separate functions or
+classes.</p>
+
+  <h3 id="avoid-overly-complex-logic-in-templates">
+    <a href="#avoid-overly-complex-logic-in-templates" class="docs-anchor" tabindex="-1" aria-label="Link to Avoid overly complex logic in templates">Avoid overly complex logic in templates</a>
+  </h3>
+  <p>Angular templates are designed to
+accommodate <a href="guide/templates/expression-syntax">JavaScript-like expressions</a>.
+You should take advantage of these expressions to capture relatively straightforward logic directly
+in template expressions.</p>
+<p>When the code in a template gets too complex, though, refactor logic into the TypeScript code (typically with a <a href="guide/signals#computed-signals">computed</a>).</p>
+<p>There's no one hard-and-fast rule that determines what constitutes "complex". Use your best
+judgement.</p>
+
+  <h3 id="use-protected-on-class-members-that-are-only-used-by-a-components-template">
+    <a href="#use-protected-on-class-members-that-are-only-used-by-a-components-template" class="docs-anchor" tabindex="-1" aria-label="Link to Use <code>protected</code> on class members that are only used by a component's template">Use <code>protected</code> on class members that are only used by a component's template</a>
+  </h3>
+  <p>A component class's public members intrinsically define a public API that's accessible via
+dependency injection and <a href="guide/components/queries">queries</a>. Prefer <code>protected</code>
+access for any members that are meant to be read from the component's template.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">@</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"><a href="/api/core/Component">Component</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  ...</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  template: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">`&lt;p&gt;{{ fullName() }}&lt;/p&gt;`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">})</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">export</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> UserProfile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">  firstName</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/input">input</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">  lastName</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/input">input</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// `fullName` is not part of the component's public API, but is used in the template.</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  protected</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70"> fullName</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/computed">computed</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> `${</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">this</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">firstName</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">()</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">} ${</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">this</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">lastName</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">()</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">}`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h3 id="use-readonly-for-properties-that-shouldnt-change">
+    <a href="#use-readonly-for-properties-that-shouldnt-change" class="docs-anchor" tabindex="-1" aria-label="Link to Use <code>readonly</code> for properties that shouldn't change">Use <code>readonly</code> for properties that shouldn't change</a>
+  </h3>
+  <p>Mark component and directive properties initialized by Angular as <code>readonly</code>. This includes
+properties initialized by <a href="/api/core/input"><code>input</code></a>, <a href="/api/core/model"><code>model</code></a>, <a href="/api/core/output"><code>output</code></a>, and queries. The readonly access modifier
+ensures that the value set by Angular is not overwritten.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">@</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"><a href="/api/core/Component">Component</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">/* ... */</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">})</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">export</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> UserProfile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  readonly</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70"> userId</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/input">input</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  readonly</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70"> userSaved</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/output">output</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  readonly</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70"> userName</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/model">model</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div><p>For components and directives that use the decorator-based <a href="/api/core/Input"><code>@Input</code></a>, <a href="/api/core/Output"><code>@Output</code></a>, and query APIs, this
+advice applies to output properties and queries, but not input properties.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">@</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"><a href="/api/core/Component">Component</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">/* ... */</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">})</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">export</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> UserProfile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  @</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"><a href="/api/core/Output">Output</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">readonly</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70"> userSaved</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> new</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/EventEmitter">EventEmitter</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">void</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;();</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  @</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"><a href="/api/core/ViewChildren">ViewChildren</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(PaymentMethod) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">readonly</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70"> paymentMethods</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">?:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/QueryList">QueryList</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">PaymentMethod</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h3 id="prefer-class-and-style-over-ngclass-and-ngstyle">
+    <a href="#prefer-class-and-style-over-ngclass-and-ngstyle" class="docs-anchor" tabindex="-1" aria-label="Link to Prefer <code>class</code> and <code>style</code> over <code>ngClass</code> and <code>ngStyle</code>">Prefer <code>class</code> and <code>style</code> over <code>ngClass</code> and <code>ngStyle</code></a>
+  </h3>
+  <p>Prefer <code>class</code> and <code>style</code> bindings over using the <a href="/api/common/NgClass"><a href="/api/common/NgClass"><code>NgClass</code></a></a> and <a href="/api/common/NgStyle"><a href="/api/common/NgStyle"><code>NgStyle</code></a></a> directives.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">&lt;!-- PREFER --&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">div</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [class.admin]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"isAdmin"</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [class.dense]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"density === 'high'"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">&lt;!-- OR --&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">div</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [class]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"{admin: isAdmin, dense: density === 'high'}"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"></span><span class="line"></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">&lt;!-- AVOID --&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">div</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [ngClass]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"{admin: isAdmin, dense: density === 'high'}"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div><p>Both <code>class</code> and <code>style</code> bindings use a more straightforward syntax that aligns closely with
+standard HTML attributes. This makes your templates easier to read and understand, especially for
+developers familiar with basic HTML.</p>
+<p>Additionally, the <a href="/api/common/NgClass"><code>NgClass</code></a> and <a href="/api/common/NgStyle"><code>NgStyle</code></a> directives incur an additional performance cost compared
+to the built-in <code>class</code> and <code>style</code> binding syntax.</p>
+<p>For more details, refer to the <a href="/guide/templates/binding#css-class-and-style-property-bindings">bindings guide</a></p>
+
+  <h3 id="name-event-handlers-for-what-they-do-not-for-the-triggering-event">
+    <a href="#name-event-handlers-for-what-they-do-not-for-the-triggering-event" class="docs-anchor" tabindex="-1" aria-label="Link to Name event handlers for what they <em>do</em>, not for the triggering event">Name event handlers for what they <em>do</em>, not for the triggering event</a>
+  </h3>
+  <p>Prefer naming event handlers for the action they perform rather than for the triggering event:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">&lt;!-- PREFER --&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> (click)</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"saveUserData()"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Save&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">&lt;!-- AVOID --&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> (click)</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"handleClick()"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Save&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div><p>Using meaningful names like this makes it easier to tell what an event does from reading the
+template.</p>
+<p>For keyboard events, you can use Angular's key event modifiers with specific handler names:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">textarea</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> (keydown.control.enter)</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"commitNotes()"</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> (keydown.control.space)</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"showSuggestions()"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div><p>Sometimes, event handling logic is especially long or complex, making it impractical to declare a
+single well-named handler. In these cases, it's fine to fall back to a name like 'handleKeydown' and
+then delegate to more specific behaviors based on the event details:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">@</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"><a href="/api/core/Component">Component</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">/* ... */</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">})</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> RichText</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  handleKeydown</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">event</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> KeyboardEvent</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (event.ctrlKey) {</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">      if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (event.key </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">===</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'B'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">        this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">activateBold</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">else</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (event.key </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">===</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'I'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">        this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">activateItalic</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      }</span></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// ...</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h3 id="keep-lifecycle-methods-simple">
+    <a href="#keep-lifecycle-methods-simple" class="docs-anchor" tabindex="-1" aria-label="Link to Keep lifecycle methods simple">Keep lifecycle methods simple</a>
+  </h3>
+  <p>Avoid putting long or complex logic inside lifecycle hooks like <code>ngOnInit</code>. Instead, prefer creating
+well-named methods to contain that logic and then <em>call those methods</em> in your lifecycle hooks.
+Lifecycle hook names describe <em>when</em> they run, meaning that the code inside doesn't have a
+meaningful name that describes what the code inside is doing.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// PREFER</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">ngOnInit</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">startLogging</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">runBackgroundTask</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// AVOID</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">ngOnInit</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.logger.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">setMode</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'info'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.logger.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">monitorErrors</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">  // ...and all the rest of the code that would be unrolled from these methods.</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h3 id="use-lifecycle-hook-interfaces">
+    <a href="#use-lifecycle-hook-interfaces" class="docs-anchor" tabindex="-1" aria-label="Link to Use lifecycle hook interfaces">Use lifecycle hook interfaces</a>
+  </h3>
+  <p>Angular provides a TypeScript interface for each lifecycle method. When adding a lifecycle hook to
+your class, import and <code>implement</code> these interfaces to ensure that the methods are named correctly.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">import</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {<a href="/api/core/Component">Component</a>, OnInit} </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> '@angular/core'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">@</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"><a href="/api/core/Component">Component</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">/* ... */</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">})</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">export</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> UserProfile</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> implements</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/OnInit">OnInit</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">  // The `OnInit` interface ensures this method is named correctly.</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  ngOnInit</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() { </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">/* ... */</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>

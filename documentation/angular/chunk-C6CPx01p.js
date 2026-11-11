@@ -1,0 +1,2 @@
+import {l as lw,b as au,v as vb,c as cu}from'./main-QM4AHSJJ.js';var r=(()=>{class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=lw({type:t,selectors:[["app-about"]],decls:2,vars:0,template:function(e,p){e&1&&(au(0,"p"),vb(1,` Angular's animations library makes it easy to define and apply animation effects such as page and list transitions.
+`),cu());},encapsulation:2})}return t})();export{r as AboutComponent};

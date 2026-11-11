@@ -1,0 +1,2 @@
+import {u as uV,l as lw,b as au,v as vb,c as cu,a as iD,f as fu}from'./main-QM4AHSJJ.js';var f=(()=>{class e{username=uV.required();static \u0275fac=function(n){return new(n||e)};static \u0275cmp=lw({type:e,selectors:[["app-profile"]],inputs:{username:[1,"username"]},decls:2,vars:1,template:function(n,l){n&1&&(au(0,"p"),vb(1),cu()),n&2&&(iD(),fu(" Hello ",l.username(),`!
+`));},encapsulation:2})}return e})();export{f as ProfileComponent};

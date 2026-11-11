@@ -1,0 +1,129 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">Deriving state with computed signals</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/tutorials/signals/steps/2-deriving-state-with-computed-signals/README.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    <p>Now that you've learned <a href="/tutorials/signals/1-creating-and-updating-your-first-signal">how to create and update signals</a>, let's learn about computed signals. Computed signals are derived values that automatically update when their dependencies change. They're perfect for creating reactive calculations based on other signals.</p>
+<p>In this activity, you'll learn how to use the <code>computed()</code> function to create derived state that updates automatically when the underlying signals change.</p>
+<p>Let's enhance our user status system by adding computed values that derive information from our user status signal. The starter code now includes three status options: <code>&#39;online&#39;</code>, <code>&#39;away&#39;</code>, and <code>&#39;offline&#39;</code>.</p>
+<hr />
+
+
+    <ol class="docs-steps">
+      
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="import-computed-function">
+    <a href="#import-computed-function" class="docs-anchor" tabindex="-1" aria-label="Link to Import computed function">Import computed function</a>
+  </h3>
+  
+      <p>Add <code>computed</code> to your existing imports.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Add computed to existing imports</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">import</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {Component, signal, computed, ChangeDetectionStrategy} </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> '@angular/core'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span></code></pre>
+  </div>
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="create-a-computed-signal-for-notifications">
+    <a href="#create-a-computed-signal-for-notifications" class="docs-anchor" tabindex="-1" aria-label="Link to Create a computed signal for notifications">Create a computed signal for notifications</a>
+  </h3>
+  
+      <p>Add a computed signal that determines if notifications should be enabled based on user status.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">notificationsEnabled </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> computed</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">userStatus</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">===</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'online'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre>
+  </div><p>This computed signal will automatically recalculate whenever the <code>userStatus</code> signal changes. Notice how we call <code>this.userStatus()</code> inside the computed function to read the signal's value.</p>
+
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="create-a-computed-signal-for-a-descriptive-message">
+    <a href="#create-a-computed-signal-for-a-descriptive-message" class="docs-anchor" tabindex="-1" aria-label="Link to Create a computed signal for a descriptive message">Create a computed signal for a descriptive message</a>
+  </h3>
+  
+      <p>Add a computed signal that creates a descriptive message based on the user status.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">statusMessage </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> computed</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> status</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">userStatus</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  switch</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (status) {</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    case</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'online'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">return</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'Available for meetings and messages'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    case</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'away'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">return</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'Temporarily away, will respond soon'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    case</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'offline'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">return</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'Not available, check back later'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    default</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">return</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'Status unknown'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre>
+  </div><p>This shows how computed signals can handle more complex logic with switch statements and string transformations.</p>
+
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="create-a-computed-signal-that-calculates-working-hours-availability">
+    <a href="#create-a-computed-signal-that-calculates-working-hours-availability" class="docs-anchor" tabindex="-1" aria-label="Link to Create a computed signal that calculates working hours availability">Create a computed signal that calculates working hours availability</a>
+  </h3>
+  
+      <p>Add a computed signal that calculates if the user is within their working hours.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">isWithinWorkingHours </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> computed</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> now</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> new</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> Date</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> hour</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> now.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">getHours</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> isWeekday</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> now.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">getDay</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&gt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &amp;&amp;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> now.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">getDay</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&lt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 6</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  return</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> isWeekday </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&amp;&amp;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> hour </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&gt;=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 9</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &amp;&amp;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> hour </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&lt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 17</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &amp;&amp;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">userStatus</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">!==</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'offline'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre>
+  </div><p>This demonstrates how computed signals can perform calculations and combine multiple data sources. The value updates automatically when the <code>userStatus</code> changes.</p>
+
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="display-the-computed-values-in-the-template">
+    <a href="#display-the-computed-values-in-the-template" class="docs-anchor" tabindex="-1" aria-label="Link to Display the computed values in the template">Display the computed values in the template</a>
+  </h3>
+  
+      <p>The template already has placeholders showing "Loading...". Replace them with your computed signals:</p>
+
+    <ol class="docs-ordered-list">
+      <li>For notifications, replace <code>Loading...</code> with an @if block:</li>
+
+    </ol>
+    <div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">@if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">notificationsEnabled</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">()) {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  Enabled</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">} </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">@else</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  Disabled</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+    <ol class="docs-ordered-list">
+      <li>For the message, replace <code>Loading...</code> with:</li>
+
+    </ol>
+    <div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{{ </span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">statusMessage</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() }}</span></span></code></pre>
+  </div>
+    <ol class="docs-ordered-list">
+      <li>For working hours, replace <code>Loading...</code> with an @if block:</li>
+
+    </ol>
+    <div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">@if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">isWithinWorkingHours</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">()) {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  Yes</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">} </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">@else</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  No</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div><p>Notice how computed signals are called just like regular signals - with parentheses!</p>
+
+    </li>
+    
+    </ol>
+    <p>Excellent! You've now learned how to create computed signals.</p>
+<p>Here are some key points to remember:</p>
+
+  <ul class="docs-list">
+    <li><strong>Computed signals are reactive</strong>: They automatically update when their dependencies change</li>
+<li><strong>They're read-only</strong>: You can't directly set computed values, they're derived from other signals</li>
+<li><strong>They can contain complex logic</strong>: Use them for calculations, transformations, and derived state</li>
+<li><strong>They provide a way to make performant computations based on dynamic state</strong>: Angular only recalculates them when their dependencies actually change</li>
+
+  </ul>
+  <p>In the next lesson, you'll learn about <a href="/tutorials/signals/3-deriving-state-with-linked-signals">a different way to derive state with linkedSignals</a>!</p>

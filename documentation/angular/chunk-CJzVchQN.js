@@ -1,0 +1,1 @@
+import {l as lw,b as au,v as vb,c as cu}from'./main-QM4AHSJJ.js';var a=(()=>{class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=lw({type:e,selectors:[["app-heroes-list"]],decls:4,vars:0,template:function(t,s){t&1&&(au(0,"h3"),vb(1,"HEROES"),cu(),au(2,"p"),vb(3,"Get your heroes here"),cu());},encapsulation:2})}return e})();export{a as HeroesListComponent};

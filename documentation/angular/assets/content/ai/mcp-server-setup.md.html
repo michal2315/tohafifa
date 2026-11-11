@@ -1,0 +1,156 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">Angular CLI MCP Server setup</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/ai/mcp-server-setup.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    <p>The Angular CLI includes an experimental <a href="https://modelcontextprotocol.io/" target="_blank">Model Context Protocol (MCP) server</a> enabling AI assistants in your development environment to interact with the Angular CLI. We've included support for CLI powered code generation, adding packages, and more.</p>
+
+  <h2 id="available-tools">
+    <a href="#available-tools" class="docs-anchor" tabindex="-1" aria-label="Link to Available Tools">Available Tools</a>
+  </h2>
+  <p>The Angular CLI MCP server provides several tools to assist you in your development workflow. By default, the following tools are enabled:</p>
+
+  <div class="docs-table docs-scroll-track-transparent">
+    <table>
+      <thead>
+        <tr>
+<th align="left">Name</th>
+<th align="left">Description</th>
+<th align="center"><code>local-only</code></th>
+<th align="center"><code>read-only</code></th>
+</tr>
+
+      </thead>
+      <tbody>
+        <tr>
+<td align="left"><code>get_best_practices</code></td>
+<td align="left">Retrieves the Angular Best Practices Guide. This guide is essential for ensuring that all code adheres to modern standards, including standalone components, typed forms, and modern control flow.</td>
+<td align="center"><span class="docs-emoji">✅</span></td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="left"><code>list_projects</code></td>
+<td align="left">Lists the names of all applications and libraries defined within an Angular workspace. It reads the <code>angular.json</code> configuration file to identify the projects.</td>
+<td align="center"><span class="docs-emoji">✅</span></td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td align="left"><code>search_documentation</code></td>
+<td align="left">Searches the official Angular documentation at <a href="https://angular.dev" target="_blank">https://angular.dev</a>. This tool should be used to answer any questions about Angular, such as for APIs, tutorials, and best practices.</td>
+<td align="center"><span class="docs-emoji">❌</span></td>
+<td align="center">✅</td>
+</tr>
+
+      </tbody>
+    </table>
+  </div>
+  
+  <h2 id="get-started">
+    <a href="#get-started" class="docs-anchor" tabindex="-1" aria-label="Link to Get Started">Get Started</a>
+  </h2>
+  <p>To get started, run the following command in your terminal:</p>
+<div class="docs-code shell">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">ng</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> mcp</span></span></code></pre>
+  </div><p>When run from an interactive terminal, this command displays instructions on how to configure a host environment to use the MCP server. The following sections provide example configurations for several popular editors and tools.</p>
+
+  <h3 id="cursor">
+    <a href="#cursor" class="docs-anchor" tabindex="-1" aria-label="Link to Cursor">Cursor</a>
+  </h3>
+  <p>Create a file named <code>.cursor/mcp.json</code> in your project's root and add the following configuration. You can also configure it globally in <code>~/.cursor/mcp.json</code>.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "mcpServers"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "angular-cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "command"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"npx"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "args"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"-y"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"@angular/cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"mcp"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h3 id="firebase-studio">
+    <a href="#firebase-studio" class="docs-anchor" tabindex="-1" aria-label="Link to Firebase Studio">Firebase Studio</a>
+  </h3>
+  <p>Create a file named <code>.idx/mcp.json</code> in your project's root and add the following configuration:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "mcpServers"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "angular-cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "command"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"npx"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "args"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"-y"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"@angular/cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"mcp"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h3 id="gemini-cli">
+    <a href="#gemini-cli" class="docs-anchor" tabindex="-1" aria-label="Link to Gemini CLI">Gemini CLI</a>
+  </h3>
+  <p>Create a file named <code>.gemini/settings.json</code> in your project's root and add the following configuration:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "mcpServers"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "angular-cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "command"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"npx"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "args"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"-y"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"@angular/cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"mcp"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h3 id="jetbrains-ides">
+    <a href="#jetbrains-ides" class="docs-anchor" tabindex="-1" aria-label="Link to JetBrains IDEs">JetBrains IDEs</a>
+  </h3>
+  <p>In JetBrains IDEs (like IntelliJ IDEA or WebStorm), after installing the JetBrains AI Assistant plugin, go to <code>Settings | Tools | AI Assistant | Model Context Protocol (MCP)</code>. Add a new server (<code>+</code>) and select <code>As JSON</code>. Then paste the following configuration:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "mcpServers"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "angular-cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "command"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"npx"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "args"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"-y"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"@angular/cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"mcp"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div><p>For the most up-to-date instructions on configuring MCP servers, please refer to the JetBrains documentation: <a href="https://www.jetbrains.com/help/ai-assistant/mcp.html#connect-to-an-mcp-server" target="_blank">Connect to an MCP server</a>.</p>
+
+  <h3 id="vs-code">
+    <a href="#vs-code" class="docs-anchor" tabindex="-1" aria-label="Link to VS Code">VS Code</a>
+  </h3>
+  <p>In your project's root, create a file named <code>.vscode/mcp.json</code> and add the following configuration. Note the use of the <code>servers</code> property.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "servers"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "angular-cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "command"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"npx"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "args"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"-y"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"@angular/cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"mcp"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h3 id="other-ides">
+    <a href="#other-ides" class="docs-anchor" tabindex="-1" aria-label="Link to Other IDEs">Other IDEs</a>
+  </h3>
+  <p>For other IDEs, check your IDE's documentation for the proper location of the MCP configuration file (often <code>mcp.json</code>). The configuration should contain the following snippet.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "mcpServers"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "angular-cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "command"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"npx"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "args"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"-y"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"@angular/cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"mcp"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h2 id="command-options">
+    <a href="#command-options" class="docs-anchor" tabindex="-1" aria-label="Link to Command Options">Command Options</a>
+  </h2>
+  <p>The <code>mcp</code> command can be configured with the following options passed as arguments in your IDE's MCP configuration:</p>
+
+  <div class="docs-table docs-scroll-track-transparent">
+    <table>
+      <thead>
+        <tr>
+<th align="left">Option</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Default</th>
+</tr>
+
+      </thead>
+      <tbody>
+        <tr>
+<td align="left"><code>--read-only</code></td>
+<td align="left"><code>boolean</code></td>
+<td align="left">Only register tools that do not make changes to the project. Your editor or coding agent may still perform edits.</td>
+<td align="left"><code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>--local-only</code></td>
+<td align="left"><code>boolean</code></td>
+<td align="left">Only register tools that do not require an internet connection. Your editor or coding agent may still send data over the network.</td>
+<td align="left"><code>false</code></td>
+</tr>
+
+      </tbody>
+    </table>
+  </div>
+  <p>For example, to run the server in read-only mode in VS Code, you would update your <code>mcp.json</code> like this:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "servers"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "angular-cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "command"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"npx"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      "args"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"-y"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"@angular/cli"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"mcp"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"--read-only"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div>
+  <h2 id="feedback-and-new-ideas">
+    <a href="#feedback-and-new-ideas" class="docs-anchor" tabindex="-1" aria-label="Link to Feedback and New Ideas">Feedback and New Ideas</a>
+  </h2>
+  <p>The Angular team welcomes your feedback on the existing MCP capabilities and any ideas you have for new tools or features. Please share your thoughts by opening an issue on the <a href="https://github.com/angular/angular/issues" target="_blank">angular/angular GitHub repository</a>.</p>

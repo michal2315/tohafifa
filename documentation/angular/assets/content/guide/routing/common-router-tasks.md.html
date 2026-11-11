@@ -1,0 +1,201 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">Other common Routing Tasks</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/guide/routing/common-router-tasks.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    <p>This guide covers some other common tasks associated with using Angular router in your application.</p>
+
+  <h2 id="getting-route-information">
+    <a href="#getting-route-information" class="docs-anchor" tabindex="-1" aria-label="Link to Getting route information">Getting route information</a>
+  </h2>
+  <p>Often, as a user navigates your application, you want to pass information from one component to another.
+For example, consider an application that displays a shopping list of grocery items.
+Each item in the list has a unique <code>id</code>.
+To edit an item, users click an Edit button, which opens an <code>EditGroceryItem</code> component.
+You want that component to retrieve the <code>id</code> for the grocery item so it can display the right information to the user.</p>
+<p>Use a route to pass this type of information to your application components.
+To do so, you use the <a href="/api/router/withComponentInputBinding"><code>withComponentInputBinding</code></a> feature with <a href="/api/router/provideRouter"><code>provideRouter</code></a> or the <code>bindToComponentInputs</code> option of <a href="/api/router/RouterModule#forRoot"><code>RouterModule.forRoot</code></a>.</p>
+<p>To get information from a route:</p>
+
+    <ol class="docs-steps">
+      
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="add-withcomponentinputbinding">
+    <a href="#add-withcomponentinputbinding" class="docs-anchor" tabindex="-1" aria-label="Link to Add <code>withComponentInputBinding</code>">Add <code>withComponentInputBinding</code></a>
+  </h3>
+  
+      <p>Add the <a href="/api/router/withComponentInputBinding"><code>withComponentInputBinding</code></a> feature to the <a href="/api/router/provideRouter"><code>provideRouter</code></a> method.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">providers</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  <a href="/api/router/provideRouter">provideRouter</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(appRoutes, </span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"><a href="/api/router/withComponentInputBinding">withComponentInputBinding</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">()),</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span></code></pre>
+  </div>
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="add-an-input-to-the-component">
+    <a href="#add-an-input-to-the-component" class="docs-anchor" tabindex="-1" aria-label="Link to Add an <code>input</code> to the component">Add an <code>input</code> to the component</a>
+  </h3>
+  
+      <p>Update the component to have an <a href="/api/core/input"><code>input()</code></a> property matching the name of the parameter.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">id </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> <a href="/api/core/input">input</a>.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">required</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">string</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;()</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">hero </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/computed">computed</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.service.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">getHero</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">id</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">()));</span></span></code></pre>
+  </div>
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="optional-use-a-default-value">
+    <a href="#optional-use-a-default-value" class="docs-anchor" tabindex="-1" aria-label="Link to Optional: Use a default value">Optional: Use a default value</a>
+  </h3>
+  
+      <p>The router assigns values to all inputs based on the current route when <a href="/api/router/withComponentInputBinding"><code>withComponentInputBinding</code></a> is enabled.
+The router assigns <code>undefined</code> if no route data matches the input key, such as when an optional query parameter is missing.
+You should include <code>undefined</code> in the <a href="/api/core/input"><code>input</code></a>'s type when there's a possibility that an input might not be matched by the route.</p>
+<p>Provide a default value by either using the <code>transform</code> option on the input or managing a local state with a <a href="/api/core/linkedSignal"><code>linkedSignal</code></a>.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">id </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> <a href="/api/core/input">input</a>.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">required</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  transform</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">maybeUndefined</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> string</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> undefined</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> maybeUndefined </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">??</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> '0'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">});</span></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// or</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">id </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/input">input</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">string</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">|</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">undefined</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;();</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">internalId </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/linkedSignal">linkedSignal</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">id</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">??</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> getDefaultId</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">());</span></span></code></pre>
+  </div>
+    </li>
+    
+    </ol>
+    
+    <div class="docs-alert docs-alert-note">
+    <p><strong>NOTE:</strong> You can bind all route data with key, value pairs to component inputs: static or resolved route data, path parameters, matrix parameters, and query parameters.
+If you want to use the parent components route info you will need to set the router <code>paramsInheritanceStrategy</code> option:
+<code>withRouterConfig({paramsInheritanceStrategy: &#39;always&#39;})</code> . See <a href="guide/routing/customizing-route-behavior#router-configuration-options">router configuration options</a> for details on other available settings.</p>
+
+    </div>
+    
+  <h2 id="displaying-a-404-page">
+    <a href="#displaying-a-404-page" class="docs-anchor" tabindex="-1" aria-label="Link to Displaying a 404 page">Displaying a 404 page</a>
+  </h2>
+  <p>To display a 404 page, set up a <a href="guide/routing/common-router-tasks#setting-up-wildcard-routes">wildcard route</a> with the <code>component</code> property set to the component you'd like to use for your 404 page as follows:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> routes</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/router/Routes">Routes</a></span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  { path: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'first-component'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, component: FirstComponent },</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  { path: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'second-component'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, component: SecondComponent },</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  { path: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'**'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, component: PageNotFoundComponent },  </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Wildcard route for a 404 page</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">];</span></span></code></pre>
+  </div><p>The last route with the <code>path</code> of <code>**</code> is a wildcard route.
+The router selects this route if the requested URL doesn't match any of the paths earlier in the list and sends the user to the <code>PageNotFoundComponent</code>.</p>
+
+  <h2 id="link-parameters-array">
+    <a href="#link-parameters-array" class="docs-anchor" tabindex="-1" aria-label="Link to Link parameters array">Link parameters array</a>
+  </h2>
+  <p>A link parameters array holds the following ingredients for router navigation:</p>
+
+  <ul class="docs-list">
+    <li>The path of the route to the destination component</li>
+<li>Required and optional route parameters that go into the route URL</li>
+
+  </ul>
+  <p>Bind the <a href="/api/router/RouterLink"><code>RouterLink</code></a> directive to such an array like this:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [routerLink]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"['/heroes']"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Heroes&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div><p>The following is a two-element array when specifying a route parameter:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [routerLink]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"['/hero', hero.id]"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">span</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"badge"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;{{ hero.id }}&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">span</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;{{ hero.name }}</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div><p>Provide optional route parameters in an object, as in <code>{ foo: &#39;foo&#39; }</code>:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [routerLink]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"['/crisis-center', { foo: 'foo' }]"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Crisis Center&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div><p>This syntax passes matrix parameters, which are optional parameters associated with a specific URL segment. Learn more about <a href="/guide/routing/read-route-state#matrix-parameters">matrix parameters</a>.</p>
+<p>These three examples cover the needs of an application with one level of routing.
+However, with a child router, such as in the crisis center, you create new link array possibilities.</p>
+<p>The following minimal <a href="/api/router/RouterLink"><code>RouterLink</code></a> example builds upon a specified default child route for the crisis center.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [routerLink]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"['/crisis-center']"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Crisis Center&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div><p>Review the following:</p>
+
+  <ul class="docs-list">
+    <li>The first item in the array identifies the parent route (<code>/crisis-center</code>)</li>
+<li>There are no parameters for this parent route</li>
+<li>There is no default for the child route so you need to pick one</li>
+<li>You're navigating to the <code>CrisisListComponent</code>, whose route path is <code>/</code>, but you don't need to explicitly add the slash</li>
+
+  </ul>
+  <p>Consider the following router link that navigates from the root of the application down to the Dragon Crisis:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [routerLink]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"['/crisis-center', 1]"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Dragon Crisis&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div>
+  <ul class="docs-list">
+    <li>The first item in the array identifies the parent route (<code>/crisis-center</code>)</li>
+<li>There are no parameters for this parent route</li>
+<li>The second item identifies the child route details about a particular crisis (<code>/:id</code>)</li>
+<li>The details child route requires an <code>id</code> route parameter</li>
+<li>You added the <code>id</code> of the Dragon Crisis as the second item in the array (<code>1</code>)</li>
+<li>The resulting path is <code>/crisis-center/1</code></li>
+
+  </ul>
+  <p>You could also redefine the <code>AppComponent</code> template with Crisis Center routes exclusively:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">@</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"><a href="/api/core/Component">Component</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  template: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">`</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">h1</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"title"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Angular Router&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">h1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">nav</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [routerLink]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"['/crisis-center']"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Crisis Center&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [routerLink]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"['/crisis-center/1', { foo: 'foo' }]"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Dragon Crisis&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> [routerLink]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"['/crisis-center/2']"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Shark Crisis&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">nav</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">router-outlet</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> /&gt;</span></span><span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">  `</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">})</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">export</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> AppComponent</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {}</span></span></code></pre>
+  </div><p>In summary, you can write applications with one, two or more levels of routing.
+The link parameters array affords the flexibility to represent any routing depth and any legal sequence of route paths, (required) router parameters, and (optional) route parameter objects.</p>
+
+  <h2 id="locationstrategy-and-browser-url-styles">
+    <a href="#locationstrategy-and-browser-url-styles" class="docs-anchor" tabindex="-1" aria-label="Link to <code>LocationStrategy</code> and browser URL styles"><code>LocationStrategy</code> and browser URL styles</a>
+  </h2>
+  <p>When the router navigates to a new component view, it updates the browser's location and history with a URL for that view.</p>
+<p>Modern HTML5 browsers support <a href="https://developer.mozilla.org/docs/Web/API/History_API/Working_with_the_History_API#adding_and_modifying_history_entries" title="HTML5 browser history push-state" target="_blank">history.pushState</a>, a technique that changes a browser's location and history without triggering a server page request.
+The router can compose a "natural" URL that is indistinguishable from one that would otherwise require a page load.</p>
+<p>Here's the Crisis Center URL in this "HTML5 pushState" style:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span>localhost:3002/crisis-center</span></span></code></pre>
+  </div><p>Older browsers send page requests to the server when the location URL changes unless the change occurs after a "#" (called the "hash").
+Routers can take advantage of this exception by composing in-application route URLs with hashes.
+Here's a "hash URL" that routes to the Crisis Center.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span>localhost:3002/src/#/crisis-center</span></span></code></pre>
+  </div><p>The router supports both styles with two <a href="/api/common/LocationStrategy"><code>LocationStrategy</code></a> providers:</p>
+
+  <div class="docs-table docs-scroll-track-transparent">
+    <table>
+      <thead>
+        <tr>
+<th align="left">Providers</th>
+<th align="left">Details</th>
+</tr>
+
+      </thead>
+      <tbody>
+        <tr>
+<td align="left"><a href="/api/common/PathLocationStrategy"><code>PathLocationStrategy</code></a></td>
+<td align="left">The default "HTML5 pushState" style.</td>
+</tr>
+<tr>
+<td align="left"><a href="/api/common/HashLocationStrategy"><code>HashLocationStrategy</code></a></td>
+<td align="left">The "hash URL" style.</td>
+</tr>
+
+      </tbody>
+    </table>
+  </div>
+  <p>The <a href="/api/router/RouterModule#forRoot"><code>RouterModule.forRoot()</code></a> function sets the <a href="/api/common/LocationStrategy"><code>LocationStrategy</code></a> to the <a href="/api/common/PathLocationStrategy"><code>PathLocationStrategy</code></a>, which makes it the default strategy.
+You also have the option of switching to the <a href="/api/common/HashLocationStrategy"><code>HashLocationStrategy</code></a> with an override during the bootstrapping process.</p>
+
+    <div class="docs-alert docs-alert-helpful">
+    <p><strong>HELPFUL:</strong> For more information on providers and the bootstrap process, see <a href="guide/di/dependency-injection-providers">Dependency Injection</a>.</p>
+
+    </div>
+    

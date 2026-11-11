@@ -1,0 +1,134 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">Two-way binding with model signals</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/tutorials/signals/steps/6-two-way-binding-with-model-signals/README.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    <p>Now that you've learned <a href="/tutorials/signals/5-component-communication-with-signals">passing data to components with input signals</a>, let's explore Angular's <code>model()</code> API for two-way binding. Model signals are perfect for UI components like checkboxes, sliders, or custom form controls where the component needs to both receive a value AND update it.</p>
+<p>In this activity, you'll create a custom checkbox component that manages its own state while keeping the parent synchronized.</p>
+<hr />
+
+
+    <ol class="docs-steps">
+      
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="set-up-the-custom-checkbox-with-model-signal">
+    <a href="#set-up-the-custom-checkbox-with-model-signal" class="docs-anchor" tabindex="-1" aria-label="Link to Set up the custom checkbox with model signal">Set up the custom checkbox with model signal</a>
+  </h3>
+  
+      <p>Create a model signal in the <code>custom-checkbox</code> component that can both receive and update the parent's value.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Add imports for model signals</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">import</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {Component, model, input} </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> '@angular/core'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Model signal for two-way binding</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">checked </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> model.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">required</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">boolean</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;();</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Optional input for label</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">label </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> input</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">string</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">''</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre>
+  </div><p>Unlike <code>input()</code> signals which are read-only, <code>model()</code> signals can be both read and written to.</p>
+
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="create-the-checkbox-template">
+    <a href="#create-the-checkbox-template" class="docs-anchor" tabindex="-1" aria-label="Link to Create the checkbox template">Create the checkbox template</a>
+  </h3>
+  
+      <p>Build the checkbox template that responds to clicks and updates its own model.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">label</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"custom-checkbox"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">input</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">    type</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"checkbox"</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">    [checked]</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"checked()"</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">    (change)</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"toggle()"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">span</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"checkmark"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">span</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  {{ label() }}</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">label</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div><p>The component reads from its model signal and has a method to update it.</p>
+
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="add-the-toggle-method">
+    <a href="#add-the-toggle-method" class="docs-anchor" tabindex="-1" aria-label="Link to Add the toggle method">Add the toggle method</a>
+  </h3>
+  
+      <p>Implement the toggle method that updates the model signal when the checkbox is clicked.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">toggle</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() {</span></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">  // This updates BOTH the component's state AND the parent's model!</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.checked.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">set</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">!</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">checked</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">());</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div><p>When the child component calls <code>this.checked.set()</code>, it automatically propagates the change back to the parent. This is the key difference from <code>input()</code> signals.</p>
+
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="set-up-two-way-binding-in-the-parent">
+    <a href="#set-up-two-way-binding-in-the-parent" class="docs-anchor" tabindex="-1" aria-label="Link to Set up two-way binding in the parent">Set up two-way binding in the parent</a>
+  </h3>
+  
+      <p>First, uncomment the model signal properties and methods in <code>app.ts</code>:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Parent signal models</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">agreedToTerms </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> model</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">false</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">enableNotifications </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> model</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Methods to test two-way binding</span></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">toggleTermsFromParent</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.agreedToTerms.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">set</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">!</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">agreedToTerms</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">());</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">resetAll</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() {</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.agreedToTerms.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">set</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">false</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.enableNotifications.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">set</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">false</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div><p>Then update the template:</p>
+<p>Part 1. <strong>Uncomment the checkboxes and add two-way binding:</strong></p>
+
+  <ul class="docs-list">
+    <li>Replace <code>___ADD_TWO_WAY_BINDING___</code> with <code>[(checked)]=&quot;agreedToTerms&quot;</code> for the first checkbox</li>
+<li>Replace <code>___ADD_TWO_WAY_BINDING___</code> with <code>[(checked)]=&quot;enableNotifications&quot;</code> for the second</li>
+
+  </ul>
+  <p>Part 2. <strong>Replace the <code>???</code> placeholders with @if blocks:</strong></p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">@if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">agreedToTerms</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">()) {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  Yes</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">} </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">@else</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  No</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div><p>Part 3. <strong>Add click handlers to the buttons:</strong></p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> (click)</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"toggleTermsFromParent()"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Toggle Terms from Parent&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> (click)</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"resetAll()"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Reset All&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div><p>The <code>[(checked)]</code> syntax creates two-way binding - data flows down to the component AND changes flow back up to the parent by emitting an event that references the signal itself and does <em>not</em> call the signal getter directly.</p>
+
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="test-the-two-way-binding">
+    <a href="#test-the-two-way-binding" class="docs-anchor" tabindex="-1" aria-label="Link to Test the two-way binding">Test the two-way binding</a>
+  </h3>
+  
+      <p>Interact with your app to see two-way binding in action:</p>
+
+    <ol class="docs-ordered-list">
+      <li><strong>Click checkboxes</strong> - Component updates its own state and notifies parent</li>
+<li><strong>Click "Toggle Terms from Parent"</strong> - Parent updates propagate down to component</li>
+<li><strong>Click "Reset All"</strong> - Parent resets both models and components update automatically</li>
+
+    </ol>
+    <p>Both the parent and child can update the shared state, and both stay in sync automatically!</p>
+
+    </li>
+    
+    </ol>
+    <p>Perfect! You've learned how model signals enable two-way binding:</p>
+
+  <ul class="docs-list">
+    <li><strong>Model signals</strong> - Use <code>model()</code> and <code>model.required()</code> for values that can be both read and written</li>
+<li><strong>Two-way binding</strong> - Use <code>[(property)]</code> syntax to bind parent signals to child models</li>
+<li><strong>Perfect for UI components</strong> - Checkboxes, form controls, and widgets that need to manage their own state</li>
+<li><strong>Automatic synchronization</strong> - Parent and child stay in sync without manual event handling</li>
+
+  </ul>
+  <p><strong>When to use <code>model()</code> vs <code>input()</code>:</strong></p>
+
+  <ul class="docs-list">
+    <li>Use <code>input()</code> for data that only flows down (display data, configuration)</li>
+<li>Use <code>model()</code> for UI components that need to update their own value (form controls, toggles)</li>
+
+  </ul>
+  <p>In the next lesson, you'll learn about <a href="/tutorials/signals/7-using-signals-with-services">using signals with services</a>!</p>

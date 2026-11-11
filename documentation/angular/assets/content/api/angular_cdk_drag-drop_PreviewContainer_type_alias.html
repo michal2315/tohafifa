@@ -1,0 +1,18 @@
+<div class="docs-api"><header class="docs-reference-header"><span class="docs-reference-category">@angular/cdk/drag-drop</span><div class="docs-reference-title"><div><h1>PreviewContainer</h1><div class="docs-api-item-label type-type_alias full">Type Alias</div></div><a class="docs-github-links" target="_blank" href="https://github.com/angular/components/blob/main/src/cdk/drag-drop/drag-ref.ts#L125-L125" title="View source" aria-label="View source"><i role="presentation" aria-hidden="true" class="material-symbols-outlined">code</i></a></div><section class="docs-reference-description"><p>Possible places into which the preview of a drag item can be inserted.</p>
+
+  <ul class="docs-list">
+    <li><code>global</code> - Preview will be inserted at the bottom of the <code>&lt;body&gt;</code>. The advantage is that
+you don't have to worry about <code>overflow: hidden</code> or <code>z-index</code>, but the item won't retain
+its inherited styles.</li>
+<li><code>parent</code> - Preview will be inserted into the parent of the drag item. The advantage is that
+inherited styles will be preserved, but it may be clipped by <code>overflow: hidden</code> or not be
+visible due to <code>z-index</code>. Furthermore, the preview is going to have an effect over selectors
+like <code>:nth-child</code> and some flexbox configurations.</li>
+<li><code>ElementRef&lt;HTMLElement&gt; | HTMLElement</code> - Preview will be inserted into a specific element.
+Same advantages and disadvantages as <code>parent</code>.</li>
+
+  </ul></section></header><div class="docs-reference-section docs-reference-api-section"><h2 id="api" class="docs-reference-section-heading"><a href="#api" aria-label="Link to API section" tabindex="-1">API</a></h2><div class="docs-code"><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0">
+    <code>
+      <span class="line "><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">type</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/cdk/drag-drop/PreviewContainer">PreviewContainer</a></span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'global'</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'parent'</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> <a href="/api/core/ElementRef">ElementRef</a></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">HTMLElement</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">> </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">|</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> HTMLElement</span></span>
+    </code>
+    </pre></div></div></div>

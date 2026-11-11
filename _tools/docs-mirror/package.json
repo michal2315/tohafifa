@@ -1,0 +1,9 @@
+{
+  "name": "docs-mirror",
+  "private": true,
+  "type": "module",
+  "description": "Records offline copies of documentation sites with headless Chrome",
+  "dependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}

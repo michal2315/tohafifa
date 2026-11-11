@@ -1,0 +1,1 @@
+import{O as p,u as Et}from"./main-MGM3KLFF.js";function f(r,e){return({queryParams:o,fragment:t})=>p(Et).createUrlTree([r],{queryParams:o,fragment:t??e})}function g(r,e){return({queryParams:o,fragment:t})=>{let[i,m]=(t&&e[t]||r).split(`#`);return p(Et).createUrlTree([i],{queryParams:o,fragment:m})}}export{g as n,f as t};

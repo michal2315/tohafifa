@@ -1,0 +1,1 @@
+import {ActorFormComponent as Z}from'./chunk-BbS2DdFN.js';import {l as lw,m as mm}from'./main-QM4AHSJJ.js';var a=(()=>{class e{static \u0275fac=function(o){return new(o||e)};static \u0275cmp=lw({type:e,selectors:[["app-root"]],decls:1,vars:0,template:function(o,m){o&1&&mm(0,"app-actor-form");},dependencies:[Z],encapsulation:2})}return e})();export{a as AppComponent};

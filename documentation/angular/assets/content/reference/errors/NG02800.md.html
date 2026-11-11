@@ -1,0 +1,27 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">JSONP support in HttpClient configuration</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/reference/errors/NG02800.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    <p>Angular produces this error when you attempt a <code>JSONP</code> request without providing the necessary support for it in the <a href="/api/common/http/HttpClient"><code>HttpClient</code></a> configuration.
+To enable <code>JSONP</code> support, you can do one of the following:</p>
+
+  <ul class="docs-list">
+    <li>add the <a href="/api/common/http/withJsonpSupport"><code>withJsonpSupport()</code></a> as an argument during the <a href="/api/common/http/provideHttpClient"><code>provideHttpClient</code></a> function call (e.g. <code>provideHttpClient(withJsonpSupport())</code>) when <a href="/api/platform-browser/bootstrapApplication"><code>bootstrapApplication</code></a> is useddocs</li>
+<li>import the <a href="/api/common/http/HttpClientJsonpModule"><code>HttpClientJsonpModule</code></a> in your root AppModule, when NgModule-based bootstrap is used.</li>
+
+  </ul>
+  
+  <h2 id="debugging-the-error">
+    <a href="#debugging-the-error" class="docs-anchor" tabindex="-1" aria-label="Link to Debugging the error">Debugging the error</a>
+  </h2>
+  <p>Make sure that the JSONP support is added into your application either by calling the <a href="/api/common/http/withJsonpSupport"><code>withJsonpSupport</code></a> function (when <a href="/api/common/http/provideHttpClient"><code>provideHttpClient</code></a> is used) or importing the <a href="/api/common/http/HttpClientJsonpModule"><code>HttpClientJsonpModule</code></a> module as described above.</p>

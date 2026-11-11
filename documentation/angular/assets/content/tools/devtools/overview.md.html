@@ -1,0 +1,85 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">DevTools Overview</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/tools/devtools/overview.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    <p>Angular DevTools is a browser extension that provides debugging and profiling capabilities for Angular applications.</p>
+
+    <div class="docs-video-container">
+      <iframe
+      class="docs-video"
+      src="https://www.youtube.com/embed/bavWOHZM6zE"
+      
+      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      credentialless
+      title="Video player"
+      ></iframe>
+    </div>
+    <p>Install Angular DevTools from the <a href="https://chrome.google.com/webstore/detail/angular-developer-tools/ienfalfjdbdpebioblfackkekamfmbnh" target="_blank">Chrome Web Store</a> or from <a href="https://addons.mozilla.org/firefox/addon/angular-devtools/" target="_blank">Firefox Addons</a>.</p>
+<p>You can open Chrome or Firefox DevTools on any web page by pressing <kbd>F12</kbd> or <kbd><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd></kbd> (Windows or Linux) and <kbd><kbd>Fn</kbd>+<kbd>F12</kbd></kbd> or <kbd><kbd>Cmd</kbd>+<kbd>Option</kbd>+<kbd>I</kbd></kbd> (Mac).
+Once browser DevTools is open and Angular DevTools is installed, you can find it under the "Angular" tab.</p>
+
+    <div class="docs-alert docs-alert-helpful">
+    <p><strong>HELPFUL:</strong> Chrome's new tab page does not run installed extensions, so the Angular tab will not appear in DevTools. Visit any other page to see it.</p>
+
+    </div>
+    <img src="assets/images/guide/devtools/devtools.png" alt="An overview of Angular DevTools showing a tree of components for an application.">
+
+
+  <h2 id="open-your-application">
+    <a href="#open-your-application" class="docs-anchor" tabindex="-1" aria-label="Link to Open your application">Open your application</a>
+  </h2>
+  <p>When you open the extension, you'll see two additional tabs:</p>
+
+  <div class="docs-table docs-scroll-track-transparent">
+    <table>
+      <thead>
+        <tr>
+<th align="left">Tabs</th>
+<th align="left">Details</th>
+</tr>
+
+      </thead>
+      <tbody>
+        <tr>
+<td align="left"><a href="tools/devtools/component">Components</a></td>
+<td align="left">Lets you explore the components and directives in your application and preview or edit their state.</td>
+</tr>
+<tr>
+<td align="left"><a href="tools/devtools/profiler">Profiler</a></td>
+<td align="left">Lets you profile your application and understand what the performance bottleneck is during change detection execution.</td>
+</tr>
+
+      </tbody>
+    </table>
+  </div>
+  <!-- TODO: Add new sections like signals, router etc. -->
+
+<img src="assets/images/guide/devtools/devtools-tabs.png" alt="A screenshot of the top of Angular DevTools illustrating two tabs in the upper-left corner, one labeled 'Components' and another labeled 'Profiler'.">
+
+<p>In the top-right corner of Angular DevTools you'll find which version of Angular is running on the page as well as the latest commit hash for the extension.</p>
+
+  <h3 id="angular-application-not-detected">
+    <a href="#angular-application-not-detected" class="docs-anchor" tabindex="-1" aria-label="Link to Angular application not detected">Angular application not detected</a>
+  </h3>
+  <p>If you see an error message "Angular application not detected" when opening Angular DevTools, this means it is not able to communicate with an Angular app on the page.
+The most common reason for this is because the web page you are inspecting does not contain an Angular application.
+Double check that you are inspecting the right web page and that the Angular app is running.</p>
+
+  <h3 id="we-detected-an-application-built-with-production-configuration">
+    <a href="#we-detected-an-application-built-with-production-configuration" class="docs-anchor" tabindex="-1" aria-label="Link to We detected an application built with production configuration">We detected an application built with production configuration</a>
+  </h3>
+  <p>If you see an error message "We detected an application built with production configuration. Angular DevTools only supports development builds.", this means that an Angular application was found on the page, but it was compiled with production optimizations.
+When compiling for production, Angular CLI removes various debug features to minimize the amount of the JavaScript on the page to improve performance. This includes features needed to communicate with DevTools.</p>
+<p>To run DevTools, you need to compile your application with optimizations disabled. <code>ng serve</code> does this by default.
+If you need to debug a deployed application, disable optimizations in your build with the <a href="reference/configs/workspace-config#optimization-configuration"><code>optimization</code> configuration option</a> (<code>{&quot;optimization&quot;: false}</code>).</p>

@@ -1,0 +1,110 @@
+
+    <header class="docs-header">
+      <docs-breadcrumb></docs-breadcrumb>
+
+      
+  <!-- Page title -->
+  <div class="docs-page-title">
+    <h1 tabindex="-1">Deriving state with linked signals</h1>
+    <a class="docs-github-links" target="_blank" href="https://github.com/angular/angular/edit/main/adev/src/content/tutorials/signals/steps/3-deriving-state-with-linked-signals/README.md" title="Edit this page" aria-label="Edit this page">
+      <!-- Pencil -->
+      <docs-icon role="presentation">edit</docs-icon>
+    </a>
+  </div>
+    </header>
+    <p>Now that you've learned <a href="/tutorials/signals/2-deriving-state-with-computed-signals">how to derive state with computed signals</a>, you created a computed signal for <code>notificationsEnabled</code> that automatically followed your user status. But what if users want to manually disable notifications even when they're online? That's where linked signals come in.</p>
+<p>Linked signals are writable signals that maintain a reactive connection to their source signals. They're perfect for creating state that normally follows a computation but can be overridden when needed.</p>
+<p>In this activity, you'll learn how <code>linkedSignal()</code> differs from <code>computed()</code> by enhancing the previous user status system's computed <code>notificationsEnabled</code> to a writable linked signal.</p>
+<hr />
+
+
+    <ol class="docs-steps">
+      
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="import-linkedsignal-function">
+    <a href="#import-linkedsignal-function" class="docs-anchor" tabindex="-1" aria-label="Link to Import linkedSignal function">Import linkedSignal function</a>
+  </h3>
+  
+      <p>Add <code>linkedSignal</code> to your existing imports.</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Add linkedSignal to existing imports</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">import</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {Component, signal, computed, linkedSignal, ChangeDetectionStrategy} </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> '@angular/core'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span></code></pre>
+  </div>
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="convert-computed-to-linkedsignal-with-the-same-expression">
+    <a href="#convert-computed-to-linkedsignal-with-the-same-expression" class="docs-anchor" tabindex="-1" aria-label="Link to Convert computed to linkedSignal with the same expression">Convert computed to linkedSignal with the same expression</a>
+  </h3>
+  
+      <p>Replace the computed <code>notificationsEnabled</code> with a linkedSignal using the exact same expression:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Previously (from lesson 2):</span></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// notificationsEnabled = computed(() =&gt; this.userStatus() === 'online');</span></span><span class="line"></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// Now with linkedSignal - same expression, but writable:</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">notificationsEnabled </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> linkedSignal</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">userStatus</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">===</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 'online'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre>
+  </div><p>The expression is identical, but linkedSignal creates a writable signal. It will still automatically update when <code>userStatus</code> changes, but you can also set it manually.</p>
+
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="add-a-method-to-manually-toggle-notifications">
+    <a href="#add-a-method-to-manually-toggle-notifications" class="docs-anchor" tabindex="-1" aria-label="Link to Add a method to manually toggle notifications">Add a method to manually toggle notifications</a>
+  </h3>
+  
+      <p>Add a method to demonstrate that linked signals can be written to directly:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">toggleNotifications</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">() {</span></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">  // This works with linkedSignal but would error with computed!</span></span><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.notificationsEnabled.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">set</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">!</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">this</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">notificationsEnabled</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">());</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+  </div><p>This is the key difference: computed signals are read-only, but linked signals can be updated manually while still maintaining their reactive connection.</p>
+
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="update-the-template-to-add-manual-notification-control">
+    <a href="#update-the-template-to-add-manual-notification-control" class="docs-anchor" tabindex="-1" aria-label="Link to Update the template to add manual notification control">Update the template to add manual notification control</a>
+  </h3>
+  
+      <p>Update your template to add a toggle button for notifications:</p>
+<div class="docs-code">
+    
+    <pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">div</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"status-info"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">div</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"notifications"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">strong</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Notifications:&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">strong</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    @if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">notificationsEnabled</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">()) {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      Enabled</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">@else</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      Disabled</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> (click)</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"toggleNotifications()"</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"override-btn"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">      @if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">notificationsEnabled</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">()) {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        Disable</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">@else</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        Enable</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      }</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">button</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">div</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">  &lt;!-- existing message and working-hours divs remain --&gt;</span></span><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">div</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre>
+  </div>
+    </li>
+    
+    <li>
+      <span class="docs-step-number" aria-hidden="true"></span>
+      
+  <h3 id="observe-the-reactive-behavior">
+    <a href="#observe-the-reactive-behavior" class="docs-anchor" tabindex="-1" aria-label="Link to Observe the reactive behavior">Observe the reactive behavior</a>
+  </h3>
+  
+      <p>Now test the behavior:</p>
+
+    <ol class="docs-ordered-list">
+      <li>Change the user status - notice how <code>notificationsEnabled</code> updates automatically</li>
+<li>Manually toggle notifications - it overrides the computed value</li>
+<li>Change status again - the linked signal re-syncs with its computation</li>
+
+    </ol>
+    <p>This demonstrates that linked signals maintain their reactive connection even after being manually set!</p>
+
+    </li>
+    
+    </ol>
+    <p>Excellent! You've learned the key differences between computed and linked signals:</p>
+
+  <ul class="docs-list">
+    <li><strong>Computed signals</strong>: Read-only, always derived from other signals</li>
+<li><strong>Linked signals</strong>: Writable, can be both derived AND manually updated</li>
+<li><strong>Use computed when</strong>: The value should always be calculated</li>
+<li><strong>Use linkedSignal when</strong>: You need a default computation that can be overridden</li>
+
+  </ul>
+  <p>In the next lesson, you'll learn <a href="/tutorials/signals/4-managing-async-data-with-signals">how to manage async data with signals</a>!</p>

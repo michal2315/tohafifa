@@ -117,6 +117,8 @@ store/posts/
   posts.state.ts
 ```
 
+It's `reducer`, singular: a slice has one reducer.
+
 ### Actions: `createActionGroup`
 
 ```ts

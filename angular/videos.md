@@ -20,6 +20,6 @@ These are links to YouTube and need internet access.
 | 13. Entity | [NgRx Entity: simplify your NgRx state](https://youtu.be/XIWFh0wN9Zs), Monsterlessons Academy | 10 min | Entity state, the adapter and its selectors | |
 | Architecture | [Are your Angular components DUMB enough?](https://youtu.be/9QU_GzcU184), Joshua Morony | 5 min | Splitting a component that does everything into a smart container and presentational components | Week 1: exactly how the feed is built |
 | PrimeNG | [PrimeNG v18 preview](https://youtu.be/KoNtRy3C5uY), Cagatay Civici (PrimeNG creator) | 10 min | Styled mode and theming with design tokens | Same theming system as v20 |
-| PrimeNG | [PrimeNG PassThrough attributes](https://youtu.be/ehHZ2ip8RXQ), Cagatay Civici | 11 min | Adding your own classes to a component's inner elements | How to style PrimeNG with our classes |
+| PrimeNG | [PrimeNG PassThrough attributes](https://youtu.be/ehHZ2ip8RXQ), Cagatay Civici | 11 min | Adding attributes and classes to a component's inner elements | Use `pt` for attributes. Classes added this way can't be styled from component SCSS: see `guide/06-primeng-styled-mode.md` |
 
 Total: about 3 hours.

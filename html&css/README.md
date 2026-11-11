@@ -1,6 +1,6 @@
 # HTML & SCSS stage: resources
 
-Material for the HTML & SCSS stage of the training. The stage ends with the Instagram feed page built from an XD design. Everything here works on the closed network: no file loads anything from the internet.
+Material for the HTML & SCSS stage of the training. The stage ends with the Instagram feed page built from an XD design. Everything here works on the closed network: no file loads anything from the internet. The one exception is `videos.md`, which only links to YouTube.
 
 ## What's here
 
@@ -9,6 +9,7 @@ html&css/
 ├── reading/        67 reading pages (Markdown, ready for Docusaurus), grouped by module
 ├── games/          Flexbox Froggy, Grid Garden, CSS Diner: cleaned for offline use
 ├── quizzes/        77-question bank: placement quiz + one quiz per module (see quizzes/README.md)
+├── videos.md       recommended videos and an optional beginner course (YouTube links, need internet)
 ├── LICENSES/       license texts that must travel with the material
 └── SOURCES.md      where every item came from, its version and license
 ```

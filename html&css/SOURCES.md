@@ -128,3 +128,7 @@ All pages were converted from the live sites (web.dev, developer.mozilla.org, sa
 | Page | Level | Source | License |
 |---|---|---|---|
 | [Color contrast](reading/05-design-to-code/01-color-contrast.md) | required | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Guides/Understanding_WCAG/Perceivable/Color_contrast) | CC BY-SA 2.5 |
+
+## Videos
+
+`videos.md` only links to YouTube. No video is downloaded or stored here.

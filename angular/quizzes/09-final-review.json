@@ -38,53 +38,66 @@
     },
     {
       "id": "final-02",
-      "type": "spot-the-bug",
-      "topic": "routing",
+      "type": "find-all-bugs",
+      "topic": "templates",
       "difficulty": 2,
       "placement": false,
-      "prompt": "The build fails with \"Can't bind to 'routerLink' since it isn't a known property of 'a'\". Click the buggy line.",
+      "prompt": "Code review: some lines of this template don't work as intended. Click every one of them.",
       "context": {
-        "lang": "html",
-        "label": "post-header.component.html",
-        "source": "<div class=\"post-header\">\n  <app-avatar [imageUrl]=\"author().imageUrl\" [username]=\"author().username\" />\n  <a class=\"username\" [routerLink]=\"['/profile', author().username]\">{{ author().username }}</a>\n</div>\n"
+        "lang": "ts",
+        "label": "post-card.component.ts",
+        "source": "export class PostCardComponent {\n  readonly post = input.required<Post>();\n  readonly isLiked = input(false);\n  readonly comments = input<Comment[]>([]);\n  readonly liked = output<void>();\n\n  like() {\n    this.liked.emit();\n  }\n}\n"
       },
       "code": {
-        "lang": "ts",
-        "label": "post-header.component.ts",
-        "source": "@Component({\n  selector: 'app-post-header',\n  imports: [AvatarComponent],\n  templateUrl: './post-header.component.html',\n  styleUrl: './post-header.component.scss',\n})\nexport class PostHeaderComponent {\n  readonly author = input.required<Author>();\n  readonly createdAt = input.required<string>();\n}\n"
+        "lang": "html",
+        "label": "post-card.component.html",
+        "source": "<div class=\"post-card\">\n  <app-post-header [post]=\"post\" />\n  @if (isLiked) {\n    <i class=\"pi pi-heart-fill\"></i>\n  }\n  <button class=\"like-button\" type=\"button\" (click)=\"like\">Like</button>\n  @for (comment of comments(); track comment.id) {\n    <app-comment [comment]=\"comment\" />\n  }\n  <span class=\"like-count\">{{ post().likes }} likes</span>\n</div>\n"
       },
-      "answer": 3,
-      "explanation": "`routerLink` is a directive, and a standalone component only knows what its `imports` list. Add `RouterLink` from `@angular/router`.",
-      "reference": "06-routing/04-navigate-to-routes.md"
+      "answer": [
+        2,
+        3,
+        6
+      ],
+      "explanation": "Line 2 passes the signal itself instead of the post: `[post]=\"post()\"`. Line 3 checks the signal function, which is always truthy: `@if (isLiked())`. Line 6 only refers to the method and never calls it: `(click)=\"like()\"`. The `@for` and the like count are fine.",
+      "reference": "03-templates/02-binding.md"
     },
     {
       "id": "final-03",
-      "type": "predict",
-      "topic": "forms",
+      "type": "fill",
+      "topic": "two-way-binding",
       "difficulty": 2,
       "placement": false,
-      "prompt": "The caption field is disabled while the image uploads. What does `submit()` send?",
+      "prompt": "The parent opens and closes the comment form with `[(isOpen)]`, and the form can close itself. What goes in the gap?",
+      "context": {
+        "lang": "html",
+        "label": "post-card.component.html",
+        "source": "<app-comment-form [(isOpen)]=\"isFormOpen\" />\n"
+      },
       "code": {
         "lang": "ts",
-        "label": "new-post-form.component.ts",
-        "source": "export class NewPostFormComponent {\n  readonly posted = output<{ imageUrl: string; caption: string }>();\n\n  readonly form = new FormGroup({\n    imageUrl: new FormControl('', { nonNullable: true }),\n    caption: new FormControl({ value: 'Sunset', disabled: true }, { nonNullable: true }),\n  });\n\n  submit() {\n    this.posted.emit(this.form.value as { imageUrl: string; caption: string });\n  }\n}\n"
+        "label": "comment-form.component.ts",
+        "source": "export class CommentFormComponent {\n  readonly isOpen = ___(false);\n\n  close() {\n    this.isOpen.set(false);\n  }\n}\n"
       },
       "options": [
         {
-          "text": "Only `imageUrl`: disabled controls are left out of `form.value`",
+          "text": "`model`",
           "correct": true
         },
         {
-          "text": "Both fields, with the caption \"Sunset\"",
+          "text": "`input`",
           "correct": false
         },
         {
-          "text": "Nothing: a form with a disabled control can't be submitted",
+          "text": "`signal`",
+          "correct": false
+        },
+        {
+          "text": "`output`",
           "correct": false
         }
       ],
-      "explanation": "`value` skips disabled controls. Use `this.form.getRawValue()` to get every control. The `as` cast hid the problem: `value` is typed with optional fields for exactly this reason.",
-      "reference": "07-forms/02-reactive-forms.md"
+      "explanation": "`model()` is an input the component can also write to: `set` updates it, and the change goes back to the parent through `[(isOpen)]`. An `input()` is read-only, so `set` doesn't build. A plain `signal()` can't be bound from the parent.",
+      "reference": "02-components/04-inputs.md"
     },
     {
       "id": "final-04",
@@ -122,11 +135,11 @@
     },
     {
       "id": "final-05",
-      "type": "predict",
+      "type": "pick-the-fix",
       "topic": "store",
       "difficulty": 2,
       "placement": false,
-      "prompt": "The app runs in development mode. What happens when the user sorts the feed?",
+      "prompt": "The feed should be sorted by likes. This throws in development, because the array belongs to the store. Which version fixes it?",
       "code": {
         "lang": "ts",
         "label": "feed-page.component.ts",
@@ -134,19 +147,19 @@
       },
       "options": [
         {
-          "text": "An error: the array comes from the store, which is frozen in development",
+          "code": "export class FeedPageComponent {\n  private readonly store = inject(Store);\n  readonly posts = this.store.selectSignal(selectAllPosts);\n  readonly sortedPosts = computed(() => [...this.posts()].sort((a, b) => b.likes - a.likes));\n}\n",
           "correct": true
         },
         {
-          "text": "The feed is sorted",
+          "code": "export class FeedPageComponent {\n  private readonly store = inject(Store);\n  readonly posts = this.store.selectSignal(selectAllPosts);\n  readonly sortedPosts = computed(() => this.posts().sort((a, b) => b.likes - a.likes));\n}\n",
           "correct": false
         },
         {
-          "text": "Nothing visible, but the store is now sorted",
+          "code": "export class FeedPageComponent {\n  private readonly store = inject(Store);\n  readonly posts = this.store.selectSignal(selectAllPosts);\n\n  sortByLikes() {\n    this.posts.set([...this.posts()].sort((a, b) => b.likes - a.likes));\n  }\n}\n",
           "correct": false
         }
       ],
-      "explanation": "`sort` changes the array in place, and that array is the store's own state. Sort a copy in a `computed`: `readonly sortedPosts = computed(() => [...this.posts()].sort(...))`, or write a selector.",
+      "explanation": "`[...]` copies the array, and only the copy is sorted. Without the copy, `sort` still changes the store's frozen array, so moving it into a `computed` throws the same error. A signal from `selectSignal` is read-only, so `set` doesn't build: the state only changes through actions.",
       "reference": "11-ngrx-store/11-runtime-checks.md"
     },
     {
@@ -180,32 +193,35 @@
     },
     {
       "id": "final-07",
-      "type": "predict",
-      "topic": "http",
-      "difficulty": 1,
+      "type": "match",
+      "topic": "errors",
+      "difficulty": 2,
       "placement": false,
-      "prompt": "The comment form calls this method when it is submitted. What reaches the server?",
-      "code": {
-        "lang": "ts",
-        "label": "comments-section.component.ts",
-        "source": "export class CommentsSectionComponent {\n  private readonly commentsApi = inject(CommentsApiService);\n  readonly postId = input.required<string>();\n\n  addComment(text: string) {\n    this.commentsApi.add(this.postId(), text).pipe(\n      map((comment) => comment.id),\n    );\n  }\n}\n"
-      },
-      "options": [
+      "prompt": "Match each error message with its cause.",
+      "pairs": [
         {
-          "text": "Nothing: adding `pipe` doesn't subscribe, so no request is sent",
-          "correct": true
+          "left": "`NG0950: Input is required but no value is available yet`",
+          "right": "A required input was read in the constructor"
         },
         {
-          "text": "The comment, and its new id is returned",
-          "correct": false
+          "left": "`NG0203: inject() must be called from an injection context`",
+          "right": "`inject()` was called inside a method"
         },
         {
-          "text": "The comment, but the response is ignored",
-          "correct": false
+          "left": "`NG0600: Writing to signals is not allowed in a computed`",
+          "right": "A `computed` calls `set` on another signal"
+        },
+        {
+          "left": "`Can't bind to 'routerLink' since it isn't a known property of 'a'`",
+          "right": "`RouterLink` is missing from the component's `imports`"
+        },
+        {
+          "left": "`NullInjectorError: No provider for HttpClient`",
+          "right": "`provideHttpClient()` is missing from the app config"
         }
       ],
-      "explanation": "`pipe` only builds a new observable. Nothing subscribes, so `HttpClient` never sends the request. It's also the wrong place: this is a presentational component, so it should emit an output and let the container dispatch an action.",
-      "reference": "08-http/03-making-requests.md"
+      "explanation": "Reading the error before searching for it saves a lot of time. Each of these has come up in an earlier quiz: they are the mistakes almost everyone makes once.",
+      "reference": "../guide/01-the-project.md"
     },
     {
       "id": "final-08",

@@ -80,11 +80,11 @@
     },
     {
       "id": "ng-04",
-      "type": "predict",
+      "type": "pick-the-fix",
       "topic": "inputs",
       "difficulty": 2,
       "placement": false,
-      "prompt": "What happens when this component is created?",
+      "prompt": "This component throws an error as soon as it is created. Which version fixes it?",
       "code": {
         "lang": "ts",
         "label": "post-card.component.ts",
@@ -92,19 +92,19 @@
       },
       "options": [
         {
-          "text": "It throws an error: a required input has no value yet in the constructor",
+          "code": "export class PostCardComponent {\n  readonly post = input.required<Post>();\n  readonly likeCount = computed(() => this.post().likes);\n}\n",
           "correct": true
         },
         {
-          "text": "`likeCount` is `undefined` until the input arrives",
+          "code": "export class PostCardComponent {\n  readonly post = input.required<Post>();\n  readonly likeCount: number;\n\n  constructor() {\n    this.likeCount = this.post()?.likes ?? 0;\n  }\n}\n",
           "correct": false
         },
         {
-          "text": "It works: required inputs are set before the constructor runs",
+          "code": "export class PostCardComponent {\n  readonly post = input<Post>();\n  readonly likeCount: number;\n\n  constructor() {\n    this.likeCount = this.post().likes;\n  }\n}\n",
           "correct": false
         }
       ],
-      "explanation": "Inputs are set after the component is created. Reading a required input in the constructor throws (NG0950). Derive the value instead: `readonly likeCount = computed(() => this.post().likes);`.",
+      "explanation": "Inputs are set after the constructor runs, and reading a required input before that throws (NG0950). `?.` doesn't help, because calling `this.post()` is what throws. An optional input is `Post | undefined`, so `.likes` doesn't build. A `computed` reads the input only when it's needed, and updates when the post changes.",
       "reference": "02-components/04-inputs.md"
     },
     {
@@ -164,31 +164,35 @@
     },
     {
       "id": "ng-07",
-      "type": "predict",
+      "type": "fill",
       "topic": "control-flow",
       "difficulty": 1,
       "placement": false,
-      "prompt": "What happens with this template?",
+      "prompt": "Without the gap, this template doesn't build. What goes in the gap?",
       "code": {
         "lang": "html",
         "label": "comments-section.component.html",
-        "source": "@for (comment of comments()) {\n  <app-comment [comment]=\"comment\" />\n} @empty {\n  <span class=\"no-comments\">No comments yet</span>\n}\n"
+        "source": "@for (comment of comments(); ___) {\n  <app-comment [comment]=\"comment\" />\n} @empty {\n  <span class=\"no-comments\">No comments yet</span>\n}\n"
       },
       "options": [
         {
-          "text": "The build fails: `@for` needs a `track` expression",
+          "text": "`track comment.id`",
           "correct": true
         },
         {
-          "text": "It works, but Angular re-renders every comment on each change",
+          "text": "`trackBy: comment.id`",
           "correct": false
         },
         {
-          "text": "It works exactly like `track $index`",
+          "text": "`key comment.id`",
+          "correct": false
+        },
+        {
+          "text": "`let i = $index`",
           "correct": false
         }
       ],
-      "explanation": "`track` is required in `@for`. Track something unique and stable: `@for (comment of comments(); track comment.id)`.",
+      "explanation": "`@for` requires a `track` expression. Track something unique and stable, like the id. `trackBy` belonged to the old `*ngFor`, and `let i = $index` is allowed but doesn't replace `track`.",
       "reference": "03-templates/05-control-flow.md"
     },
     {
@@ -224,6 +228,23 @@
       ],
       "explanation": "A standalone component only has what its `imports` array lists. Add `DatePipe` to `imports`.",
       "reference": "03-templates/06-pipes.md"
+    },
+    {
+      "id": "ng-09",
+      "type": "order",
+      "topic": "lifecycle",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The feed shows a new `PostCardComponent`. Put the steps in order, from first to last.",
+      "items": [
+        "The constructor runs, together with the field initializers",
+        "Angular sets the inputs from the parent's template",
+        "`ngOnInit` runs",
+        "The template is rendered and `ngAfterViewInit` runs",
+        "`ngOnDestroy` runs when the post is removed from the feed"
+      ],
+      "explanation": "Inputs arrive after the constructor, which is why reading a required input there throws. `ngOnInit` is the first hook where inputs have values. `ngAfterViewInit` runs once the component's own view is rendered.",
+      "reference": "02-components/08-lifecycle.md"
     }
   ]
 }

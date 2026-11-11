@@ -203,3 +203,19 @@ questions:
         correct: false
     explanation: 'A change for the whole app belongs in the preset: `components: { button: { root: { borderRadius: ''8px'' } } }`. Use `[dt]` or CSS variables for one place, and never `::ng-deep`.'
     reference: ../guide/06-primeng-styled-mode.md
+
+  - id: prime-08
+    type: match
+    topic: tokens
+    difficulty: 1
+    placement: false
+    prompt: 'Match each design token tier with an example of it.'
+    pairs:
+      - left: 'Primitive'
+        right: '`blue.500`: a color from the palette, with no meaning on its own'
+      - left: 'Semantic'
+        right: '`primary.color`: a role in the design'
+      - left: 'Component'
+        right: '`button.primary.background`: one part of one component'
+    explanation: 'Each tier points to the one below it: `button.primary.background` → `primary.color` → `emerald.500` in Aura. Change the semantic tier to change the whole app; change the component tier for one component.'
+    reference: ../guide/06-primeng-styled-mode.md

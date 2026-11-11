@@ -530,6 +530,74 @@
       ],
       "explanation": "`LoadingMore` says \"there is data on screen, and more is coming\". The feed keeps showing its 20 posts with a small spinner at the bottom. `Loading` is for the first request, when there is nothing to show yet, so a page that checks it would hide the posts behind a full-page loader.",
       "reference": "01-angular-conventions.md"
+    },
+    {
+      "id": "tav-22",
+      "type": "find-all-bugs",
+      "topic": "naming",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "Code review: click every line that breaks our naming conventions.",
+      "code": {
+        "lang": "ts",
+        "label": "feed-page.component.ts",
+        "source": "export class FeedPageComponent {\n  private readonly store = inject(Store);\n  readonly posts = this.store.selectSignal(selectAllPosts);\n  readonly loading = this.store.selectSignal(selectIsFeedLoading);\n  readonly $hasMorePosts = this.store.selectSignal(selectHasMorePosts);\n\n  constructor() {\n    this.store.dispatch(PostsActions.loadFeed());\n  }\n}\n"
+      },
+      "answer": [
+        2,
+        3,
+        4
+      ],
+      "explanation": "Line 2: private members start with `_`: `_store`. Line 3: signals start with `$`: `$posts`. Line 4: it's a signal and a boolean, so `$isLoading`. Line 5 is right. Line 8 uses the old name, but it's the same mistake as line 2, fixed by renaming the field.",
+      "reference": "01-angular-conventions.md"
+    },
+    {
+      "id": "tav-23",
+      "type": "find-all-bugs",
+      "topic": "http",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "Code review: click every line that breaks our HTTP conventions.",
+      "code": {
+        "lang": "ts",
+        "label": "comments-api.service.ts",
+        "source": "@Injectable({ providedIn: 'root' })\nexport class CommentsApiService {\n  private readonly _http = inject(HttpClient);\n  private readonly _apiUrl = `${environment.apiUrl}/comments`;\n\n  getComments(postId: string): Observable<Comment[]> {\n    return this._http.get<Comment[]>(`${this._apiUrl}/${postId}`).pipe(timeout({ each: 90000 }));\n  }\n\n  addComment(postId: string, text: string): Observable<Comment> {\n    const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };\n    return this._http.post<Comment>(`${this._apiUrl}/${postId}`, { text }, { headers });\n  }\n}\n"
+      },
+      "answer": [
+        4,
+        11,
+        12
+      ],
+      "explanation": "Line 4: no API base URL from `environments`; use the relative `'/api/comments'` and let the proxy route it. Line 11: only the auth interceptor adds the `Authorization` header. Line 12: every HTTP call has `timeout({ each: 90000 })`.",
+      "reference": "01-angular-conventions.md"
+    },
+    {
+      "id": "tav-24",
+      "type": "match",
+      "topic": "file-suffixes",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "Match each file with what it holds.",
+      "pairs": [
+        {
+          "left": "`post.type.ts`",
+          "right": "The `Post` interface"
+        },
+        {
+          "left": "`feed.consts.ts`",
+          "right": "`export const PAGE_SIZE = 20;`"
+        },
+        {
+          "left": "`count-format.util.ts`",
+          "right": "A pure function that turns 1200 into \"1.2K\""
+        },
+        {
+          "left": "`post-visibility.label-map.ts`",
+          "right": "The text shown for each visibility value"
+        }
+      ],
+      "explanation": "Types in `.type.ts`, constants in `.consts.ts`, pure helpers in `.util.ts`, and maps from a value to UI text in `.label-map.ts`.",
+      "reference": "01-angular-conventions.md"
     }
   ]
 }

@@ -3,23 +3,27 @@
     "module": "00-essentials",
     "title": "0. Essentials",
     "file": "00-essentials.json",
-    "questions": 5,
+    "questions": 6,
     "placement": 0,
     "byType": {
       "single": 2,
       "predict": 2,
-      "spot-the-bug": 1
+      "spot-the-bug": 1,
+      "order": 1
     }
   },
   {
     "module": "01-components-and-templates",
     "title": "1. Components & templates",
     "file": "01-components-and-templates.json",
-    "questions": 8,
+    "questions": 9,
     "placement": 0,
     "byType": {
-      "predict": 5,
-      "spot-the-bug": 3
+      "predict": 3,
+      "spot-the-bug": 3,
+      "pick-the-fix": 1,
+      "fill": 1,
+      "order": 1
     }
   },
   {
@@ -38,22 +42,24 @@
     "module": "03-routing-and-forms",
     "title": "3. Routing & forms",
     "file": "03-routing-and-forms.json",
-    "questions": 8,
+    "questions": 9,
     "placement": 0,
     "byType": {
       "spot-the-bug": 3,
-      "predict": 5
+      "predict": 5,
+      "match": 1
     }
   },
   {
     "module": "04-http-and-services",
     "title": "4. HTTP & services",
     "file": "04-http-and-services.json",
-    "questions": 7,
+    "questions": 8,
     "placement": 0,
     "byType": {
       "predict": 5,
-      "spot-the-bug": 2
+      "spot-the-bug": 2,
+      "order": 1
     }
   },
   {
@@ -63,8 +69,10 @@
     "questions": 6,
     "placement": 0,
     "byType": {
-      "single": 2,
-      "predict": 3,
+      "fill": 2,
+      "match": 1,
+      "predict": 1,
+      "pick-the-fix": 1,
       "spot-the-bug": 1
     }
   },
@@ -72,12 +80,15 @@
     "module": "06-ngrx",
     "title": "6. NgRx",
     "file": "06-ngrx.json",
-    "questions": 7,
+    "questions": 9,
     "placement": 0,
     "byType": {
-      "predict": 5,
+      "predict": 2,
+      "pick-the-fix": 2,
       "spot-the-bug": 1,
-      "single": 1
+      "fill": 2,
+      "single": 1,
+      "match": 1
     }
   },
   {
@@ -88,7 +99,8 @@
     "placement": 0,
     "byType": {
       "multiple": 1,
-      "predict": 2,
+      "order": 1,
+      "match": 1,
       "single": 4
     }
   },
@@ -96,12 +108,13 @@
     "module": "08-primeng",
     "title": "8. PrimeNG",
     "file": "08-primeng.json",
-    "questions": 7,
+    "questions": 8,
     "placement": 0,
     "byType": {
       "predict": 5,
       "spot-the-bug": 1,
-      "single": 1
+      "single": 1,
+      "match": 1
     }
   },
   {
@@ -111,8 +124,11 @@
     "questions": 8,
     "placement": 0,
     "byType": {
-      "predict": 6,
-      "spot-the-bug": 1,
+      "predict": 3,
+      "find-all-bugs": 1,
+      "fill": 1,
+      "pick-the-fix": 1,
+      "match": 1,
       "single": 1
     }
   }

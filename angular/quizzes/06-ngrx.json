@@ -33,11 +33,11 @@
     },
     {
       "id": "ngrx-02",
-      "type": "predict",
+      "type": "pick-the-fix",
       "topic": "effects",
       "difficulty": 3,
       "placement": false,
-      "prompt": "After a successful login, what happens?",
+      "prompt": "After a successful login, this effect runs in an endless loop. Which version fixes it?",
       "code": {
         "lang": "ts",
         "label": "auth.effects.ts",
@@ -45,19 +45,19 @@
       },
       "options": [
         {
-          "text": "An endless loop: the effect dispatches `loginSuccess` again, which triggers it again",
+          "code": "export const navigateAfterLogin = createEffect(\n  (actions$ = inject(Actions), router = inject(Router)) =>\n    actions$.pipe(\n      ofType(AuthActions.loginSuccess),\n      tap(() => router.navigate(['/'])),\n    ),\n  { functional: true, dispatch: false },\n);\n",
           "correct": true
         },
         {
-          "text": "It navigates to the feed once",
+          "code": "export const navigateAfterLogin = createEffect(\n  (actions$ = inject(Actions), router = inject(Router)) =>\n    actions$.pipe(\n      ofType(AuthActions.loginSuccess),\n      tap(() => router.navigate(['/'])),\n      take(1),\n    ),\n  { functional: true },\n);\n",
           "correct": false
         },
         {
-          "text": "The build fails: `tap` isn't allowed in effects",
+          "code": "export const navigateAfterLogin = createEffect(\n  (actions$ = inject(Actions), router = inject(Router)) =>\n    actions$.pipe(\n      ofType(AuthActions.loginSuccess),\n      map(() => router.navigate(['/'])),\n    ),\n  { functional: true },\n);\n",
           "correct": false
         }
       ],
-      "explanation": "Whatever an effect emits is dispatched. After `tap`, it still emits `loginSuccess`, so it triggers itself forever. An effect that dispatches nothing needs `{ functional: true, dispatch: false }`.",
+      "explanation": "Whatever an effect emits is dispatched. After `tap` it still emits `loginSuccess`, so it triggers itself. `dispatch: false` tells NgRx this effect dispatches nothing. With `take(1)`, the effect finishes after the first login and never runs again. With `map`, it dispatches the `Promise` that `navigate` returns, and NgRx reports an invalid action.",
       "reference": "12-ngrx-effects/01-effects-overview.md"
     },
     {
@@ -107,60 +107,69 @@
     },
     {
       "id": "ngrx-05",
-      "type": "predict",
+      "type": "fill",
       "topic": "entity",
       "difficulty": 3,
       "placement": false,
-      "prompt": "Post `p1` is already in the store with 10 likes. After a like, the server returns `p1` with 11 likes. What does the post show?",
+      "prompt": "Post `p1` is already in the store with 10 likes. After a like, the server returns `p1` with 11 likes. What goes in the gap so the post shows 11?",
       "code": {
         "lang": "ts",
         "label": "posts.reducer.ts",
-        "source": "on(PostsActions.likePostSuccess, (state, { post }) => adapter.addOne(post, state)),\n"
+        "source": "on(PostsActions.likePostSuccess, (state, { post }) => adapter.___(post, state)),\n"
       },
       "options": [
         {
-          "text": "Still 10 likes: `addOne` does nothing when the id already exists",
+          "text": "`setOne`",
           "correct": true
         },
         {
-          "text": "11 likes: `addOne` replaces the old post",
+          "text": "`addOne`",
           "correct": false
         },
         {
-          "text": "Both versions of the post",
+          "text": "`addMany`",
+          "correct": false
+        },
+        {
+          "text": "`removeOne`",
           "correct": false
         }
       ],
-      "explanation": "`addOne` only adds new ids. To change an existing entity, use `updateOne`, `upsertOne` or `setOne`.",
+      "explanation": "`setOne` adds the post, or replaces it when the id already exists. `addOne` does nothing when the id exists, so the post would stay at 10 likes. `addMany` takes a list, and `removeOne` takes an id.",
       "reference": "13-ngrx-entity-and-devtools/04-adapter.md"
     },
     {
       "id": "ngrx-06",
-      "type": "predict",
+      "type": "pick-the-fix",
       "topic": "entity",
       "difficulty": 3,
       "placement": false,
-      "prompt": "The server sends three posts. How many show in the feed?",
-      "code": {
+      "prompt": "The server sends three posts, but only one shows in the feed: the adapter looks for an `id` field. Which version fixes it?",
+      "context": {
         "lang": "ts",
         "label": "posts.reducer.ts",
-        "source": "export interface Post {\n  postId: string;\n  imageUrl: string;\n  caption: string;\n}\n\nexport const adapter = createEntityAdapter<Post>();\n\nexport const postsReducer = createReducer(\n  adapter.getInitialState(),\n  on(PostsActions.loadFeedSuccess, (state, { posts }) => adapter.setAll(posts, state)),\n);\n"
+        "source": "export interface Post {\n  postId: string;\n  imageUrl: string;\n  caption: string;\n}\n\nexport const postsReducer = createReducer(\n  adapter.getInitialState(),\n  on(PostsActions.loadFeedSuccess, (state, { posts }) => adapter.setAll(posts, state)),\n);\n"
+      },
+      "code": {
+        "lang": "ts",
+        "label": "posts.adapter.ts",
+        "source": "export const adapter = createEntityAdapter<Post>();\n"
       },
       "options": [
         {
-          "text": "One: the adapter looks for an `id` field, so all three get the same `undefined` key",
+          "code": "export const adapter = createEntityAdapter<Post>({\n  selectId: (post) => post.postId,\n});\n",
           "correct": true
         },
         {
-          "text": "Three",
+          "code": "export const adapter = createEntityAdapter<Post>({\n  sortComparer: (a, b) => a.postId.localeCompare(b.postId),\n});\n",
           "correct": false
         },
         {
-          "text": "None, and the build fails",
+          "code": "export const adapter = createEntityAdapter<Post & { id: string }>();\n",
           "correct": false
         }
       ],
-      "explanation": "By default the adapter uses `entity.id`. When the key has another name, say so: `createEntityAdapter<Post>({ selectId: (post) => post.postId })`.",
+      "explanation": "By default the adapter uses `entity.id`, which is `undefined` here, so all three posts get the same key. `selectId` tells it which field is the key. `sortComparer` only sorts. The third version doesn't build: `setAll` now expects posts with an `id`, and ours don't have one.",
       "reference": "13-ngrx-entity-and-devtools/04-adapter.md"
     },
     {
@@ -186,6 +195,76 @@
       ],
       "explanation": "Presentational components only show data and emit events. The container turns the event into an action, the effect talks to the server, and the reducer updates the state. Every change shows up in Redux DevTools.",
       "reference": "11-ngrx-store/04-architecture.md"
+    },
+    {
+      "id": "ngrx-08",
+      "type": "match",
+      "topic": "entity",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "Match each entity adapter method with what it does.",
+      "pairs": [
+        {
+          "left": "`addOne`",
+          "right": "Adds the entity only if its id is new"
+        },
+        {
+          "left": "`setOne`",
+          "right": "Adds the entity, or replaces it if the id exists"
+        },
+        {
+          "left": "`updateOne`",
+          "right": "Changes some fields of an entity that exists: `{ id, changes }`"
+        },
+        {
+          "left": "`removeOne`",
+          "right": "Deletes the entity with this id"
+        },
+        {
+          "left": "`setAll`",
+          "right": "Replaces the whole collection"
+        }
+      ],
+      "explanation": "Every method returns a new state and never changes the old one. Use `setAll` when the feed loads, `setOne` when the server sends back a whole post, and `updateOne` when you only know what changed.",
+      "reference": "13-ngrx-entity-and-devtools/04-adapter.md"
+    },
+    {
+      "id": "ngrx-09",
+      "type": "fill",
+      "topic": "selectors",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The template reads `posts()`. What goes in the gap?",
+      "context": {
+        "lang": "html",
+        "label": "feed-page.component.html",
+        "source": "@for (post of posts(); track post.id) {\n  <app-post-card [post]=\"post\" />\n}\n"
+      },
+      "code": {
+        "lang": "ts",
+        "label": "feed-page.component.ts",
+        "source": "export class FeedPageComponent {\n  private readonly store = inject(Store);\n  readonly posts = this.store.___(selectAllPosts);\n}\n"
+      },
+      "options": [
+        {
+          "text": "`selectSignal`",
+          "correct": true
+        },
+        {
+          "text": "`select`",
+          "correct": false
+        },
+        {
+          "text": "`dispatch`",
+          "correct": false
+        },
+        {
+          "text": "`pipe`",
+          "correct": false
+        }
+      ],
+      "explanation": "`selectSignal` returns a signal, which the template reads by calling it. `select` returns an observable, so `posts()` wouldn't build. `dispatch` sends actions, it doesn't read state.",
+      "reference": "11-ngrx-store/09-selectors.md"
     }
   ]
 }

@@ -284,3 +284,141 @@ questions:
       - { text: 'Custom properties cannot be used inside `:host`', correct: false }
     explanation: 'A theme only changes the elements that read the variables. Any hard-coded color stays the same in every theme. Use the variable everywhere: `color: var(--text-color);`.'
     reference: 02-css-fundamentals-and-layout/27-theming.md
+
+  - id: mod-13
+    type: visual
+    topic: has
+    difficulty: 2
+    placement: false
+    prompt: 'Which picture does this SCSS draw?'
+    renderWidth: 260
+    context:
+      lang: html
+      label: feed.component.html
+      source: |
+        <div class="feed">
+          <div class="post-card">
+            <div class="post-image"></div>
+          </div>
+          <div class="post-card">
+            <div class="post-video"></div>
+          </div>
+        </div>
+    code:
+      lang: scss
+      label: feed.component.scss
+      source: |
+        :host {
+          .feed {
+            display: flex;
+            gap: 8px;
+          }
+
+          .post-card {
+            width: 100px;
+            padding: 8px;
+            border: 3px solid #dbdbdb;
+          }
+
+          .post-image,
+          .post-video {
+            height: 60px;
+            background: #efefef;
+          }
+
+          .post-card:has(.post-video) {
+            border-color: #0095f6;
+          }
+        }
+    options:
+      - image: img/mod-13-a.png
+        correct: false
+        render: |
+          :host {
+            .feed {
+              display: flex;
+              gap: 8px;
+            }
+
+            .post-card {
+              width: 100px;
+              padding: 8px;
+              border: 3px solid #dbdbdb;
+            }
+
+            .post-image,
+            .post-video {
+              height: 60px;
+              background: #efefef;
+            }
+
+            .post-video {
+              border: 3px solid #0095f6;
+            }
+          }
+      - image: img/mod-13-b.png
+        correct: true
+      - image: img/mod-13-c.png
+        correct: false
+        render: |
+          :host {
+            .feed {
+              display: flex;
+              gap: 8px;
+            }
+
+            .post-card {
+              width: 100px;
+              padding: 8px;
+              border: 3px solid #dbdbdb;
+            }
+
+            .post-image,
+            .post-video {
+              height: 60px;
+              background: #efefef;
+            }
+
+            .feed:has(.post-video) .post-card {
+              border-color: #0095f6;
+            }
+          }
+    explanation: '`.post-card:has(.post-video)` selects the card itself, and only the card that contains a video. The video box doesn''t change, and the card with the image keeps its gray border.'
+    reference: 03-modern-css/06-has-selector.md
+
+  - id: mod-14
+    type: fill
+    topic: container-queries
+    difficulty: 3
+    placement: false
+    prompt: 'The post card should switch layout when its column is wider than 500px. What goes in the gap?'
+    code:
+      lang: scss
+      label: feed.component.scss
+      source: |
+        :host {
+          .post-column {
+            container-type: ___;
+          }
+
+          .post-card {
+            display: block;
+          }
+
+          @container (min-width: 500px) {
+            .post-card {
+              display: flex;
+            }
+          }
+        }
+    options:
+      - text: '`inline-size`'
+        correct: true
+      - text: '`size`'
+        correct: false
+      - text: '`width`'
+        correct: false
+      - text: '`normal`'
+        correct: false
+    explanation: '`inline-size` lets children query the container''s width. `size` would also contain its height, so the column no longer grows with its content and collapses to 0 height. `width` isn''t a valid value, and `normal` makes no size container.'
+    reference: 03-modern-css/05-container-queries.md

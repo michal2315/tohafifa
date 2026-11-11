@@ -190,6 +190,39 @@
       ],
       "explanation": "When an attribute appears twice, the browser keeps the first one and ignores the rest. Put all classes in one attribute, separated by spaces: `class=\"post-card selected\"`.",
       "reference": "01-semantic-html-and-accessibility/05-attributes.md"
+    },
+    {
+      "id": "html-08",
+      "type": "pick-the-fix",
+      "topic": "images",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "A screen reader announces this post image as \"sunset.jpg\". Which version fixes it?",
+      "code": {
+        "lang": "html",
+        "label": "post-card.component.html",
+        "source": "<img class=\"post-image\" src=\"sunset.jpg\">\n"
+      },
+      "options": [
+        {
+          "code": "<img class=\"post-image\" src=\"sunset.jpg\" alt=\"Sunset over the sea at the beach\">\n",
+          "correct": true
+        },
+        {
+          "code": "<img class=\"post-image\" src=\"sunset.jpg\" title=\"Sunset over the sea at the beach\">\n",
+          "correct": false
+        },
+        {
+          "code": "<img class=\"post-image\" src=\"sunset.jpg\" alt=\"image\">\n",
+          "correct": false
+        },
+        {
+          "code": "<img class=\"post-image\" src=\"sunset.jpg\" alt=\"\">\n",
+          "correct": false
+        }
+      ],
+      "explanation": "`alt` is what a screen reader reads instead of the image, so describe what the image shows. `title` is only a tooltip and isn't a reliable replacement. `alt=\"image\"` says nothing useful, and `alt=\"\"` marks the image as decoration, so it's skipped completely.",
+      "reference": "01-semantic-html-and-accessibility/10-images.md"
     }
   ]
 }

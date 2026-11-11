@@ -185,3 +185,21 @@ questions:
         correct: false
     explanation: '`value` leaves out disabled controls. When you need them too, use `profileForm.getRawValue()`.'
     reference: 07-forms/02-reactive-forms.md
+
+  - id: route-05
+    type: match
+    topic: routes
+    difficulty: 2
+    placement: false
+    prompt: 'Match each piece of router setup with what it does.'
+    pairs:
+      - left: '`withComponentInputBinding()`'
+        right: 'Route parameters such as `:username` arrive in the page as inputs'
+      - left: '`canActivate: [authGuard]`'
+        right: 'Blocks the route until the guard allows it, for example when logged out'
+      - left: '`loadComponent: () => import(''./profile-page.component'')`'
+        right: 'Loads the page''s code only when the user first opens it'
+      - left: '`{ path: ''**'', redirectTo: '''' }`'
+        right: 'Sends any unknown URL back to the feed'
+    explanation: 'These four cover most of what the Instagram app needs from the router. Routes are matched from top to bottom, so the `**` route always goes last.'
+    reference: 06-routing/02-define-routes.md

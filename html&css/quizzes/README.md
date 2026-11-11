@@ -1,6 +1,6 @@
 # HTML & SCSS quiz bank
 
-77 questions for the HTML & SCSS stage, ready for the Docusaurus quiz component.
+89 questions for the HTML & SCSS stage, ready for the Docusaurus quiz component.
 
 Spot-the-bug questions in modules 1–4 show code that is actually broken: it renders wrong or doesn't compile. Module 6 is a code-review quiz about our conventions. Every SCSS answer was checked with the Sass compiler and the tricky CSS answers in a browser.
 
@@ -20,12 +20,12 @@ The build checks most of these automatically (all except useless wrappers, which
 
 | File | Module | Questions | In placement quiz |
 |---|---|---|---|
-| `01-html.json` | 1. HTML | 7 | 4 |
-| `02-css-fundamentals-and-layout.json` | 2. CSS fundamentals & layout | 22 | 8 |
-| `03-modern-css.json` | 3. Modern CSS | 12 | 6 |
-| `04-scss.json` | 4. SCSS | 16 | 6 |
+| `01-html.json` | 1. HTML | 8 | 4 |
+| `02-css-fundamentals-and-layout.json` | 2. CSS fundamentals & layout | 28 | 8 |
+| `03-modern-css.json` | 3. Modern CSS | 14 | 6 |
+| `04-scss.json` | 4. SCSS | 17 | 6 |
 | `05-design-to-code.json` | 5. From design to code (XD) | 8 | 0 |
-| `06-team-conventions.json` | 6. Our conventions (code review) | 12 | 0 |
+| `06-team-conventions.json` | 6. Our conventions (code review) | 14 | 0 |
 | `placement.json` | Placement quiz (day 1) | 24 | – |
 | `index.json` | Summary of all files | – | – |
 
@@ -67,27 +67,52 @@ Every question has these fields:
 | Field | Meaning |
 |---|---|
 | `id` | Unique, e.g. `css-06`. Use it to store results. |
-| `type` | `single`, `multiple`, `predict`, `spot-the-bug` or `text` (see below) |
+| `type` | One of the eleven types below |
 | `topic` | Short tag, e.g. `flexbox`. Use it to show "weak areas" in the results. |
 | `difficulty` | `1` easy, `2` medium, `3` hard |
 | `placement` | `true` if the question is in the placement quiz |
 | `prompt` | The question, in Markdown (inline code with backticks) |
 | `code` | Optional `{ lang, label, source }` snippet shown under the prompt. `label` is a file name like `post-card.component.scss`. For spot-the-bug, this is the block the trainee clicks in. |
 | `context` | Optional second `{ lang, label, source }` block, shown **before** `code`, read-only. Usually the HTML for an SCSS question or the other way round, like the two files of a component. |
-| `options` | For `single`, `multiple` and `predict`: `[{ text, correct }]`, `text` in Markdown, `correct` is `true` or `false` |
-| `answer` | Only for `spot-the-bug` and `text` (see below) |
+| `options` | For the choice types: `[{ text, correct }]`, `text` in Markdown, `correct` is `true` or `false`. `pick-the-fix` options use `code` instead of `text`, and `visual` options use `image` or `code` (see below). |
+| `answer` | Only for `spot-the-bug`, `find-all-bugs` and `text` (see below) |
+| `items` | Only for `order`: the steps, listed in the right order |
+| `pairs` | Only for `match`: `[{ left, right }]` |
+| `image` | Only for `visual`: a picture shown in the question, path relative to the quizzes folder |
+| `optionLang` | Only for `visual` with an `image`: the language of the code options, e.g. `scss` |
+| `renderWidth` | Only for `visual`: the width in px the pictures are drawn at (default 320) |
 | `explanation` | Shown after answering (module quizzes only) |
 | `reference` | Optional path of the reading page, relative to `html&css/reading/` |
 
-### The five types
+### The eleven types
+
+The same types are used in every quiz bank (HTML & SCSS, Angular, team quizzes).
 
 | Type | What the trainee does | How the right answer is stored |
 |---|---|---|
 | `single` | Picks one option | Exactly one option has `correct: true` |
 | `multiple` | Picks all correct options | One or more options have `correct: true`. Count it right only if the trainee picked exactly those. |
 | `predict` | Reads `code`, picks what happens | Like `single`, but always has `code` |
+| `fill` | Reads `code` with a gap (`___`), picks what goes in it | Like `single`. The code has exactly one `___`. Show the chosen option in the gap. |
+| `pick-the-fix` | Reads broken `code`, picks the version that fixes it | Like `single`, but each option is `{ code, correct }`: a code snippet in the same language as `code` |
+| `visual` | Matches code and a picture | Like `single`. Either `code` (SCSS) with picture options `{ image, correct }`, or an `image` with code options `{ code, correct }`. Both have the HTML as `context`. |
 | `spot-the-bug` | Clicks the wrong line in `code` (a bug, or in module 6 a line that breaks our conventions) | `answer`: line number, starting at 1, e.g. `6` |
+| `find-all-bugs` | Clicks every wrong line in `code`, without being told how many there are | `answer`: list of line numbers, e.g. `[2, 6, 8]`. Count it right only if the trainee clicked exactly those. |
+| `order` | Drags steps into the right order | `items`: the steps in the right order. Shuffle them before showing. |
+| `match` | Connects each item on the left with one on the right | `pairs`: `[{ left, right }]`. Shuffle the right column before showing. |
 | `text` | Types a short answer (a selector or declaration) | `answer`: `{ accept: [...], normalized: [...] }` |
+
+### Pictures for `visual` questions
+
+Don't make screenshots by hand: they're drawn from the SCSS in the question, so they always match it. The right picture is drawn from `code` (or, for a question with an `image`, from the right option's code). Each wrong picture option has a `render` field with the SCSS it's drawn from. `render` is only for drawing: the build leaves it out of the JSON.
+
+After adding or changing a visual question, draw the pictures again before building:
+
+```bash
+node render.mjs "../../html&css/quizzes"
+```
+
+It uses Chrome (or the path in `CHROME_PATH`) and writes PNG files to `quizzes/img/`. `:host` in the SCSS becomes a wrapper around the HTML, with a dashed outline so trainees can see the component's edges.
 
 Example of a choice question in the JSON:
 

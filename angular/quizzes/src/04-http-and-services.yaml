@@ -182,3 +182,18 @@ questions:
         correct: false
     explanation: '`inject()` works in field initializers, the constructor and provider factories, not in methods that run later (NG0203). Move it to a field: `private readonly clipboard = inject(Clipboard);`.'
     reference: 05-services-and-di/02-creating-and-using-services.md
+
+  - id: http-06
+    type: order
+    topic: interceptors
+    difficulty: 3
+    placement: false
+    prompt: 'The app has `provideHttpClient(withInterceptors([authInterceptor, loggingInterceptor]))`. Put the steps of one request in order.'
+    items:
+      - '`authInterceptor` gets the request'
+      - '`loggingInterceptor` gets the request'
+      - 'The request goes to the server'
+      - '`loggingInterceptor` gets the response'
+      - '`authInterceptor` gets the response'
+    explanation: 'Interceptors run in the order they are listed. Each one passes the request on with `next(req)`, so the response comes back through them in reverse order, like layers of an onion.'
+    reference: 08-http/04-interceptors.md

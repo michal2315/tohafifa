@@ -106,3 +106,17 @@ questions:
         correct: false
     explanation: '`providedIn: ''root''` registers the service in the root injector, so every `inject()` gets the same instance. It is created the first time something asks for it.'
     reference: 01-essentials/05-dependency-injection.md
+
+  - id: ess-06
+    type: order
+    topic: bootstrap
+    difficulty: 2
+    placement: false
+    prompt: 'The user opens the app at `/`. Put the steps in order.'
+    items:
+      - 'The browser loads `index.html` and the app''s JavaScript'
+      - '`main.ts` calls `bootstrapApplication(AppComponent, appConfig)`'
+      - 'Angular renders `AppComponent` in place of `<app-root>`'
+      - 'The router matches `/` and shows `FeedPageComponent` in the `<router-outlet>`'
+    explanation: '`index.html` only holds the `<app-root>` element. Everything else starts in `main.ts`: the app config sets up the providers, the root component renders, and the router fills the outlet with the page for the URL.'
+    reference: 01-essentials/01-overview.md

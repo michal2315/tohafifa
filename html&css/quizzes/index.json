@@ -3,51 +3,59 @@
     "module": "01-semantic-html-and-accessibility",
     "title": "1. HTML",
     "file": "01-html.json",
-    "questions": 7,
+    "questions": 8,
     "placement": 4,
     "byType": {
       "spot-the-bug": 3,
       "predict": 3,
-      "single": 1
+      "single": 1,
+      "pick-the-fix": 1
     }
   },
   {
     "module": "02-css-fundamentals-and-layout",
     "title": "2. CSS fundamentals & layout",
     "file": "02-css-fundamentals-and-layout.json",
-    "questions": 22,
+    "questions": 28,
     "placement": 8,
     "byType": {
       "spot-the-bug": 6,
       "predict": 5,
       "single": 10,
-      "text": 1
+      "text": 1,
+      "visual": 3,
+      "order": 1,
+      "match": 1,
+      "pick-the-fix": 1
     }
   },
   {
     "module": "03-modern-css",
     "title": "3. Modern CSS",
     "file": "03-modern-css.json",
-    "questions": 12,
+    "questions": 14,
     "placement": 6,
     "byType": {
       "spot-the-bug": 3,
       "predict": 4,
       "single": 4,
-      "text": 1
+      "text": 1,
+      "visual": 1,
+      "fill": 1
     }
   },
   {
     "module": "04-scss",
     "title": "4. SCSS",
     "file": "04-scss.json",
-    "questions": 16,
+    "questions": 17,
     "placement": 6,
     "byType": {
       "spot-the-bug": 7,
       "predict": 6,
       "multiple": 2,
-      "single": 1
+      "single": 1,
+      "fill": 1
     }
   },
   {
@@ -65,12 +73,13 @@
     "module": "06-team-conventions",
     "title": "6. Our conventions (code review)",
     "file": "06-team-conventions.json",
-    "questions": 12,
+    "questions": 14,
     "placement": 0,
     "byType": {
       "spot-the-bug": 9,
       "multiple": 2,
-      "single": 1
+      "single": 1,
+      "find-all-bugs": 2
     }
   }
 ]

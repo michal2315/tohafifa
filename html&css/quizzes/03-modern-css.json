@@ -332,6 +332,74 @@
       ],
       "explanation": "A theme only changes the elements that read the variables. Any hard-coded color stays the same in every theme. Use the variable everywhere: `color: var(--text-color);`.",
       "reference": "02-css-fundamentals-and-layout/27-theming.md"
+    },
+    {
+      "id": "mod-13",
+      "type": "visual",
+      "topic": "has",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "Which picture does this SCSS draw?",
+      "renderWidth": 260,
+      "context": {
+        "lang": "html",
+        "label": "feed.component.html",
+        "source": "<div class=\"feed\">\n  <div class=\"post-card\">\n    <div class=\"post-image\"></div>\n  </div>\n  <div class=\"post-card\">\n    <div class=\"post-video\"></div>\n  </div>\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "feed.component.scss",
+        "source": ":host {\n  .feed {\n    display: flex;\n    gap: 8px;\n  }\n\n  .post-card {\n    width: 100px;\n    padding: 8px;\n    border: 3px solid #dbdbdb;\n  }\n\n  .post-image,\n  .post-video {\n    height: 60px;\n    background: #efefef;\n  }\n\n  .post-card:has(.post-video) {\n    border-color: #0095f6;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "image": "img/mod-13-a.png",
+          "correct": false
+        },
+        {
+          "image": "img/mod-13-b.png",
+          "correct": true
+        },
+        {
+          "image": "img/mod-13-c.png",
+          "correct": false
+        }
+      ],
+      "explanation": "`.post-card:has(.post-video)` selects the card itself, and only the card that contains a video. The video box doesn't change, and the card with the image keeps its gray border.",
+      "reference": "03-modern-css/06-has-selector.md"
+    },
+    {
+      "id": "mod-14",
+      "type": "fill",
+      "topic": "container-queries",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "The post card should switch layout when its column is wider than 500px. What goes in the gap?",
+      "code": {
+        "lang": "scss",
+        "label": "feed.component.scss",
+        "source": ":host {\n  .post-column {\n    container-type: ___;\n  }\n\n  .post-card {\n    display: block;\n  }\n\n  @container (min-width: 500px) {\n    .post-card {\n      display: flex;\n    }\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`inline-size`",
+          "correct": true
+        },
+        {
+          "text": "`size`",
+          "correct": false
+        },
+        {
+          "text": "`width`",
+          "correct": false
+        },
+        {
+          "text": "`normal`",
+          "correct": false
+        }
+      ],
+      "explanation": "`inline-size` lets children query the container's width. `size` would also contain its height, so the column no longer grows with its content and collapses to 0 height. `width` isn't a valid value, and `normal` makes no size container.",
+      "reference": "03-modern-css/05-container-queries.md"
     }
   ]
 }

@@ -36,66 +36,49 @@
     },
     {
       "id": "arch-02",
-      "type": "predict",
-      "topic": "route-params",
-      "difficulty": 3,
+      "type": "order",
+      "topic": "data-flow",
+      "difficulty": 2,
       "placement": false,
-      "prompt": "The user is on `/profile/alice` and clicks a link to `/profile/bob`. What does the page show?",
-      "code": {
-        "lang": "ts",
-        "label": "profile-page.component.ts",
-        "source": "export class ProfilePageComponent implements OnInit {\n  private readonly store = inject(Store);\n\n  readonly username = input.required<string>();\n  readonly profile = this.store.selectSignal(selectProfile);\n\n  ngOnInit() {\n    this.store.dispatch(ProfileActions.open({ username: this.username() }));\n  }\n}\n"
-      },
-      "options": [
-        {
-          "text": "Still Alice's profile, with Bob's name in the URL",
-          "correct": true
-        },
-        {
-          "text": "Bob's profile",
-          "correct": false
-        },
-        {
-          "text": "An error: the input changed after `ngOnInit`",
-          "correct": false
-        }
+      "prompt": "The feed page opens. Put the steps of the store loop in order.",
+      "items": [
+        "The feed page dispatches `loadFeed`",
+        "The reducer sets `status` to `loading`",
+        "The effect hears `loadFeed` and calls the API",
+        "The effect dispatches `loadFeedSuccess` with the posts",
+        "The reducer saves the posts and sets `status` to `loaded`",
+        "The selector gives the feed page the new posts"
       ],
-      "explanation": "Only the parameter changed, so Angular reuses the same component and `ngOnInit` doesn't run again. The `username` input does update. React to it: dispatch inside `effect(() => ...)` in the constructor.",
+      "explanation": "Reducers handle an action before effects see it, so the spinner shows while the request is running. The component only dispatches and reads: it never waits for the API.",
       "reference": "../guide/04-store-data-flow.md"
     },
     {
       "id": "arch-03",
-      "type": "predict",
-      "topic": "route-params",
-      "difficulty": 2,
+      "type": "match",
+      "topic": "slices",
+      "difficulty": 1,
       "placement": false,
-      "prompt": "The routes have `{ path: 'profile/:username', component: ProfilePageComponent }`. What happens when the profile page opens?",
-      "context": {
-        "lang": "ts",
-        "label": "profile-page.component.ts",
-        "source": "export class ProfilePageComponent {\n  readonly username = input.required<string>();\n\n  constructor() {\n    effect(() => console.log(this.username()));\n  }\n}\n"
-      },
-      "code": {
-        "lang": "ts",
-        "label": "app.config.ts",
-        "source": "export const appConfig: ApplicationConfig = {\n  providers: [\n    provideRouter(routes),\n    provideHttpClient(),\n  ],\n};\n"
-      },
-      "options": [
+      "prompt": "Match each file of the posts slice with what goes in it.",
+      "pairs": [
         {
-          "text": "An error: the required input never gets a value",
-          "correct": true
+          "left": "`posts.actions.ts`",
+          "right": "What happened: the action group"
         },
         {
-          "text": "The username is logged",
-          "correct": false
+          "left": "`posts.reducer.ts`",
+          "right": "How the state changes for each action"
         },
         {
-          "text": "`undefined` is logged",
-          "correct": false
+          "left": "`posts.selectors.ts`",
+          "right": "What the components read from the state"
+        },
+        {
+          "left": "`posts.effects.ts`",
+          "right": "Calls to the API, and the actions that follow them"
         }
       ],
-      "explanation": "The router only passes route parameters to inputs with `provideRouter(routes, withComponentInputBinding())`. Without it, `username` is never set, and reading a required input with no value throws (NG0950).",
-      "reference": "../guide/03-instagram-component-tree.md"
+      "explanation": "Each file has one job. If you find an API call in the reducer or state logic in an effect, it's in the wrong file. (Your team may add more files, like a separate state file.)",
+      "reference": "../guide/04-store-data-flow.md"
     },
     {
       "id": "arch-04",

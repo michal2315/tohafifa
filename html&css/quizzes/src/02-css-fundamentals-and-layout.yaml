@@ -595,3 +595,361 @@ questions:
       - { text: 'Like and share', correct: false }
     explanation: 'A comma is missing between `.icon-comment` and `.icon-share`. Without it, `.icon-comment .icon-share` means "a `.icon-share` inside a `.icon-comment`", which matches nothing here. Fix: `.icon-like, .icon-comment, .icon-share`.'
     reference: 02-css-fundamentals-and-layout/02-selectors.md
+
+  - id: css-23
+    type: visual
+    topic: grid
+    difficulty: 3
+    placement: false
+    prompt: 'The first post on the profile is featured. Which picture does this SCSS draw?'
+    renderWidth: 300
+    context:
+      lang: html
+      label: profile-grid.component.html
+      source: |
+        <div class="profile-grid">
+          <div class="grid-post featured-post">1</div>
+          <div class="grid-post">2</div>
+          <div class="grid-post">3</div>
+          <div class="grid-post">4</div>
+          <div class="grid-post">5</div>
+          <div class="grid-post">6</div>
+        </div>
+    code:
+      lang: scss
+      label: profile-grid.component.scss
+      source: |
+        :host {
+          .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+          }
+
+          .grid-post {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 72px;
+            background: #dbdbdb;
+          }
+
+          .featured-post {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: #0095f6;
+          }
+        }
+    options:
+      - image: img/css-23-a.png
+        correct: false
+        render: |
+          :host {
+            .profile-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 4px;
+            }
+
+            .grid-post {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              min-height: 72px;
+              background: #dbdbdb;
+            }
+
+            .featured-post {
+              grid-column: span 2;
+              background: #0095f6;
+            }
+          }
+      - image: img/css-23-b.png
+        correct: false
+        render: |
+          :host {
+            .profile-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 4px;
+            }
+
+            .grid-post {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              min-height: 72px;
+              background: #dbdbdb;
+            }
+
+            .featured-post {
+              grid-column: span 3;
+              background: #0095f6;
+            }
+          }
+      - image: img/css-23-c.png
+        correct: true
+      - image: img/css-23-d.png
+        correct: false
+        render: |
+          :host {
+            .profile-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 4px;
+            }
+
+            .grid-post {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              min-height: 72px;
+              background: #dbdbdb;
+            }
+
+            .featured-post {
+              grid-row: span 2;
+              background: #0095f6;
+            }
+          }
+    explanation: '`grid-column: span 2` makes the post 2 columns wide, and `grid-row: span 2` makes it 2 rows tall. Posts 2 and 3 fill the third column next to it, and posts 4–6 make the next row.'
+    reference: 02-css-fundamentals-and-layout/09-grid.md
+
+  - id: css-24
+    type: visual
+    topic: flexbox
+    difficulty: 2
+    placement: false
+    prompt: 'Which picture does this SCSS draw for the hashtags under a caption?'
+    renderWidth: 220
+    context:
+      lang: html
+      label: post-caption.component.html
+      source: |
+        <div class="hashtags">
+          <span class="hashtag">#sunset</span>
+          <span class="hashtag">#beach</span>
+          <span class="hashtag">#summer</span>
+          <span class="hashtag">#travel</span>
+          <span class="hashtag">#photography</span>
+        </div>
+    code:
+      lang: scss
+      label: post-caption.component.scss
+      source: |
+        :host {
+          .hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+          }
+
+          .hashtag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: #efefef;
+            color: #00376b;
+          }
+        }
+    options:
+      - image: img/css-24-a.png
+        correct: true
+      - image: img/css-24-b.png
+        correct: false
+        render: |
+          :host {
+            .hashtags {
+              display: flex;
+              gap: 6px;
+            }
+
+            .hashtag {
+              padding: 4px 10px;
+              border-radius: 12px;
+              background: #efefef;
+              color: #00376b;
+            }
+          }
+      - image: img/css-24-c.png
+        correct: false
+        render: |
+          :host {
+            .hashtags {
+              display: flex;
+              flex-direction: column;
+              flex-wrap: wrap;
+              gap: 6px;
+            }
+
+            .hashtag {
+              padding: 4px 10px;
+              border-radius: 12px;
+              background: #efefef;
+              color: #00376b;
+            }
+          }
+    explanation: '`flex-wrap: wrap` moves the tags that don''t fit to a new line. Without it, flex items stay on one line and the last ones stick out of the box. `flex-direction: column` would stack every tag.'
+    reference: 02-css-fundamentals-and-layout/08-flexbox.md
+
+  - id: css-25
+    type: visual
+    topic: borders
+    difficulty: 1
+    placement: false
+    prompt: 'Which SCSS draws these story avatars?'
+    renderWidth: 260
+    image: img/css-25.png
+    optionLang: scss
+    context:
+      lang: html
+      label: stories.component.html
+      source: |
+        <div class="stories">
+          <div class="story-avatar"></div>
+          <div class="story-avatar"></div>
+          <div class="story-avatar"></div>
+        </div>
+    options:
+      - code: |
+          :host {
+            .stories {
+              display: flex;
+              gap: 12px;
+            }
+
+            .story-avatar {
+              width: 56px;
+              height: 56px;
+              border: 3px solid #d62976;
+              border-radius: 50%;
+              background: #dbdbdb;
+            }
+          }
+        correct: true
+      - code: |
+          :host {
+            .stories {
+              display: flex;
+              gap: 12px;
+            }
+
+            .story-avatar {
+              width: 56px;
+              height: 56px;
+              border: 3px solid #d62976;
+              border-radius: 8px;
+              background: #dbdbdb;
+            }
+          }
+        correct: false
+      - code: |
+          :host {
+            .stories {
+              display: flex;
+              gap: 12px;
+            }
+
+            .story-avatar {
+              width: 56px;
+              height: 40px;
+              border: 3px solid #d62976;
+              border-radius: 50%;
+              background: #dbdbdb;
+            }
+          }
+        correct: false
+      - code: |
+          :host {
+            .stories {
+              display: flex;
+            }
+
+            .story-avatar {
+              width: 56px;
+              height: 56px;
+              border: 3px solid #d62976;
+              border-radius: 50%;
+              background: #dbdbdb;
+            }
+          }
+        correct: false
+    explanation: 'Circles need equal width and height plus `border-radius: 50%`. With a different height you get an oval, `8px` gives rounded squares, and without `gap` the circles touch.'
+    reference: 02-css-fundamentals-and-layout/17-borders.md
+
+  - id: css-26
+    type: order
+    topic: specificity
+    difficulty: 2
+    placement: false
+    prompt: 'All four rules set the color of the same caption. Order them from weakest to strongest.'
+    items:
+      - '`.caption { color: #8e8e8e; }`'
+      - '`.post-card .caption { color: #262626; }`'
+      - '`.post-card .caption.is-highlighted { color: #0095f6; }`'
+      - '`.caption { color: #ed4956 !important; }`'
+    explanation: 'Each extra class adds to the specificity: one class, then two, then three. `!important` beats any specificity, which is why we avoid it: the only way to override it is another `!important`.'
+    reference: 02-css-fundamentals-and-layout/04-specificity.md
+
+  - id: css-27
+    type: match
+    topic: units
+    difficulty: 1
+    placement: false
+    prompt: 'Match each unit with where we use it.'
+    pairs:
+      - left: '`px`'
+        right: 'Fixed sizes from the design, like a 32px avatar'
+      - left: '`%`'
+        right: 'A size that follows the parent, like an image that fills its card'
+      - left: '`vh` and `vw`'
+        right: 'Only the top-level app container'
+      - left: '`fr`'
+        right: 'A share of the free space in a grid'
+    explanation: 'Inside components, `vh` and `vw` measure the browser window, not the component''s space, so the component breaks as soon as it sits in a smaller column. `%` and `fr` follow the space the component is given.'
+    reference: 02-css-fundamentals-and-layout/06-sizing.md
+
+  - id: css-28
+    type: pick-the-fix
+    topic: spacing
+    difficulty: 1
+    placement: false
+    prompt: 'The feed should be 470px wide and centered on the page, but it sticks to the left. Which version fixes it?'
+    code:
+      lang: scss
+      label: feed.component.scss
+      source: |
+        :host {
+          .feed {
+            max-width: 470px;
+            margin: 0;
+          }
+        }
+    options:
+      - code: |
+          :host {
+            .feed {
+              max-width: 470px;
+              margin: 0 auto;
+            }
+          }
+        correct: true
+      - code: |
+          :host {
+            .feed {
+              max-width: 470px;
+              margin: 0;
+              text-align: center;
+            }
+          }
+        correct: false
+      - code: |
+          :host {
+            .feed {
+              max-width: 470px;
+              margin: 0;
+              justify-content: center;
+            }
+          }
+        correct: false
+    explanation: '`auto` on the left and right margins splits the free space equally, which centers a block with a set width. `text-align: center` centers the text inside the feed, not the feed. `justify-content` only works on flex and grid containers.'
+    reference: 02-css-fundamentals-and-layout/10-spacing.md

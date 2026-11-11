@@ -401,6 +401,39 @@
       ],
       "explanation": "Sass calculates `math.div` at compile time, so the CSS gets the result. In new Sass, use `math.div()` for division, not `/`, which is deprecated for division.",
       "reference": "04-scss/15-sass-math-module.md"
+    },
+    {
+      "id": "scss-17",
+      "type": "fill",
+      "topic": "use",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The colors module should be used with the short namespace `c`. What goes in the gap?",
+      "code": {
+        "lang": "scss",
+        "label": "post-header.component.scss",
+        "source": "@use 'colors' ___ c;\n\n:host {\n  .username {\n    color: c.$text-primary;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "`as`",
+          "correct": true
+        },
+        {
+          "text": "`with`",
+          "correct": false
+        },
+        {
+          "text": "`from`",
+          "correct": false
+        },
+        {
+          "text": "`in`",
+          "correct": false
+        }
+      ],
+      "explanation": "`@use 'colors' as c` names the namespace `c`. Without `as`, the namespace is the file name: `colors.$text-primary`. `with` is for configuring a module's variables.",
+      "reference": "04-scss/05-use.md"
     }
   ]
 }

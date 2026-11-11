@@ -229,6 +229,45 @@
         }
       ],
       "explanation": "One parent for the flex row and one element per thing you see. The second option wraps each element in a useless `div`, the third uses a heading tag, and the fourth is not kebab-case."
+    },
+    {
+      "id": "conv-13",
+      "type": "find-all-bugs",
+      "topic": "review",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "Code review: click every line that breaks our conventions.",
+      "code": {
+        "lang": "scss",
+        "label": "post-card.component.scss",
+        "source": ":host {\n  .post-card {\n    width: 100%;\n    background: white;\n  }\n\n  // the header row\n  .postHeader {\n    display: flex;\n    gap: 8px;\n  }\n\n  span {\n    color: #262626;\n  }\n}\n"
+      },
+      "answer": [
+        4,
+        7,
+        8,
+        13
+      ],
+      "explanation": "Line 4: colors are lowercase hex, `#ffffff`. Line 7: no comments. Line 8: class names are kebab-case, `.post-header`. Line 13: we style classes, never tags; give the element a class."
+    },
+    {
+      "id": "conv-14",
+      "type": "find-all-bugs",
+      "topic": "review",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "Code review: click every line that breaks our conventions.",
+      "code": {
+        "lang": "html",
+        "label": "post-card.component.html",
+        "source": "<div class=\"post-card\">\n  <div class=\"image-wrapper\">\n    <img class=\"post-image\" src=\"sunset.jpg\" alt=\"Sunset over the sea\">\n  </div>\n  <div class=\"post-caption\">Golden hour</div>\n  <h3 class=\"post-likes\">128 likes</h3>\n  <div class=\"post-actions\">\n    <button class=\"likeButton\" type=\"button\">Like</button>\n    <button class=\"share-button\" type=\"button\">Share</button>\n  </div>\n</div>\n"
+      },
+      "answer": [
+        2,
+        6,
+        8
+      ],
+      "explanation": "Line 2: `image-wrapper` wraps a single element, so it's a useless wrapper; put the class on the image. Line 6: we don't use heading tags; use a `div` with a class. Line 8: class names are kebab-case, `like-button`. `post-actions` is fine: it groups two buttons."
     }
   ]
 }

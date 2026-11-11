@@ -1,0 +1,154 @@
+module: 02-signals
+title: 2. Signals
+questions:
+  - id: sig-01
+    type: predict
+    topic: update
+    difficulty: 2
+    placement: false
+    prompt: '`likes` starts at `10`. The user clicks the heart three times. What does the counter show?'
+    code:
+      lang: ts
+      label: like-button.component.ts
+      source: |
+        export class LikeButtonComponent {
+          readonly likes = signal(10);
+
+          like() {
+            this.likes.update((count) => count++);
+          }
+        }
+    options:
+      - text: '`10`'
+        correct: true
+      - text: '`13`'
+        correct: false
+      - text: '`11`'
+        correct: false
+    explanation: '`count++` increments the local variable but returns the old value, so `update` sets the signal to the same number every time. Write `this.likes.update((count) => count + 1)`.'
+    reference: 04-signals/01-signals-overview.md
+
+  - id: sig-02
+    type: predict
+    topic: immutability
+    difficulty: 2
+    placement: false
+    prompt: 'A new comment is added with `addComment`. What does the "N comments" label show?'
+    code:
+      lang: ts
+      label: comments-section.component.ts
+      source: |
+        export class CommentsSectionComponent {
+          readonly comments = signal<Comment[]>([]);
+          readonly commentCount = computed(() => this.comments().length);
+
+          addComment(comment: Comment) {
+            this.comments().push(comment);
+          }
+        }
+    options:
+      - text: 'The old count: the signal was never told that it changed'
+        correct: true
+      - text: 'The new count: `computed` notices the new item'
+        correct: false
+      - text: 'An error: signal values are read-only'
+        correct: false
+    explanation: '`push` changes the array in place, so the signal still holds the same array and nothing is notified. Give the signal a new array: `this.comments.update((comments) => [...comments, comment])`.'
+    reference: 04-signals/01-signals-overview.md
+
+  - id: sig-03
+    type: predict
+    topic: computed
+    difficulty: 2
+    placement: false
+    prompt: 'What happens the first time a template reads `visiblePosts()`?'
+    code:
+      lang: ts
+      label: feed.component.ts
+      source: |
+        export class FeedComponent {
+          readonly posts = signal<Post[]>([]);
+          readonly lastSeenCount = signal(0);
+
+          readonly visiblePosts = computed(() => {
+            const posts = this.posts();
+            this.lastSeenCount.set(posts.length);
+            return posts.filter((post) => !post.isHidden);
+          });
+        }
+    options:
+      - text: 'An error: writing to a signal inside `computed` is not allowed'
+        correct: true
+      - text: 'It works, and `lastSeenCount` stays in sync with `posts`'
+        correct: false
+      - text: 'An endless loop that freezes the page'
+        correct: false
+    explanation: '`computed` must only derive a value from other signals. Writing to a signal inside it throws (NG0600). Make `lastSeenCount` a `computed` of its own, or update it where the posts change.'
+    reference: 04-signals/01-signals-overview.md
+
+  - id: sig-04
+    type: predict
+    topic: interop
+    difficulty: 2
+    placement: false
+    prompt: 'What happens when this component starts?'
+    code:
+      lang: ts
+      label: profile.component.ts
+      source: |
+        export class ProfileComponent implements OnInit {
+          private readonly route = inject(ActivatedRoute);
+          username!: Signal<string | null>;
+
+          ngOnInit() {
+            this.username = toSignal(this.route.paramMap.pipe(map((params) => params.get('username'))), { initialValue: null });
+          }
+        }
+    options:
+      - text: 'An error: `toSignal` can only be called in an injection context'
+        correct: true
+      - text: 'It works the same as calling it in a field'
+        correct: false
+      - text: 'The signal stays `null` because `ngOnInit` runs too late'
+        correct: false
+    explanation: '`toSignal` needs an injection context so it can unsubscribe when the component is destroyed. Call it in a field initializer or the constructor: `readonly username = toSignal(...)`.'
+    reference: 04-signals/02-signals-interop.md
+
+  - id: sig-05
+    type: spot-the-bug
+    topic: reading-signals
+    difficulty: 1
+    placement: false
+    prompt: 'The "Edit profile" button shows on every profile, including other people''s. Click the buggy line.'
+    code:
+      lang: ts
+      label: profile.component.ts
+      source: |
+        export class ProfileComponent {
+          readonly profile = input.required<Profile>();
+          readonly currentUsername = input.required<string>();
+          readonly isOwnProfile = computed(() => this.profile().username === this.currentUsername());
+
+          get showEditButton(): boolean {
+            return this.isOwnProfile ? true : false;
+          }
+        }
+    answer: 7
+    explanation: '`this.isOwnProfile` is the signal function itself, which is always truthy. Call it: `this.isOwnProfile()`. Better still, use the signal in the template and drop the getter.'
+    reference: 04-signals/01-signals-overview.md
+
+  - id: sig-06
+    type: single
+    topic: computed
+    difficulty: 1
+    placement: false
+    prompt: 'The profile page shows "N posts". `posts` is a signal. Which is the right way to get the count?'
+    options:
+      - text: '`readonly postCount = computed(() => this.posts().length);`'
+        correct: true
+      - text: 'A `postCount` signal, set from `effect(() => this.postCount.set(this.posts().length))`'
+        correct: false
+      - text: 'A `postCount` number field, set once in `ngOnInit`'
+        correct: false
+    explanation: 'A value derived from other signals is a `computed`. It is always in sync and only recalculates when `posts` changes. An `effect` that copies values into another signal is extra work and briefly out of date. A number set in `ngOnInit` never updates.'
+    reference: 04-signals/01-signals-overview.md

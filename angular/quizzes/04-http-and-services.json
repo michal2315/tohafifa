@@ -1,0 +1,188 @@
+{
+  "module": "04-http-and-services",
+  "title": "4. HTTP & services",
+  "questions": [
+    {
+      "id": "http-01",
+      "type": "predict",
+      "topic": "observables",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The user clicks \"Delete\". What does the server receive?",
+      "code": {
+        "lang": "ts",
+        "label": "post-menu.component.ts",
+        "source": "export class PostMenuComponent {\n  private readonly postsApi = inject(PostsApiService);\n  readonly post = input.required<Post>();\n\n  deletePost() {\n    this.postsApi.deletePost(this.post().id);\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Nothing: `HttpClient` only sends the request when something subscribes",
+          "correct": true
+        },
+        {
+          "text": "One DELETE request",
+          "correct": false
+        },
+        {
+          "text": "One DELETE request, but the response is ignored",
+          "correct": false
+        }
+      ],
+      "explanation": "`HttpClient` methods return a cold observable. No subscriber means no request. (With NgRx, the effect subscribes for you, which is one more reason to send calls through effects.)",
+      "reference": "08-http/03-making-requests.md"
+    },
+    {
+      "id": "http-02",
+      "type": "predict",
+      "topic": "observables",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "How many requests to `/api/posts` does the feed send when it opens?",
+      "context": {
+        "lang": "ts",
+        "label": "feed.component.ts",
+        "source": "export class FeedComponent {\n  readonly posts$ = inject(PostsApiService).getFeed();\n}\n"
+      },
+      "code": {
+        "lang": "html",
+        "label": "feed.component.html",
+        "source": "<span class=\"post-count\">{{ (posts$ | async)?.length }} posts</span>\n@for (post of posts$ | async; track post.id) {\n  <app-post-card [post]=\"post\" />\n}\n"
+      },
+      "options": [
+        {
+          "text": "Two: each `async` pipe subscribes separately",
+          "correct": true
+        },
+        {
+          "text": "One: the observable is shared",
+          "correct": false
+        },
+        {
+          "text": "None: `async` only reads values that are already cached",
+          "correct": false
+        }
+      ],
+      "explanation": "Every subscription to an `HttpClient` observable sends its own request. Subscribe once, for example with `toSignal`, or keep the data in the store and select it.",
+      "reference": "08-http/03-making-requests.md"
+    },
+    {
+      "id": "http-03",
+      "type": "predict",
+      "topic": "setup",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "In Angular 20, the app config only has `provideRouter(routes)`. What happens when the feed loads?",
+      "code": {
+        "lang": "ts",
+        "label": "posts-api.service.ts",
+        "source": "@Injectable({ providedIn: 'root' })\nexport class PostsApiService {\n  private readonly http = inject(HttpClient);\n}\n"
+      },
+      "options": [
+        {
+          "text": "An error: no provider for `HttpClient`",
+          "correct": true
+        },
+        {
+          "text": "It works: `HttpClient` is always available",
+          "correct": false
+        },
+        {
+          "text": "It works, but interceptors don't run",
+          "correct": false
+        }
+      ],
+      "explanation": "In Angular 20, `HttpClient` has to be provided: add `provideHttpClient()` to `app.config.ts`. (Angular 21 provides it by default, but we teach 20.)",
+      "reference": "08-http/02-setup.md"
+    },
+    {
+      "id": "http-04",
+      "type": "spot-the-bug",
+      "topic": "interceptors",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The server keeps answering 401: the token never arrives. Click the buggy line.",
+      "code": {
+        "lang": "ts",
+        "label": "auth.interceptor.ts",
+        "source": "export const authInterceptor: HttpInterceptorFn = (req, next) => {\n  const token = inject(AuthService).token();\n  if (token) {\n    req.headers.set('Authorization', `Bearer ${token}`);\n  }\n  return next(req);\n};\n"
+      },
+      "answer": 4,
+      "explanation": "Requests and headers are immutable: `headers.set` returns a new object and leaves `req` unchanged. Clone the request: `req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });`.",
+      "reference": "08-http/04-interceptors.md"
+    },
+    {
+      "id": "http-05",
+      "type": "spot-the-bug",
+      "topic": "interceptors",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The auth interceptor is written correctly, but it never runs. Click the buggy line.",
+      "code": {
+        "lang": "ts",
+        "label": "app.config.ts",
+        "source": "export const appConfig: ApplicationConfig = {\n  providers: [\n    provideRouter(routes, withComponentInputBinding()),\n    provideHttpClient(),\n    provideStore(),\n  ],\n};\n"
+      },
+      "answer": 4,
+      "explanation": "A functional interceptor runs only when it's registered: `provideHttpClient(withInterceptors([authInterceptor]))`.",
+      "reference": "08-http/04-interceptors.md"
+    },
+    {
+      "id": "di-01",
+      "type": "predict",
+      "topic": "providers",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "`FollowService` is `@Injectable({ providedIn: 'root' })` and keeps the list of followed users. The profile header also lists it in its own `providers`. The user follows someone from the profile header. Does the feed see the change?",
+      "code": {
+        "lang": "ts",
+        "label": "profile-header.component.ts",
+        "source": "@Component({\n  selector: 'app-profile-header',\n  providers: [FollowService],\n  templateUrl: './profile-header.component.html',\n  styleUrl: './profile-header.component.scss',\n})\nexport class ProfileHeaderComponent {\n  private readonly followService = inject(FollowService);\n}\n"
+      },
+      "options": [
+        {
+          "text": "No: `providers` gives this component its own new instance, so it isn't shared with the rest of the app",
+          "correct": true
+        },
+        {
+          "text": "Yes: `providedIn: 'root'` makes it a singleton everywhere",
+          "correct": false
+        },
+        {
+          "text": "An error: a service can't be provided twice",
+          "correct": false
+        }
+      ],
+      "explanation": "A component's `providers` creates a separate instance for that component and its children. Remove it from `providers` to use the app-wide instance.",
+      "reference": "05-services-and-di/01-di-overview.md"
+    },
+    {
+      "id": "di-02",
+      "type": "predict",
+      "topic": "inject",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "What happens when the user clicks \"Share\"?",
+      "code": {
+        "lang": "ts",
+        "label": "share-button.component.ts",
+        "source": "export class ShareButtonComponent {\n  readonly post = input.required<Post>();\n\n  share() {\n    const clipboard = inject(Clipboard);\n    clipboard.copy(`/posts/${this.post().id}`);\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "An error: `inject()` can only be called in an injection context",
+          "correct": true
+        },
+        {
+          "text": "The link is copied",
+          "correct": false
+        },
+        {
+          "text": "Nothing: `inject()` returns `null` outside the constructor",
+          "correct": false
+        }
+      ],
+      "explanation": "`inject()` works in field initializers, the constructor and provider factories, not in methods that run later (NG0203). Move it to a field: `private readonly clipboard = inject(Clipboard);`.",
+      "reference": "05-services-and-di/02-creating-and-using-services.md"
+    }
+  ]
+}

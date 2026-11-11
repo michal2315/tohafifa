@@ -1,0 +1,163 @@
+{
+  "module": "05-rxjs",
+  "title": "5. RxJS",
+  "questions": [
+    {
+      "id": "rx-01",
+      "type": "single",
+      "topic": "flattening",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The user can post several comments quickly. All must be saved, in the order they were written. Which operator do you use to call the API?",
+      "options": [
+        {
+          "text": "`concatMap`",
+          "correct": true
+        },
+        {
+          "text": "`switchMap`",
+          "correct": false
+        },
+        {
+          "text": "`exhaustMap`",
+          "correct": false
+        },
+        {
+          "text": "`mergeMap`",
+          "correct": false
+        }
+      ],
+      "explanation": "`concatMap` waits for each request to finish before starting the next, so nothing is lost and the order is kept. `switchMap` cancels the previous request, `exhaustMap` ignores new ones while one is running, and `mergeMap` runs them in parallel, so they may finish in any order.",
+      "reference": "10-rxjs/10-concatmap.md"
+    },
+    {
+      "id": "rx-02",
+      "type": "single",
+      "topic": "flattening",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "A user double-clicks \"Log in\". Which operator makes sure only one login request is sent?",
+      "options": [
+        {
+          "text": "`exhaustMap`",
+          "correct": true
+        },
+        {
+          "text": "`switchMap`",
+          "correct": false
+        },
+        {
+          "text": "`concatMap`",
+          "correct": false
+        },
+        {
+          "text": "`mergeMap`",
+          "correct": false
+        }
+      ],
+      "explanation": "`exhaustMap` ignores new values while the current request is still running. `concatMap` would send the second login after the first one.",
+      "reference": "10-rxjs/11-exhaustmap.md"
+    },
+    {
+      "id": "rx-03",
+      "type": "predict",
+      "topic": "error-handling",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "The search request fails once, and the user keeps typing. What happens?",
+      "code": {
+        "lang": "ts",
+        "label": "user-search.component.ts",
+        "source": "readonly results = toSignal(\n  this.searchTerm$.pipe(\n    debounceTime(300),\n    switchMap((term) => this.usersApi.search(term)),\n    catchError(() => of([])),\n  ),\n  { initialValue: [] },\n);\n"
+      },
+      "options": [
+        {
+          "text": "The results stay empty: after the error the whole stream completed and ignores new terms",
+          "correct": true
+        },
+        {
+          "text": "The search keeps working; only the failed request returned `[]`",
+          "correct": false
+        },
+        {
+          "text": "The error is rethrown on the next keystroke",
+          "correct": false
+        }
+      ],
+      "explanation": "`catchError` replaces the stream it is attached to. Here that is the outer stream, so it ends. Put `catchError` inside, on the request: `switchMap((term) => this.usersApi.search(term).pipe(catchError(() => of([]))))`.",
+      "reference": "10-rxjs/15-catcherror.md"
+    },
+    {
+      "id": "rx-04",
+      "type": "predict",
+      "topic": "tap",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "What does this observable emit?",
+      "code": {
+        "lang": "ts",
+        "source": "of(1, 2, 3).pipe(\n  tap((n) => n * 10),\n)\n"
+      },
+      "options": [
+        {
+          "text": "`1, 2, 3`",
+          "correct": true
+        },
+        {
+          "text": "`10, 20, 30`",
+          "correct": false
+        },
+        {
+          "text": "Nothing: `tap` swallows the values",
+          "correct": false
+        }
+      ],
+      "explanation": "`tap` is for side effects, like logging, and ignores what you return. To change values, use `map`.",
+      "reference": "10-rxjs/14-tap.md"
+    },
+    {
+      "id": "rx-05",
+      "type": "predict",
+      "topic": "flattening",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "What arrives in `subscribe` when the user picks a profile?",
+      "code": {
+        "lang": "ts",
+        "source": "this.selectedUsername$.pipe(\n  map((username) => this.profileApi.getProfile(username)),\n).subscribe((profile) => console.log(profile));\n"
+      },
+      "options": [
+        {
+          "text": "Observables instead of profiles, and no request is sent",
+          "correct": true
+        },
+        {
+          "text": "The profile object",
+          "correct": false
+        },
+        {
+          "text": "A promise that resolves to the profile",
+          "correct": false
+        }
+      ],
+      "explanation": "`map` returns the observable itself, and nobody subscribes to it, so no request goes out. To call an API for each value, use a flattening operator such as `switchMap`.",
+      "reference": "10-rxjs/07-higher-order-observables.md"
+    },
+    {
+      "id": "rx-06",
+      "type": "spot-the-bug",
+      "topic": "unsubscribe",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "After the user leaves the feed, the app keeps calling the API every 30 seconds. Click the line that needs fixing.",
+      "code": {
+        "lang": "ts",
+        "label": "feed.component.ts",
+        "source": "export class FeedComponent implements OnInit {\n  private readonly store = inject(Store);\n\n  ngOnInit() {\n    interval(30000).subscribe(() => this.store.dispatch(PostsActions.refreshFeed()));\n  }\n}\n"
+      },
+      "answer": 5,
+      "explanation": "An `interval` subscription lives until it is unsubscribed, even after the component is gone. Stop it with the component: add `private readonly destroyRef = inject(DestroyRef);` and use `interval(30000).pipe(takeUntilDestroyed(this.destroyRef))`. `ngOnInit` is not an injection context, so `takeUntilDestroyed` needs the `DestroyRef` passed in.",
+      "reference": "04-signals/03-take-until-destroyed.md"
+    }
+  ]
+}

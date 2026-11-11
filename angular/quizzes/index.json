@@ -1,0 +1,71 @@
+[
+  {
+    "module": "01-components-and-templates",
+    "title": "1. Components & templates",
+    "file": "01-components-and-templates.json",
+    "questions": 8,
+    "placement": 0,
+    "byType": {
+      "predict": 5,
+      "spot-the-bug": 3
+    }
+  },
+  {
+    "module": "02-signals",
+    "title": "2. Signals",
+    "file": "02-signals.json",
+    "questions": 6,
+    "placement": 0,
+    "byType": {
+      "predict": 4,
+      "spot-the-bug": 1,
+      "single": 1
+    }
+  },
+  {
+    "module": "03-routing-and-forms",
+    "title": "3. Routing & forms",
+    "file": "03-routing-and-forms.json",
+    "questions": 8,
+    "placement": 0,
+    "byType": {
+      "spot-the-bug": 3,
+      "predict": 5
+    }
+  },
+  {
+    "module": "04-http-and-services",
+    "title": "4. HTTP & services",
+    "file": "04-http-and-services.json",
+    "questions": 7,
+    "placement": 0,
+    "byType": {
+      "predict": 5,
+      "spot-the-bug": 2
+    }
+  },
+  {
+    "module": "05-rxjs",
+    "title": "5. RxJS",
+    "file": "05-rxjs.json",
+    "questions": 6,
+    "placement": 0,
+    "byType": {
+      "single": 2,
+      "predict": 3,
+      "spot-the-bug": 1
+    }
+  },
+  {
+    "module": "06-ngrx",
+    "title": "6. NgRx",
+    "file": "06-ngrx.json",
+    "questions": 7,
+    "placement": 0,
+    "byType": {
+      "predict": 5,
+      "spot-the-bug": 1,
+      "single": 1
+    }
+  }
+]

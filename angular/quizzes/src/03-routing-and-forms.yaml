@@ -1,0 +1,187 @@
+module: 03-routing-and-forms
+title: 3. Routing & forms
+questions:
+  - id: route-01
+    type: spot-the-bug
+    topic: routes
+    difficulty: 1
+    placement: false
+    prompt: 'Every profile link shows the "Page not found" page. Click the buggy line.'
+    code:
+      lang: ts
+      label: app.routes.ts
+      source: |
+        export const routes: Routes = [
+          { path: '', component: FeedComponent },
+          { path: '**', component: NotFoundComponent },
+          { path: 'profile/:username', loadComponent: () => import('./profile/profile.component').then((m) => m.ProfileComponent) },
+        ];
+    answer: 3
+    explanation: 'The router uses the first route that matches, and `**` matches everything. The wildcard route must always be last.'
+    reference: 06-routing/02-define-routes.md
+
+  - id: route-02
+    type: predict
+    topic: router-link
+    difficulty: 2
+    placement: false
+    prompt: 'The component''s `imports` array is `[AvatarComponent]`. What happens when the user clicks the username?'
+    code:
+      lang: html
+      label: post-header.component.html
+      source: |
+        <div class="post-header">
+          <app-avatar [imageUrl]="post().author.imageUrl" [username]="post().author.username" />
+          <a class="username" routerLink="/profile/noa_k">noa_k</a>
+        </div>
+    options:
+      - text: 'Nothing: without `RouterLink` in `imports`, `routerLink` is just an unknown HTML attribute'
+        correct: true
+      - text: 'The build fails: `routerLink` is not a known property'
+        correct: false
+      - text: 'It navigates: the router is provided for the whole app'
+        correct: false
+    explanation: 'A plain `routerLink="..."` attribute compiles fine even when the directive is missing, so nothing warns you. Add `RouterLink` to the component''s `imports`. (A binding like `[routerLink]` would fail the build instead.)'
+    reference: 06-routing/04-navigate-to-routes.md
+
+  - id: route-03
+    type: predict
+    topic: route-params
+    difficulty: 3
+    placement: false
+    prompt: 'You''re on `/profile/noa_k` and click a link to `/profile/dan_r`. What does the page show?'
+    code:
+      lang: ts
+      label: profile.component.ts
+      source: |
+        export class ProfileComponent {
+          private readonly route = inject(ActivatedRoute);
+          readonly username = this.route.snapshot.paramMap.get('username');
+        }
+    options:
+      - text: 'Still noa_k''s profile: the router reuses the same component, and the snapshot was read only once'
+        correct: true
+      - text: 'dan_r''s profile: the component is created again for the new URL'
+        correct: false
+      - text: 'An error: the snapshot is out of date'
+        correct: false
+    explanation: 'When only a parameter changes, the router keeps the existing component. A snapshot is read once, so it never sees the new value. Use a value that updates: `toSignal(this.route.paramMap...)`, or an input bound with `withComponentInputBinding()`.'
+    reference: 06-routing/05-read-route-state.md
+
+  - id: route-04
+    type: predict
+    topic: route-params
+    difficulty: 2
+    placement: false
+    prompt: 'The app is set up with `provideRouter(routes)`. What is `username()` on `/profile/noa_k`?'
+    code:
+      lang: ts
+      label: profile.component.ts
+      source: |
+        export class ProfileComponent {
+          readonly username = input<string>();
+        }
+    options:
+      - text: '`undefined`: route parameters only bind to inputs when `withComponentInputBinding()` is enabled'
+        correct: true
+      - text: '`''noa_k''`: inputs with the same name as a parameter are filled automatically'
+        correct: false
+      - text: 'An error: routed components can''t have inputs'
+        correct: false
+    explanation: 'Binding route params to inputs is opt-in: `provideRouter(routes, withComponentInputBinding())`.'
+    reference: 06-routing/05-read-route-state.md
+
+  - id: form-01
+    type: spot-the-bug
+    topic: reactive-forms
+    difficulty: 1
+    placement: false
+    prompt: 'The page throws an error as soon as the comment form appears. Click the buggy line.'
+    context:
+      lang: ts
+      label: comment-form.component.ts
+      source: |
+        export class CommentFormComponent {
+          private readonly formBuilder = inject(NonNullableFormBuilder);
+          readonly commentForm = this.formBuilder.group({
+            commentText: ['', Validators.required],
+          });
+        }
+    code:
+      lang: html
+      label: comment-form.component.html
+      source: |
+        <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submit()">
+          <input class="comment-input" formControlName="text" placeholder="Add a comment…">
+          <button class="post-button" type="submit" [disabled]="commentForm.invalid">Post</button>
+        </form>
+    answer: 2
+    explanation: '`formControlName` must match a key in the group. The control is called `commentText`, so Angular can''t find a control named `text`.'
+    reference: 07-forms/02-reactive-forms.md
+
+  - id: form-02
+    type: predict
+    topic: reactive-forms
+    difficulty: 1
+    placement: false
+    prompt: 'The component''s `imports` array is empty. What happens when you build?'
+    code:
+      lang: html
+      label: comment-form.component.html
+      source: |
+        <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submit()">
+          <input class="comment-input" formControlName="commentText">
+          <button class="post-button" type="submit">Post</button>
+        </form>
+    options:
+      - text: 'It fails: `formGroup` isn''t a known property of `form`'
+        correct: true
+      - text: 'It builds, but submitting reloads the page'
+        correct: false
+      - text: 'It builds: forms work in every component'
+        correct: false
+    explanation: 'The reactive forms directives come from `ReactiveFormsModule`. Add it to the component''s `imports`.'
+    reference: 07-forms/02-reactive-forms.md
+
+  - id: form-03
+    type: spot-the-bug
+    topic: forms
+    difficulty: 2
+    placement: false
+    prompt: 'Clicking "Cancel" posts the comment. Click the line that causes it.'
+    code:
+      lang: html
+      label: comment-form.component.html
+      source: |
+        <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submit()">
+          <input class="comment-input" formControlName="commentText">
+          <button class="cancel-button" (click)="cancel()">Cancel</button>
+          <button class="post-button" type="submit">Post</button>
+        </form>
+    answer: 3
+    explanation: 'A button inside a form without a `type` is a submit button, so clicking it also submits the form. Give it `type="button"`.'
+    reference: 07-forms/02-reactive-forms.md
+
+  - id: form-04
+    type: predict
+    topic: forms
+    difficulty: 3
+    placement: false
+    prompt: 'The `username` control is disabled because it can''t be changed. What does `profileForm.value` contain?'
+    code:
+      lang: ts
+      label: edit-profile.component.ts
+      source: |
+        readonly profileForm = this.formBuilder.group({
+          username: [{ value: 'noa_k', disabled: true }],
+          bio: ['Photographer'],
+        });
+    options:
+      - text: '`{ bio: ''Photographer'' }`'
+        correct: true
+      - text: '`{ username: ''noa_k'', bio: ''Photographer'' }`'
+        correct: false
+      - text: '`{ username: null, bio: ''Photographer'' }`'
+        correct: false
+    explanation: '`value` leaves out disabled controls. When you need them too, use `profileForm.getRawValue()`.'
+    reference: 07-forms/02-reactive-forms.md

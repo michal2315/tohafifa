@@ -1,0 +1,181 @@
+module: 06-ngrx
+title: 6. NgRx
+questions:
+  - id: ngrx-01
+    type: predict
+    topic: reducers
+    difficulty: 2
+    placement: false
+    prompt: 'The app runs in development mode with NgRx''s default settings. What happens when `addPostSuccess` is dispatched?'
+    code:
+      lang: ts
+      label: posts.reducer.ts
+      source: |
+        export const postsReducer = createReducer(
+          initialState,
+          on(PostsActions.addPostSuccess, (state, { post }) => {
+            state.posts.push(post);
+            return state;
+          }),
+        );
+    options:
+      - text: 'An error: in development, NgRx freezes the state, so `push` throws'
+        correct: true
+      - text: 'It works: the new post appears'
+        correct: false
+      - text: 'Nothing visible: no error, but the screen doesn''t update'
+        correct: false
+    explanation: 'Reducers must return a new state object and never change the old one. NgRx''s runtime checks freeze the state in development to catch this. Return `{ ...state, posts: [...state.posts, post] }`, or use the entity adapter: `adapter.addOne(post, state)`.'
+    reference: 11-ngrx-store/11-runtime-checks.md
+
+  - id: ngrx-02
+    type: predict
+    topic: effects
+    difficulty: 3
+    placement: false
+    prompt: 'After a successful login, what happens?'
+    code:
+      lang: ts
+      label: auth.effects.ts
+      source: |
+        export const navigateAfterLogin = createEffect(
+          (actions$ = inject(Actions), router = inject(Router)) =>
+            actions$.pipe(
+              ofType(AuthActions.loginSuccess),
+              tap(() => router.navigate(['/'])),
+            ),
+          { functional: true },
+        );
+    options:
+      - text: 'An endless loop: the effect dispatches `loginSuccess` again, which triggers it again'
+        correct: true
+      - text: 'It navigates to the feed once'
+        correct: false
+      - text: 'The build fails: `tap` isn''t allowed in effects'
+        correct: false
+    explanation: 'Whatever an effect emits is dispatched. After `tap`, it still emits `loginSuccess`, so it triggers itself forever. An effect that dispatches nothing needs `{ functional: true, dispatch: false }`.'
+    reference: 12-ngrx-effects/01-effects-overview.md
+
+  - id: ngrx-03
+    type: spot-the-bug
+    topic: effects
+    difficulty: 2
+    placement: false
+    prompt: 'Opening the feed freezes the browser with endless requests. Click the buggy line.'
+    code:
+      lang: ts
+      label: posts.effects.ts
+      source: |
+        export const loadFeed = createEffect(
+          (actions$ = inject(Actions), postsApi = inject(PostsApiService)) =>
+            actions$.pipe(
+              ofType(PostsActions.loadFeed),
+              switchMap(() =>
+                postsApi.getFeed().pipe(
+                  map(() => PostsActions.loadFeed()),
+                  catchError((error: HttpErrorResponse) => of(PostsActions.loadFeedFailure({ errorMessage: error.message }))),
+                ),
+              ),
+            ),
+          { functional: true },
+        );
+    answer: 7
+    explanation: 'On success the effect dispatches `loadFeed` again, which starts a new request, and so on forever. It should dispatch the success action with the data: `map((posts) => PostsActions.loadFeedSuccess({ posts }))`.'
+    reference: 12-ngrx-effects/01-effects-overview.md
+
+  - id: ngrx-04
+    type: predict
+    topic: setup
+    difficulty: 2
+    placement: false
+    prompt: '`postsFeature` was created with `createFeature`, but its state was never registered with `provideState`. What happens when the feed reads `selectAll`?'
+    code:
+      lang: ts
+      label: app.config.ts
+      source: |
+        export const appConfig: ApplicationConfig = {
+          providers: [
+            provideRouter(routes),
+            provideHttpClient(withInterceptors([authInterceptor])),
+            provideStore(),
+            provideEffects(postsEffects),
+          ],
+        };
+    options:
+      - text: 'The console warns that the feature `posts` doesn''t exist in the state, and the selectors fail'
+        correct: true
+      - text: 'It works: `createFeature` registers the state by itself'
+        correct: false
+      - text: 'The feed shows an empty list'
+        correct: false
+    explanation: 'A feature''s state only exists after `provideState(postsFeature)`, either here or in the route that lazy-loads the feed. Without it the feature selector returns `undefined`.'
+    reference: 11-ngrx-store/10-feature-creators.md
+
+  - id: ngrx-05
+    type: predict
+    topic: entity
+    difficulty: 3
+    placement: false
+    prompt: 'Post `p1` is already in the store with 10 likes. After a like, the server returns `p1` with 11 likes. What does the post show?'
+    code:
+      lang: ts
+      label: posts.reducer.ts
+      source: |
+        on(PostsActions.likePostSuccess, (state, { post }) => adapter.addOne(post, state)),
+    options:
+      - text: 'Still 10 likes: `addOne` does nothing when the id already exists'
+        correct: true
+      - text: '11 likes: `addOne` replaces the old post'
+        correct: false
+      - text: 'Both versions of the post'
+        correct: false
+    explanation: '`addOne` only adds new ids. To change an existing entity, use `updateOne`, `upsertOne` or `setOne`.'
+    reference: 13-ngrx-entity-and-devtools/04-adapter.md
+
+  - id: ngrx-06
+    type: predict
+    topic: entity
+    difficulty: 3
+    placement: false
+    prompt: 'The server sends three posts. How many show in the feed?'
+    code:
+      lang: ts
+      label: posts.reducer.ts
+      source: |
+        export interface Post {
+          postId: string;
+          imageUrl: string;
+          caption: string;
+        }
+
+        export const adapter = createEntityAdapter<Post>();
+
+        export const postsReducer = createReducer(
+          adapter.getInitialState(),
+          on(PostsActions.loadFeedSuccess, (state, { posts }) => adapter.setAll(posts, state)),
+        );
+    options:
+      - text: 'One: the adapter looks for an `id` field, so all three get the same `undefined` key'
+        correct: true
+      - text: 'Three'
+        correct: false
+      - text: 'None, and the build fails'
+        correct: false
+    explanation: 'By default the adapter uses `entity.id`. When the key has another name, say so: `createEntityAdapter<Post>({ selectId: (post) => post.postId })`.'
+    reference: 13-ngrx-entity-and-devtools/04-adapter.md
+
+  - id: ngrx-07
+    type: single
+    topic: architecture
+    difficulty: 1
+    placement: false
+    prompt: 'A user likes a post. What should the post card do?'
+    options:
+      - text: 'Emit an output; the container dispatches `PostsActions.likePost({ postId })`, and an effect calls the API'
+        correct: true
+      - text: 'Call `postsApi.likePost()` and update the store when the response arrives'
+        correct: false
+      - text: 'Update the post''s like count with `store.select` and save it'
+        correct: false
+    explanation: 'Presentational components only show data and emit events. The container turns the event into an action, the effect talks to the server, and the reducer updates the state. Every change shows up in Redux DevTools.'
+    reference: 11-ngrx-store/04-architecture.md

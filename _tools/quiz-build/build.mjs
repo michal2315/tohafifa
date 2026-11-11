@@ -46,7 +46,16 @@ const HTML_RULES = [
   [/<(html|body|head|h[1-6]|p|article|section|nav|header|footer|main|aside|style)\b/, 'uses a tag we do not use'],
   [/\b(class|id|for)="[^"]*[A-Z]/, 'has a name that is not kebab-case'],
 ];
+const TS_RULES = [
+  [/\/\*|(^|[^:])\/\//m, 'has a comment'],
+  [/@(Input|Output)\(/, 'uses the @Input/@Output decorators instead of input()/output()'],
+  [/@NgModule\(/, 'uses an NgModule'],
+];
 function lintCode(at, k, c) {
+  if (['ts', 'typescript', 'js', 'json', 'text', 'shell'].includes(c.lang)) {
+    if (['ts', 'typescript', 'js'].includes(c.lang)) for (const [re, msg] of TS_RULES) if (re.test(c.source)) err(at, `${k} ${msg}`);
+    return;
+  }
   const isHtml = c.lang === 'html';
   for (const [re, msg] of isHtml ? HTML_RULES : STYLE_RULES) {
     if (!msg) {
@@ -122,7 +131,7 @@ for (const f of files) {
   index.push({ module: data.module, title: data.title, file: `${name}.json`, questions: qs.length, placement: p.length,
     byType: qs.reduce((m, q) => ({ ...m, [q.type]: (m[q.type] || 0) + 1 }), {}) });
 }
-fs.writeFileSync(path.join(DIR, 'placement.json'), JSON.stringify({
+if (placement.length) fs.writeFileSync(path.join(DIR, 'placement.json'), JSON.stringify({
   title: 'HTML & SCSS placement quiz',
   scoring: { skim: 0.8, requiredOnly: 0.5, note: '>= 80% per module: module becomes skim. 50-79%: required pages only. < 50%: full module.' },
   modules: placement,

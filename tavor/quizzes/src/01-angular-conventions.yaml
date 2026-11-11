@@ -1,0 +1,396 @@
+module: 01-angular-conventions
+title: Tavor Angular conventions (code review)
+questions:
+  - id: tav-01
+    type: single
+    topic: naming
+    difficulty: 1
+    placement: false
+    prompt: 'The feed component reads the posts from the store. Which field follows our conventions?'
+    options:
+      - text: '`readonly $posts = this._store.selectSignal(selectAllPosts);`'
+        correct: true
+      - text: '`readonly posts$ = this._store.selectSignal(selectAllPosts);`'
+        correct: false
+      - text: '`readonly posts = this._store.selectSignal(selectAllPosts);`'
+        correct: false
+      - text: '`readonly _posts = this._store.selectSignal(selectAllPosts);`'
+        correct: false
+    explanation: '`selectSignal` returns a signal, and signals are named `$camelCase`. A `$` at the end (`posts$`) marks an observable. `_posts` is the private-member style, and the template needs this field, so it is not private.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-02
+    type: multiple
+    topic: naming
+    difficulty: 1
+    placement: false
+    prompt: 'Which of these boolean signal names follow our conventions? Pick all that do.'
+    options:
+      - text: '`$isOwnProfile`'
+        correct: true
+      - text: '`$canComment`'
+        correct: true
+      - text: '`$hasMorePosts`'
+        correct: true
+      - text: '`$liked`'
+        correct: false
+      - text: '`$ownProfile`'
+        correct: false
+      - text: '`$loading`'
+        correct: false
+    explanation: 'A boolean starts with `is`, `should`, `has` or `can`, so the name reads as a yes/no question. `$liked` should be `$isLiked`, and `$ownProfile` should be `$isOwnProfile`. A `$loading` boolean is wrong twice: loading comes from `CallState`.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-03
+    type: spot-the-bug
+    topic: naming
+    difficulty: 1
+    placement: false
+    lint: false
+    prompt: 'Code review: one line breaks our naming conventions. Click it.'
+    code:
+      lang: ts
+      label: profile.component.ts
+      source: |
+        export class ProfileComponent {
+          private readonly _store = inject(Store);
+          private readonly route = inject(ActivatedRoute);
+
+          readonly $profile = this._store.selectSignal(selectProfile);
+          readonly $isOwnProfile = this._store.selectSignal(selectIsOwnProfile);
+        }
+    answer: 3
+    explanation: 'Private members are named `_camelCase`: `private readonly _route = inject(ActivatedRoute);`.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-04
+    type: spot-the-bug
+    topic: store
+    difficulty: 2
+    placement: false
+    lint: false
+    prompt: 'Code review: this works, but one line reads the store the wrong way. Click it.'
+    code:
+      lang: ts
+      label: feed.component.ts
+      source: |
+        export class FeedComponent {
+          private readonly _store = inject(Store);
+
+          readonly $isLoading = this._store.selectSignal(selectIsFeedLoading);
+
+          get posts(): Post[] {
+            return this._store.selectSignal(selectAllPosts)();
+          }
+        }
+    answer: 7
+    explanation: '`selectSignal` is called once and assigned to a field: `readonly $posts = this._store.selectSignal(selectAllPosts);`. Inside a getter it runs on every change detection, and the template reads `posts` instead of a signal.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-05
+    type: spot-the-bug
+    topic: call-state
+    difficulty: 1
+    placement: false
+    lint: false
+    prompt: 'Code review: one line of this state breaks our conventions. Click it.'
+    code:
+      lang: ts
+      label: comments.state.ts
+      source: |
+        export interface CommentsState extends EntityState<Comment> {
+          postId: string | null;
+          isLoading: boolean;
+        }
+    answer: 3
+    explanation: 'Request status is never an ad-hoc boolean. The slice has `callState: CallState`, and a selector derives "is loading" from it. A single `CallState` also covers the error case, which `isLoading` can''t.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-06
+    type: multiple
+    topic: store
+    difficulty: 1
+    placement: false
+    prompt: 'You add a **comments** slice to the feed feature. Which files does it have? Pick all.'
+    options:
+      - text: '`comments.actions.ts`'
+        correct: true
+      - text: '`comments.effects.ts`'
+        correct: true
+      - text: '`comments.reducer.ts`'
+        correct: true
+      - text: '`comments.selectors.ts`'
+        correct: true
+      - text: '`comments.state.ts`'
+        correct: true
+      - text: '`comments.facade.ts`'
+        correct: false
+      - text: '`comments-api.service.ts`'
+        correct: false
+    explanation: 'A slice is always the same five files: actions, effects, reducer, selectors, state. We don''t use facades. The API service is not part of the slice: it lives in the feature''s `services/` folder.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-07
+    type: single
+    topic: effects
+    difficulty: 2
+    placement: false
+    lint: false
+    prompt: 'A teammate wrote this effect. What does the code review say?'
+    code:
+      lang: ts
+      label: posts.effects.ts
+      source: |
+        @Injectable()
+        export class PostsEffects {
+          private readonly _actions$ = inject(Actions);
+          private readonly _postsApi = inject(PostsApiService);
+
+          loadFeed$ = createEffect(() =>
+            this._actions$.pipe(
+              ofType(PostsActions.loadFeed),
+              switchMap(() =>
+                this._postsApi.getFeed().pipe(
+                  map((posts) => PostsActions.loadFeedSuccess({ posts })),
+                  catchError((error: HttpErrorResponse) => of(PostsActions.loadFeedFailure({ errorMessage: error.message }))),
+                ),
+              ),
+            ),
+          );
+        }
+    options:
+      - text: 'We don''t write effect classes. Make it a functional effect: `export const loadFeed = createEffect((actions$ = inject(Actions), postsApi = inject(PostsApiService)) => …, { functional: true })`.'
+        correct: true
+      - text: 'It''s fine. It just needs `providedIn: ''root''` on `@Injectable`.'
+        correct: false
+      - text: 'The `catchError` should move out of the inner `pipe`, after `switchMap`.'
+        correct: false
+      - text: 'The effect should call `HttpClient` directly instead of going through `PostsApiService`.'
+        correct: false
+    explanation: 'Our effects are functional: a `const` created with `{ functional: true }` that gets its dependencies with `inject()` as default parameters. The rest of this effect is right. `catchError` belongs inside the inner observable, or one failed request kills the effect. Effects call the thin API service, never `HttpClient`.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-08
+    type: single
+    topic: actions
+    difficulty: 1
+    placement: false
+    prompt: 'How do we define the actions of a slice?'
+    options:
+      - text: 'One `createActionGroup({ source, events })` per slice'
+        correct: true
+      - text: 'One `createAction(...)` call per action'
+        correct: false
+      - text: 'A TypeScript `enum` of action types plus action classes'
+        correct: false
+      - text: 'Methods on a facade service'
+        correct: false
+    explanation: '`createActionGroup` defines all of a slice''s actions in one place, with the source written once. It generates the action creators, e.g. `PostsActions.loadFeedSuccess`.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-09
+    type: single
+    topic: structure
+    difficulty: 1
+    placement: false
+    prompt: 'The `like-button` component (a single heart icon button) is used only in the feed. Where does it go?'
+    options:
+      - text: '`features/feed/components/atoms/like-button/`'
+        correct: true
+      - text: '`features/feed/components/molecules/like-button/`'
+        correct: false
+      - text: '`shared/components/atoms/like-button/`'
+        correct: false
+      - text: '`core/components/like-button/`'
+        correct: false
+    explanation: 'A single element that can''t be split further is an atom. It''s used only in the feed, so it stays in the feed feature. It moves to `shared/` only when a second feature needs it.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-10
+    type: single
+    topic: structure
+    difficulty: 2
+    placement: false
+    prompt: '`post-card` shows the post header, the image, the like and comment buttons, and the comments section. Which level is it?'
+    options:
+      - text: 'Organism'
+        correct: true
+      - text: 'Molecule'
+        correct: false
+      - text: 'Atom'
+        correct: false
+    explanation: 'It''s a complete section of the UI built from molecules (the post header) and other organisms (the comments section), so it''s an organism. A molecule is a few atoms working together, like the post header (avatar + username + time).'
+    reference: 01-angular-conventions.md
+
+  - id: tav-11
+    type: single
+    topic: structure
+    difficulty: 1
+    placement: false
+    prompt: 'Where does the auth interceptor go?'
+    options:
+      - text: '`core/interceptors/`'
+        correct: true
+      - text: '`shared/interceptors/`'
+        correct: false
+      - text: '`features/auth/services/`'
+        correct: false
+      - text: 'Next to `app.config.ts`'
+        correct: false
+    explanation: '`core/` is for things the whole app needs exactly once: guards, interceptors, app-wide services and app-wide store slices.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-12
+    type: text
+    topic: file-suffixes
+    difficulty: 1
+    placement: false
+    prompt: 'You''re adding the `Post` interface to the feed feature. Type the file name.'
+    answer:
+      accept: ['post.type.ts']
+    explanation: 'Interfaces and types go in `.type.ts` files, in the feature''s `types/` folder: `features/feed/types/post.type.ts`.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-13
+    type: single
+    topic: file-suffixes
+    difficulty: 2
+    placement: false
+    prompt: 'This maps each visibility value to the text shown in the post menu. Which file does it belong in?'
+    code:
+      lang: ts
+      source: |
+        export const POST_VISIBILITY_LABEL_MAP: Record<PostVisibility, string> = {
+          public: 'Everyone',
+          followers: 'Followers only',
+          private: 'Only me',
+        };
+    options:
+      - text: '`post-visibility.label-map.ts`'
+        correct: true
+      - text: '`post-visibility.consts.ts`'
+        correct: false
+      - text: '`post-visibility.type.ts`'
+        correct: false
+      - text: '`post-visibility.util.ts`'
+        correct: false
+    explanation: 'Maps from a value to UI text have their own suffix, `.label-map.ts`, so all the texts the user sees are easy to find. `.consts.ts` is for other constants and `.util.ts` for helper functions.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-14
+    type: spot-the-bug
+    topic: http
+    difficulty: 1
+    placement: false
+    lint: false
+    prompt: 'Code review: one line breaks our HTTP conventions. Click it.'
+    code:
+      lang: ts
+      label: profile-api.service.ts
+      source: |
+        @Injectable({ providedIn: 'root' })
+        export class ProfileApiService {
+          private readonly _http = inject(HttpClient);
+          private readonly _apiUrl = `${environment.apiBaseUrl}/users`;
+
+          getProfile(username: string): Observable<Profile> {
+            return this._http.get<Profile>(`${this._apiUrl}/${username}`).pipe(timeout({ each: 90000 }));
+          }
+        }
+    answer: 4
+    explanation: 'There is no API base URL in `environments`. The URL is relative, `''/api/users''`, and the dev server proxy sends `/api` to the NestJS server.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-15
+    type: single
+    topic: http
+    difficulty: 2
+    placement: false
+    prompt: 'What is missing from this method?'
+    code:
+      lang: ts
+      label: comments-api.service.ts
+      source: |
+        addComment(postId: string, text: string): Observable<Comment> {
+          return this._http.post<Comment>(`${this._apiUrl}/${postId}/comments`, { text });
+        }
+    options:
+      - text: '`.pipe(timeout({ each: 90000 }))`'
+        correct: true
+      - text: 'An `Authorization` header with the JWT'
+        correct: false
+      - text: 'A `catchError` that returns an empty comment'
+        correct: false
+      - text: 'Nothing, it''s complete'
+        correct: false
+    explanation: 'Every HTTP call has `timeout({ each: 90000 })`. The `Authorization` header is the auth interceptor''s job, never the service''s. Errors are handled in the effect, which dispatches a failure action.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-16
+    type: spot-the-bug
+    topic: http
+    difficulty: 2
+    placement: false
+    lint: false
+    prompt: 'Code review: one line doesn''t belong in this service. Click it.'
+    code:
+      lang: ts
+      label: posts-api.service.ts
+      source: |
+        @Injectable({ providedIn: 'root' })
+        export class PostsApiService {
+          private readonly _http = inject(HttpClient);
+          private readonly _store = inject(Store);
+          private readonly _apiUrl = '/api/posts';
+
+          getFeed(): Observable<Post[]> {
+            const headers = { Authorization: `Bearer ${this._store.selectSignal(selectAuthToken)()}` };
+            return this._http.get<Post[]>(this._apiUrl, { headers }).pipe(timeout({ each: 90000 }));
+          }
+        }
+    answer: 8
+    explanation: 'The JWT is added in one place only: the auth interceptor in `core/interceptors`. Delete line 8, the `{ headers }` argument on line 9, and the `_store` field: a thin API service doesn''t touch the store.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-17
+    type: spot-the-bug
+    topic: forms
+    difficulty: 1
+    placement: false
+    lint: false
+    prompt: 'Code review: one line breaks our forms convention. Click it.'
+    context:
+      lang: ts
+      label: comment-form.component.ts
+      source: |
+        export class CommentFormComponent {
+          readonly $commentText = signal('');
+          readonly submitted = output<string>();
+        }
+    code:
+      lang: html
+      label: comment-form.component.html
+      source: |
+        <form class="comment-form" (ngSubmit)="submitted.emit($commentText())">
+          <input class="comment-input" [(ngModel)]="$commentText" placeholder="Add a comment…">
+          <button class="post-button" type="submit">Post</button>
+        </form>
+    answer: 2
+    explanation: 'We use reactive forms only: no `ngModel` and no `FormsModule`. Build the form with `NonNullableFormBuilder` and bind it with `[formGroup]` and `formControlName`.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-18
+    type: single
+    topic: components
+    difficulty: 1
+    placement: false
+    prompt: 'A new trainee wants to create `FeedModule` to declare the feed components. What do you tell them?'
+    options:
+      - text: 'We don''t use NgModules. All components are standalone and import what they use directly.'
+        correct: true
+      - text: 'Fine, but name it `feed.module.ts` and put it in `core/`.'
+        correct: false
+      - text: 'Fine, as long as every component in it also has `standalone: true`.'
+        correct: false
+    explanation: 'Standalone components only. In Angular 20 that''s the default, so a component imports the components, directives and pipes it uses in its own `imports` array.'
+    reference: 01-angular-conventions.md

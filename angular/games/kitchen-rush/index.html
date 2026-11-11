@@ -1,0 +1,1458 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kitchen Rush</title>
+  <link rel="stylesheet" href="shared/kitchen.css">
+  <style>
+    .game-layout {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 16px;
+      padding: 16px 20px 28px;
+      align-items: start;
+    }
+
+    .level-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .level-button {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: 1px solid transparent;
+      background: none;
+      border-radius: 8px;
+      padding: 6px 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+    }
+
+    .level-button:hover {
+      background: var(--surface-2);
+    }
+
+    .level-button.is-current {
+      border-color: var(--tomato);
+      background: var(--tomato-soft);
+    }
+
+    .level-number {
+      display: inline-grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      font-weight: 700;
+      font-size: 0.78rem;
+      flex: none;
+    }
+
+    .level-button.is-done .level-number {
+      background: var(--basil);
+      color: #ffffff;
+    }
+
+    .progress-line {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+    }
+
+    .level-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .level-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px 12px;
+    }
+
+    .level-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .story {
+      margin: 0;
+      font-style: italic;
+      color: var(--ink-soft);
+    }
+
+    .task {
+      background: var(--mustard-soft);
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+
+    .task p {
+      margin: 0 0 6px;
+    }
+
+    .task ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .code-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink-soft);
+      margin-bottom: 4px;
+    }
+
+    .given-code {
+      max-height: 260px;
+      overflow: auto;
+      opacity: 0.85;
+    }
+
+    .code-editor {
+      width: 100%;
+      min-height: 280px;
+      resize: vertical;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      line-height: 1.55;
+      tab-size: 2;
+      white-space: pre;
+    }
+
+    .editor-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .shortcut {
+      color: var(--ink-soft);
+      font-size: 0.8rem;
+      margin-left: auto;
+    }
+
+    .hint-box {
+      border-left: 4px solid var(--sky);
+      background: var(--sky-soft);
+      border-radius: 0 10px 10px 0;
+      padding: 8px 12px;
+    }
+
+    .results {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .result {
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.88rem;
+    }
+
+    .result-pass {
+      background: var(--basil-soft);
+    }
+
+    .result-fail {
+      background: var(--tomato-soft);
+    }
+
+    .result-name {
+      font-weight: 600;
+    }
+
+    .result-message {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+      margin-top: 2px;
+    }
+
+    .success {
+      border: 2px solid var(--basil);
+      border-radius: 12px;
+      padding: 12px 16px;
+      background: var(--basil-soft);
+    }
+
+    .success-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .transfer {
+      margin: 8px 0 10px;
+    }
+
+    .note {
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+    }
+
+    .part-title {
+      margin: 12px 0 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-soft);
+    }
+
+    .part-title:first-child {
+      margin-top: 0;
+    }
+
+    .role-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-top: 8px;
+      background: var(--surface);
+      border-radius: 8px;
+    }
+
+    .role-table th,
+    .role-table td {
+      text-align: left;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .quiz-host {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .question {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .question.is-right {
+      border-color: var(--basil);
+      background: var(--basil-soft);
+    }
+
+    .question.is-wrong {
+      border-color: var(--tomato);
+      background: var(--tomato-soft);
+    }
+
+    .question-text {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .question .code-block {
+      margin-bottom: 10px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .option {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      cursor: pointer;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 6px 10px;
+    }
+
+    .option input {
+      margin-top: 4px;
+    }
+
+    .explain {
+      margin-top: 8px;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 820px) {
+      .game-layout {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 12px 16px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div>
+      <div class="page-title">Kitchen Rush</div>
+      <div class="page-subtitle">Learn NgRx in a restaurant kitchen: first understand it, then write it, then think like the store.</div>
+    </div>
+  </div>
+
+  <div class="game-layout">
+    <div class="panel">
+      <div class="panel-title">Levels</div>
+      <ol class="level-list"></ol>
+      <div class="progress-line"></div>
+      <p class="note">Your code and progress are saved in this browser.</p>
+    </div>
+
+    <div class="panel level-panel">
+      <div class="level-head">
+        <span class="tag level-tag"></span>
+        <span class="level-title"></span>
+      </div>
+      <p class="story"></p>
+      <div class="task"></div>
+      <div class="quiz-area">
+        <div class="quiz-host"></div>
+        <div class="editor-actions">
+          <button class="button button-primary check-button" type="button">Check answers</button>
+          <span class="quiz-score muted"></span>
+        </div>
+      </div>
+      <div class="code-area">
+      <div class="given-host"></div>
+      <div>
+        <div class="code-label">Your code</div>
+        <textarea class="code-editor" spellcheck="false" aria-label="Your code"></textarea>
+      </div>
+      <div class="editor-actions">
+        <button class="button button-primary run-button" type="button">▶ Run tests</button>
+        <button class="button hint-button" type="button">Hint</button>
+        <button class="button solution-button" type="button">Show solution</button>
+        <button class="button reset-button" type="button">Reset code</button>
+        <span class="shortcut">Ctrl+Enter runs</span>
+      </div>
+      <div class="hint-host"></div>
+      <ul class="results"></ul>
+      </div>
+      <div class="success-host"></div>
+      <p class="note code-note">Like in Angular, write TypeScript generics such as <span class="inline-code">props&lt;{ id: string }&gt;()</span> and <span class="inline-code">private readonly</span>. Type annotations on parameters, like <span class="inline-code">(dish: string)</span>, aren't supported here: leave them out.</p>
+    </div>
+  </div>
+
+  <script src="shared/mini-ngrx.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const API = { ...MiniRx, ...MiniNgrx };
+      const API_NAMES = Object.keys(API);
+      const { deepFreeze, runInInjectionContext, startEffect, Actions, Store, MiniStore, isAction } = MiniNgrx;
+      const { Subject } = MiniRx;
+      const $ = (selector) => document.querySelector(selector);
+      const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+      const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      class Fail extends Error {}
+      const expect = (ok, message) => { if (!ok) throw new Fail(message); };
+      const show = (x) => (x === undefined ? 'undefined' : JSON.stringify(x));
+
+      const ACTIONS_FULL = `import { createActionGroup, props, emptyProps } from '@ngrx/store';
+
+export const KitchenActions = createActionGroup({
+  source: 'Kitchen',
+  events: {
+    'Order Placed': props<{ order: { id: string; table: number; dish: string; status: string } }>(),
+    'Order Cancelled': props<{ id: string }>(),
+    'Order Served': props<{ id: string }>(),
+    'Start Cooking': props<{ id: string; dish: string }>(),
+    'Ingredients Delivered': props<{ id: string }>(),
+    'Ingredients Failed': props<{ id: string; error: string }>(),
+  },
+});`;
+
+      const REDUCER_DONE = `export const initialState = {
+  orders: [],
+  menu: { pasta: 12, burger: 10, salad: 8 },
+};
+
+export const kitchenReducer = createReducer(
+  initialState,
+  on(KitchenActions.orderPlaced, (state, { order }) => ({
+    ...state,
+    orders: [...state.orders, order],
+  })),
+  on(KitchenActions.orderServed, (state, { id }) => ({
+    ...state,
+    orders: state.orders.map((o) => (o.id === id ? { ...o, status: 'served' } : o)),
+  })),
+);`;
+
+      const order = (id, table, dish, status) => ({ id, table, dish, status: status || 'new' });
+      const kitchenState = (orders, menu) => ({ kitchen: { orders, menu: menu || { pasta: 12, burger: 10, salad: 8 } } });
+
+      function collectEffect(effect, providers, name) {
+        const actions$ = new Subject();
+        const injector = new Map([[Actions, actions$.asObservable()], ...providers]);
+        const out = { values: [], errors: [], completed: false };
+        const source = startEffect(effect, injector, name);
+        source.subscribe({
+          next: (v) => out.values.push(v),
+          error: (e) => out.errors.push(e),
+          complete: () => { out.completed = true; },
+        });
+        return { actions$, out };
+      }
+
+      function needEffect(x, name) {
+        expect(x !== undefined, `I can't find ${name}. Did you export it with that exact name?`);
+      }
+
+      const CODE_LEVELS = [
+        {
+          title: 'The order ticket',
+          concept: 'actions',
+          story: 'Opening night. Before anyone cooks, the kitchen needs tickets: every ticket says what happened, nothing more.',
+          task: `<p>Create <span class="inline-code">KitchenActions</span> with <span class="inline-code">createActionGroup</span>, source <span class="inline-code">'Kitchen'</span>, and three events:</p>
+            <ul><li><span class="inline-code">'Order Placed'</span> with an <span class="inline-code">order</span></li>
+            <li><span class="inline-code">'Order Cancelled'</span> with an <span class="inline-code">id</span></li>
+            <li><span class="inline-code">'Order Served'</span> with an <span class="inline-code">id</span></li></ul>`,
+          given: '',
+          starter: `import { createActionGroup, props } from '@ngrx/store';
+
+export const KitchenActions = createActionGroup({
+  source: '',
+  events: {
+  },
+});`,
+          solution: `import { createActionGroup, props } from '@ngrx/store';
+
+export const KitchenActions = createActionGroup({
+  source: 'Kitchen',
+  events: {
+    'Order Placed': props<{ order: { id: string; table: number; dish: string } }>(),
+    'Order Cancelled': props<{ id: string }>(),
+    'Order Served': props<{ id: string }>(),
+  },
+});`,
+          hint: 'Each event is a name and props: <span class="inline-code">\'Order Cancelled\': props&lt;{ id: string }&gt;()</span>. NgRx turns the names into camelCase creators: <span class="inline-code">KitchenActions.orderCancelled</span>.',
+          exports: ['KitchenActions'],
+          transfer: 'Remember: name events after what happened (<span class="inline-code">\'Order Placed\'</span>), not after what should be done (<span class="inline-code">\'Add Order\'</span>).',
+          tests: [
+            ['KitchenActions exists', ({ KitchenActions }) => {
+              expect(KitchenActions && typeof KitchenActions === 'object', 'Export a const named KitchenActions.');
+            }],
+            ['Order Placed carries the order', ({ KitchenActions }) => {
+              expect(typeof KitchenActions.orderPlaced === 'function', 'KitchenActions.orderPlaced is missing. Check the event name: \'Order Placed\'.');
+              const o = order('o1', 2, 'pasta');
+              const a = KitchenActions.orderPlaced({ order: o });
+              expect(a.type === '[Kitchen] Order Placed', `The type should be "[Kitchen] Order Placed", but it is ${show(a.type)}. Check the source.`);
+              expect(a.order === o, 'The action should have an "order" property with the order passed in.');
+            }],
+            ['Order Cancelled carries an id', ({ KitchenActions }) => {
+              expect(typeof KitchenActions.orderCancelled === 'function', 'KitchenActions.orderCancelled is missing.');
+              const a = KitchenActions.orderCancelled({ id: 'o1' });
+              expect(a.type === '[Kitchen] Order Cancelled' && a.id === 'o1', `Got ${show(a)}.`);
+            }],
+            ['Order Served carries an id', ({ KitchenActions }) => {
+              expect(typeof KitchenActions.orderServed === 'function', 'KitchenActions.orderServed is missing.');
+              const a = KitchenActions.orderServed({ id: 'o1' });
+              expect(a.type === '[Kitchen] Order Served' && a.id === 'o1', `Got ${show(a)}.`);
+            }],
+          ],
+        },
+        {
+          title: 'The waiter',
+          concept: 'dispatch',
+          story: 'Table 4 wants pasta. The waiter doesn\'t cook and doesn\'t write on the board. They hand in a ticket.',
+          task: `<p>In <span class="inline-code">TableComponent</span>:</p>
+            <ul><li>get the store with <span class="inline-code">inject(Store)</span></li>
+            <li>in <span class="inline-code">order(dish)</span>, dispatch <span class="inline-code">orderPlaced</span> with <span class="inline-code">{ id: nextId(), table: this.table, dish, status: 'new' }</span></li></ul>`,
+          given: `${ACTIONS_FULL}
+
+let counter = 0;
+export const nextId = () => \`o\${++counter}\`;`,
+          starter: `import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class TableComponent {
+  table = 4;
+
+  order(dish) {
+  }
+}`,
+          solution: `import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+export class TableComponent {
+  private readonly store = inject(Store);
+  table = 4;
+
+  order(dish) {
+    this.store.dispatch(
+      KitchenActions.orderPlaced({ order: { id: nextId(), table: this.table, dish, status: 'new' } }),
+    );
+  }
+}`,
+          hint: '<span class="inline-code">inject()</span> works only while Angular creates the class, so use it in a field: <span class="inline-code">private readonly store = inject(Store);</span>. Then call <span class="inline-code">this.store.dispatch(KitchenActions.orderPlaced({ order: ... }))</span>. Don\'t forget the <span class="inline-code">()</span> after orderPlaced.',
+          exports: ['TableComponent'],
+          transfer: 'Remember: a component never changes data. It only dispatches actions and reads with selectors.',
+          tests: [
+            ['TableComponent is created with the store', ({ TableComponent }) => {
+              expect(typeof TableComponent === 'function', 'Export the class TableComponent.');
+              const dispatched = [];
+              const fakeStore = { dispatch: (a) => { MiniNgrx.checkAction(a); dispatched.push(a); } };
+              const c = runInInjectionContext(new Map([[Store, fakeStore]]), () => new TableComponent());
+              expect(typeof c.order === 'function', 'TableComponent needs an order(dish) method.');
+              c.order('pasta');
+              expect(dispatched.length === 1, `order('pasta') should dispatch one action, but it dispatched ${dispatched.length}.`);
+              const a = dispatched[0];
+              expect(a.type === '[Kitchen] Order Placed', `It dispatched ${show(a.type)} instead of "[Kitchen] Order Placed".`);
+              expect(a.order && a.order.table === 4 && a.order.dish === 'pasta' && a.order.status === 'new' && /^o\d+$/.test(a.order.id),
+                `The order should be { id: nextId(), table: 4, dish: 'pasta', status: 'new' }, but it is ${show(a.order)}.`);
+            }],
+            ['Each order gets its own id', ({ TableComponent }) => {
+              const dispatched = [];
+              const fakeStore = { dispatch: (a) => dispatched.push(a) };
+              const c = runInInjectionContext(new Map([[Store, fakeStore]]), () => new TableComponent());
+              c.order('salad');
+              c.order('burger');
+              expect(dispatched.length === 2 && dispatched[0].order.id !== dispatched[1].order.id, 'Two orders got the same id. Call nextId() for each order.');
+            }],
+          ],
+        },
+        {
+          title: 'The head chef',
+          concept: 'reducer',
+          story: 'Tickets are piling up. The head chef keeps the order board, but has one rule: never scribble on the old board, write a new one.',
+          task: `<p>Make <span class="inline-code">kitchenReducer</span> add the order from <span class="inline-code">orderPlaced</span> to the end of <span class="inline-code">orders</span>.</p>
+            <ul><li>Return a <b>new</b> state object and a <b>new</b> array.</li><li>The state is frozen, like with NgRx runtime checks: <span class="inline-code">push</span> will throw.</li></ul>`,
+          given: ACTIONS_FULL,
+          starter: `import { createReducer, on } from '@ngrx/store';
+
+export const initialState = {
+  orders: [],
+  menu: { pasta: 12, burger: 10, salad: 8 },
+};
+
+export const kitchenReducer = createReducer(
+  initialState,
+  on(KitchenActions.orderPlaced, (state, { order }) => state),
+);`,
+          solution: `import { createReducer, on } from '@ngrx/store';
+
+export const initialState = {
+  orders: [],
+  menu: { pasta: 12, burger: 10, salad: 8 },
+};
+
+export const kitchenReducer = createReducer(
+  initialState,
+  on(KitchenActions.orderPlaced, (state, { order }) => ({
+    ...state,
+    orders: [...state.orders, order],
+  })),
+);`,
+          hint: 'Spread twice: <span class="inline-code">({ ...state, orders: [...state.orders, order] })</span>. The outer <span class="inline-code">( )</span> around the object are needed when an arrow function returns an object.',
+          exports: ['kitchenReducer', 'initialState', 'KitchenActions'],
+          transfer: 'Remember: a reducer always returns a new state. <span class="inline-code">push</span>, <span class="inline-code">splice</span> and <span class="inline-code">state.x = ...</span> are never allowed.',
+          tests: [
+            ['The first order lands on the board', ({ kitchenReducer, initialState, KitchenActions }) => {
+              expect(typeof kitchenReducer === 'function', 'Export kitchenReducer made with createReducer.');
+              const before = deepFreeze(structuredClone(initialState));
+              const o = order('o1', 1, 'pasta');
+              const after = kitchenReducer(before, KitchenActions.orderPlaced({ order: o }));
+              expect(after !== undefined, 'The reducer returned undefined. Did you forget to return the new state?');
+              expect(Array.isArray(after.orders) && after.orders.length === 1 && after.orders[0] === o, `orders should be [the new order], but it is ${show(after.orders)}.`);
+            }],
+            ['A new board, the old one untouched', ({ kitchenReducer, KitchenActions }) => {
+              const before = deepFreeze({ orders: [order('o1', 1, 'salad')], menu: { pasta: 12 } });
+              const after = kitchenReducer(before, KitchenActions.orderPlaced({ order: order('o2', 3, 'burger') }));
+              expect(after !== before, 'The reducer returned the same state object. NgRx would think nothing changed.');
+              expect(after.orders !== before.orders, 'orders is the same array as before. Make a new array.');
+              expect(before.orders.length === 1, 'The old state changed.');
+              expect(after.orders.length === 2 && after.orders[1].id === 'o2', `The new order should be last. orders: ${show(after.orders.map((o) => o.id))}.`);
+              expect(after.menu === before.menu, 'menu should be kept as it is (the same object). Use ...state.');
+            }],
+            ['Other tickets change nothing', ({ kitchenReducer, KitchenActions }) => {
+              const before = deepFreeze({ orders: [], menu: {} });
+              const after = kitchenReducer(before, KitchenActions.orderServed({ id: 'x' }));
+              expect(after === before, 'For an action the reducer doesn\'t handle, it should return the same state.');
+            }],
+          ],
+        },
+        {
+          title: 'Served and cancelled',
+          concept: 'reducer',
+          story: 'The board fills up. Some guests change their mind; other dishes go out. Only the orders that changed should get a new card.',
+          task: `<p>Add two <span class="inline-code">on(...)</span> cases:</p>
+            <ul><li><span class="inline-code">orderServed</span>: set that order's <span class="inline-code">status</span> to <span class="inline-code">'served'</span>. Every other order stays the <b>same object</b>.</li>
+            <li><span class="inline-code">orderCancelled</span>: remove that order.</li></ul>`,
+          given: ACTIONS_FULL,
+          starter: `import { createReducer, on } from '@ngrx/store';
+
+export const initialState = {
+  orders: [],
+  menu: { pasta: 12, burger: 10, salad: 8 },
+};
+
+export const kitchenReducer = createReducer(
+  initialState,
+  on(KitchenActions.orderPlaced, (state, { order }) => ({
+    ...state,
+    orders: [...state.orders, order],
+  })),
+);`,
+          solution: `import { createReducer, on } from '@ngrx/store';
+
+export const initialState = {
+  orders: [],
+  menu: { pasta: 12, burger: 10, salad: 8 },
+};
+
+export const kitchenReducer = createReducer(
+  initialState,
+  on(KitchenActions.orderPlaced, (state, { order }) => ({
+    ...state,
+    orders: [...state.orders, order],
+  })),
+  on(KitchenActions.orderServed, (state, { id }) => ({
+    ...state,
+    orders: state.orders.map((o) => (o.id === id ? { ...o, status: 'served' } : o)),
+  })),
+  on(KitchenActions.orderCancelled, (state, { id }) => ({
+    ...state,
+    orders: state.orders.filter((o) => o.id !== id),
+  })),
+);`,
+          hint: '<span class="inline-code">map</span> makes a new array: return <span class="inline-code">{ ...o, status: \'served\' }</span> for the matching order and <span class="inline-code">o</span> itself for the rest. <span class="inline-code">filter</span> removes one.',
+          exports: ['kitchenReducer', 'KitchenActions'],
+          transfer: 'Remember: change only what changed. Objects you didn\'t touch stay the same, so whatever shows them doesn\'t update for nothing.',
+          tests: [
+            ['Serving changes only that order', ({ kitchenReducer, KitchenActions }) => {
+              const a = order('o1', 1, 'pasta'); const b = order('o2', 2, 'salad'); const c = order('o3', 3, 'burger');
+              const before = deepFreeze({ orders: [a, b, c], menu: {} });
+              const after = kitchenReducer(before, KitchenActions.orderServed({ id: 'o2' }));
+              expect(after && after !== before && after.orders !== before.orders, 'Return a new state with a new orders array.');
+              expect(after.orders.length === 3, `There should still be 3 orders, but there are ${after.orders.length}.`);
+              expect(after.orders[1].status === 'served', `o2 should be served, but its status is ${show(after.orders[1].status)}.`);
+              expect(after.orders[1] !== b, 'o2 should be a new object, not the old one changed.');
+              expect(after.orders[0] === a && after.orders[2] === c, 'o1 and o3 didn\'t change, so they should be the same objects as before. Return o for them.');
+              expect(after.orders[1].dish === 'salad' && after.orders[1].table === 2, 'Keep the other fields of o2: use ...o.');
+            }],
+            ['Cancelling removes the order', ({ kitchenReducer, KitchenActions }) => {
+              const a = order('o1', 1, 'pasta'); const b = order('o2', 2, 'salad');
+              const before = deepFreeze({ orders: [a, b], menu: {} });
+              const after = kitchenReducer(before, KitchenActions.orderCancelled({ id: 'o1' }));
+              expect(after && after.orders && after.orders.length === 1 && after.orders[0] === b, `orders should be [o2], but it is ${show(after && after.orders && after.orders.map((o) => o.id))}.`);
+            }],
+            ['Placing still works', ({ kitchenReducer, KitchenActions }) => {
+              const after = kitchenReducer(deepFreeze({ orders: [], menu: {} }), KitchenActions.orderPlaced({ order: order('o9', 1, 'pasta') }));
+              expect(after.orders.length === 1, 'orderPlaced stopped working.');
+            }],
+          ],
+        },
+        {
+          title: 'The kitchen screens',
+          concept: 'selectors',
+          story: 'The cooks don\'t want to read the whole board. They want one screen: what\'s waiting, and how many.',
+          task: `<p>Write three selectors:</p>
+            <ul><li><span class="inline-code">selectOrders</span>: the orders from the kitchen feature</li>
+            <li><span class="inline-code">selectWaitingOrders</span>: orders with status <span class="inline-code">'new'</span></li>
+            <li><span class="inline-code">selectWaitingCount</span>: how many are waiting, built on <span class="inline-code">selectWaitingOrders</span></li></ul>`,
+          given: ACTIONS_FULL,
+          starter: `import { createFeatureSelector, createSelector } from '@ngrx/store';
+
+export const selectKitchen = createFeatureSelector<KitchenState>('kitchen');
+
+export const selectOrders = createSelector(selectKitchen, (kitchen) => kitchen);
+`,
+          solution: `import { createFeatureSelector, createSelector } from '@ngrx/store';
+
+export const selectKitchen = createFeatureSelector<KitchenState>('kitchen');
+
+export const selectOrders = createSelector(selectKitchen, (kitchen) => kitchen.orders);
+
+export const selectWaitingOrders = createSelector(
+  selectOrders,
+  (orders) => orders.filter((o) => o.status === 'new'),
+);
+
+export const selectWaitingCount = createSelector(
+  selectWaitingOrders,
+  (waiting) => waiting.length,
+);`,
+          hint: 'Build selectors on other selectors: <span class="inline-code">createSelector(selectOrders, (orders) => orders.filter(...))</span>. The last function only runs again when its input changes.',
+          exports: ['selectOrders', 'selectWaitingOrders', 'selectWaitingCount'],
+          transfer: 'Remember: build selectors on top of other selectors. Components read them with <span class="inline-code">store.selectSignal(...)</span>.',
+          tests: [
+            ['The screens show the right orders', ({ selectOrders, selectWaitingOrders, selectWaitingCount }) => {
+              expect(typeof selectWaitingOrders === 'function' && typeof selectWaitingCount === 'function', 'Export selectWaitingOrders and selectWaitingCount.');
+              const orders = [order('o1', 1, 'pasta'), order('o2', 2, 'salad', 'cooking'), order('o3', 3, 'burger')];
+              const state = deepFreeze(kitchenState(orders));
+              expect(selectOrders(state) === orders, 'selectOrders should return kitchen.orders.');
+              const waiting = selectWaitingOrders(state);
+              expect(Array.isArray(waiting) && waiting.map((o) => o.id).join() === 'o1,o3', `selectWaitingOrders should return o1 and o3, but returned ${show(waiting)}.`);
+              expect(selectWaitingCount(state) === 2, `selectWaitingCount should be 2, but it is ${show(selectWaitingCount(state))}.`);
+            }],
+            ['Same orders, no new work (memoization)', ({ selectWaitingOrders }) => {
+              const orders = [order('o1', 1, 'pasta')];
+              const s1 = deepFreeze(kitchenState(orders, { pasta: 12 }));
+              const s2 = deepFreeze(kitchenState(orders, { pasta: 14 }));
+              const first = selectWaitingOrders(s1);
+              const runs = selectWaitingOrders.recomputations;
+              const second = selectWaitingOrders(s2);
+              expect(first === second && selectWaitingOrders.recomputations === runs,
+                'Only the menu changed, so selectWaitingOrders should return the cached array without filtering again. Build it on selectOrders, not on selectKitchen.');
+            }],
+            ['The count is built on the waiting list', ({ selectWaitingCount }) => {
+              const s = deepFreeze(kitchenState([order('o1', 1, 'pasta', 'served')]));
+              expect(selectWaitingCount(s) === 0, `No order is waiting, but the count is ${show(selectWaitingCount(s))}.`);
+            }],
+          ],
+        },
+        {
+          title: 'The bill',
+          concept: 'selectors',
+          story: 'Guests want to pay. The cashier needs each table\'s total, from the served orders and today\'s menu prices.',
+          task: `<p>Write:</p>
+            <ul><li><span class="inline-code">selectBills</span>: from <span class="inline-code">selectOrders</span> and <span class="inline-code">selectMenu</span>, an object of table → total of its <b>served</b> orders, like <span class="inline-code">{ 1: 22, 3: 8 }</span></li>
+            <li><span class="inline-code">selectTableBill(table)</span>: a function that returns a selector for one table's total (0 if nothing)</li></ul>`,
+          given: `${ACTIONS_FULL}
+
+export const selectKitchen = createFeatureSelector<KitchenState>('kitchen');
+export const selectOrders = createSelector(selectKitchen, (kitchen) => kitchen.orders);
+export const selectMenu = createSelector(selectKitchen, (kitchen) => kitchen.menu);`,
+          starter: `import { createSelector } from '@ngrx/store';
+
+export const selectBills = createSelector(
+  selectOrders,
+  selectMenu,
+  (orders, menu) => ({}),
+);
+
+export const selectTableBill = (table) => createSelector(selectBills, (bills) => 0);`,
+          solution: `import { createSelector } from '@ngrx/store';
+
+export const selectBills = createSelector(
+  selectOrders,
+  selectMenu,
+  (orders, menu) => {
+    const bills = {};
+    orders
+      .filter((o) => o.status === 'served')
+      .forEach((o) => {
+        bills[o.table] = (bills[o.table] || 0) + menu[o.dish];
+      });
+    return bills;
+  },
+);
+
+export const selectTableBill = (table) => createSelector(selectBills, (bills) => bills[table] || 0);`,
+          hint: 'A selector can take several inputs: the last function gets them in the same order. Inside it you may build a new local object: only the store\'s state must never be changed.',
+          exports: ['selectBills', 'selectTableBill', 'selectMenu'],
+          transfer: 'Remember: a function that returns a selector (a selector factory) is how you select by id.',
+          tests: [
+            ['Each table\'s total', ({ selectBills }) => {
+              const orders = [order('o1', 1, 'pasta', 'served'), order('o2', 1, 'salad', 'served'), order('o3', 2, 'burger', 'cooking'), order('o4', 3, 'salad', 'served')];
+              const bills = selectBills(deepFreeze(kitchenState(orders)));
+              expect(bills && bills[1] === 20 && bills[3] === 8, `Expected { 1: 20, 3: 8 }, got ${show(bills)}.`);
+              expect(!bills[2], 'Table 2\'s burger isn\'t served yet, so it isn\'t on the bill.');
+            }],
+            ['Prices come from the menu', ({ selectBills }) => {
+              const bills = selectBills(deepFreeze(kitchenState([order('o1', 5, 'pasta', 'served')], { pasta: 15, burger: 10, salad: 8 })));
+              expect(bills && bills[5] === 15, `The menu says pasta costs 15 now. Got ${show(bills)}.`);
+            }],
+            ['One table\'s bill', ({ selectTableBill }) => {
+              expect(typeof selectTableBill === 'function', 'Export selectTableBill.');
+              const state = deepFreeze(kitchenState([order('o1', 2, 'burger', 'served')]));
+              const forTwo = selectTableBill(2);
+              expect(typeof forTwo === 'function', 'selectTableBill(2) should return a selector.');
+              expect(forTwo(state) === 10, `Table 2 should owe 10, got ${show(forTwo(state))}.`);
+              expect(selectTableBill(7)(state) === 0, `Table 7 ordered nothing, so its bill should be 0, got ${show(selectTableBill(7)(state))}.`);
+            }],
+          ],
+        },
+        {
+          title: 'The runner',
+          concept: 'effects',
+          story: 'Out of tomatoes! When cooking starts, someone has to run to the supplier. The chef can\'t leave the kitchen: reducers never wait for anything.',
+          task: `<p>Write <span class="inline-code">cookOrder$</span>: when <span class="inline-code">startCooking</span> happens, call <span class="inline-code">supplier.getIngredients(dish)</span> and map the answer to <span class="inline-code">ingredientsDelivered({ id })</span>.</p>
+            <ul><li>A functional effect: <span class="inline-code">{ functional: true }</span></li><li>Get <span class="inline-code">Actions</span> and <span class="inline-code">SupplierApi</span> with <span class="inline-code">inject</span> in default parameters</li></ul>`,
+          given: `${ACTIONS_FULL}
+
+export const SupplierApi = token('SupplierApi');`,
+          starter: `import { inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { map, mergeMap } from 'rxjs';
+
+export const cookOrder$ = createEffect(
+  (actions$ = inject(Actions)) => actions$.pipe(
+  ),
+  { functional: true },
+);`,
+          solution: `import { inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { map, mergeMap } from 'rxjs';
+
+export const cookOrder$ = createEffect(
+  (actions$ = inject(Actions), supplier = inject(SupplierApi)) => actions$.pipe(
+    ofType(KitchenActions.startCooking),
+    mergeMap(({ id, dish }) => supplier.getIngredients(dish).pipe(
+      map(() => KitchenActions.ingredientsDelivered({ id })),
+    )),
+  ),
+  { functional: true },
+);`,
+          hint: '<span class="inline-code">ofType(KitchenActions.startCooking)</span> lets only that action through. <span class="inline-code">mergeMap</span> turns each action into the supplier\'s observable. Inside it, <span class="inline-code">map</span> turns the answer into a new action.',
+          exports: ['cookOrder$', 'SupplierApi', 'KitchenActions'],
+          transfer: 'Remember: anything that waits (an API call, a timer) belongs in an effect, never in a reducer. The effect answers with a new action.',
+          tests: [
+            ['The runner brings back ingredients', ({ cookOrder$, SupplierApi, KitchenActions }) => {
+              needEffect(cookOrder$, 'cookOrder$');
+              const calls = [];
+              const supplier = { getIngredients: (dish) => { calls.push(dish); return MiniRx.of({ dish }); } };
+              const { actions$, out } = collectEffect(cookOrder$, [[SupplierApi, supplier]], 'cookOrder$');
+              actions$.next(KitchenActions.startCooking({ id: 'o1', dish: 'pasta' }));
+              expect(calls.length === 1 && calls[0] === 'pasta', `The supplier should be asked for 'pasta' once. Calls: ${show(calls)}.`);
+              expect(out.values.length === 1, `The effect should output one action, but it output ${out.values.length}.`);
+              const a = out.values[0];
+              expect(isAction(a) && a.type === '[Kitchen] Ingredients Delivered' && a.id === 'o1', `Expected ingredientsDelivered({ id: 'o1' }), got ${MiniNgrx.describe(a)} ${show(a)}.`);
+            }],
+            ['Other tickets are ignored', ({ cookOrder$, SupplierApi, KitchenActions }) => {
+              const calls = [];
+              const supplier = { getIngredients: (dish) => { calls.push(dish); return MiniRx.of({ dish }); } };
+              const { actions$, out } = collectEffect(cookOrder$, [[SupplierApi, supplier]], 'cookOrder$');
+              actions$.next(KitchenActions.orderServed({ id: 'o1' }));
+              expect(!calls.length && !out.values.length, 'The effect reacted to orderServed. Use ofType(KitchenActions.startCooking).');
+            }],
+          ],
+        },
+        {
+          title: 'Out of truffle',
+          concept: 'effects',
+          story: 'The supplier calls: no truffle today. Last time this happened the runner quit and never came back. Every order after that waited forever.',
+          task: `<p>Make <span class="inline-code">cookOrder$</span> handle a failing supplier:</p>
+            <ul><li>on error, output <span class="inline-code">ingredientsFailed({ id, error: error.message })</span></li>
+            <li>the effect must <b>keep working</b> for the next order</li></ul>`,
+          given: `${ACTIONS_FULL}
+
+export const SupplierApi = token('SupplierApi');`,
+          starter: `import { inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, mergeMap, of } from 'rxjs';
+
+export const cookOrder$ = createEffect(
+  (actions$ = inject(Actions), supplier = inject(SupplierApi)) => actions$.pipe(
+    ofType(KitchenActions.startCooking),
+    mergeMap(({ id, dish }) => supplier.getIngredients(dish).pipe(
+      map(() => KitchenActions.ingredientsDelivered({ id })),
+    )),
+  ),
+  { functional: true },
+);`,
+          solution: `import { inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, mergeMap, of } from 'rxjs';
+
+export const cookOrder$ = createEffect(
+  (actions$ = inject(Actions), supplier = inject(SupplierApi)) => actions$.pipe(
+    ofType(KitchenActions.startCooking),
+    mergeMap(({ id, dish }) => supplier.getIngredients(dish).pipe(
+      map(() => KitchenActions.ingredientsDelivered({ id })),
+      catchError((error) => of(KitchenActions.ingredientsFailed({ id, error: error.message }))),
+    )),
+  ),
+  { functional: true },
+);`,
+          hint: 'Where you put <span class="inline-code">catchError</span> matters. After the <span class="inline-code">mergeMap</span>, an error ends the whole effect. Inside, next to <span class="inline-code">map</span>, only that one request ends. <span class="inline-code">catchError</span> must return an observable: <span class="inline-code">of(action)</span>.',
+          exports: ['cookOrder$', 'SupplierApi', 'KitchenActions'],
+          transfer: 'Remember: put <span class="inline-code">catchError</span> inside the inner pipe, so one failed request doesn\'t stop the effect.',
+          tests: [
+            ['A failed delivery becomes a ticket', ({ cookOrder$, SupplierApi, KitchenActions }) => {
+              needEffect(cookOrder$, 'cookOrder$');
+              const supplier = { getIngredients: (dish) => (dish === 'truffle' ? MiniRx.throwError(() => new Error('Out of truffle')) : MiniRx.of({ dish })) };
+              const { actions$, out } = collectEffect(cookOrder$, [[SupplierApi, supplier]], 'cookOrder$');
+              actions$.next(KitchenActions.startCooking({ id: 'o1', dish: 'truffle' }));
+              expect(!out.errors.length, `The error reached the effect and stopped it: ${out.errors[0] && out.errors[0].message}. Catch it with catchError.`);
+              const a = out.values[0];
+              expect(a && a.type === '[Kitchen] Ingredients Failed' && a.id === 'o1' && a.error === 'Out of truffle',
+                `Expected ingredientsFailed({ id: 'o1', error: 'Out of truffle' }), got ${show(a)}.`);
+            }],
+            ['The runner comes back for the next order', ({ cookOrder$, SupplierApi, KitchenActions }) => {
+              const supplier = { getIngredients: (dish) => (dish === 'truffle' ? MiniRx.throwError(() => new Error('Out of truffle')) : MiniRx.of({ dish })) };
+              const { actions$, out } = collectEffect(cookOrder$, [[SupplierApi, supplier]], 'cookOrder$');
+              actions$.next(KitchenActions.startCooking({ id: 'o1', dish: 'truffle' }));
+              actions$.next(KitchenActions.startCooking({ id: 'o2', dish: 'pasta' }));
+              expect(!out.completed, 'After the error the effect completed: it will never react again. Move catchError inside the mergeMap.');
+              const last = out.values[out.values.length - 1];
+              expect(out.values.length === 2 && last.type === '[Kitchen] Ingredients Delivered' && last.id === 'o2', `o2 should still be delivered. Outputs: ${show(out.values.map((v) => v.type))}.`);
+            }],
+          ],
+        },
+        {
+          title: 'Rush hour',
+          concept: 'flattening',
+          story: 'Friday, 8 pm. The manager keeps tapping "refresh menu", a guest taps "pay" three times, and the oven must bake in order. One operator for all of it won\'t do.',
+          task: `<p>All three effects use <span class="inline-code">mergeMap</span>. Change each to the right operator:</p>
+            <ul><li><span class="inline-code">refreshMenu$</span>: only the <b>latest</b> refresh matters, drop older ones</li>
+            <li><span class="inline-code">payBill$</span>: charge <b>once</b>, ignore taps while a payment is running</li>
+            <li><span class="inline-code">bakeInOrder$</span>: bake one at a time, <b>in order</b></li></ul>`,
+          given: `${ACTIONS_FULL}
+
+export const RushActions = createActionGroup({
+  source: 'Rush',
+  events: {
+    'Refresh Menu': props<{ version: number }>(),
+    'Menu Loaded': props<{ version: number }>(),
+    'Pay Bill': props<{ table: number }>(),
+    'Bill Paid': props<{ table: number }>(),
+    'Bake': props<{ id: string }>(),
+    'Baked': props<{ id: string }>(),
+  },
+});
+
+export const RushApi = token('RushApi');`,
+          starter: `import { inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { concatMap, exhaustMap, map, mergeMap, switchMap } from 'rxjs';
+
+export const refreshMenu$ = createEffect(
+  (actions$ = inject(Actions), api = inject(RushApi)) => actions$.pipe(
+    ofType(RushActions.refreshMenu),
+    mergeMap(({ version }) => api.getMenu(version).pipe(
+      map(() => RushActions.menuLoaded({ version })),
+    )),
+  ),
+  { functional: true },
+);
+
+export const payBill$ = createEffect(
+  (actions$ = inject(Actions), api = inject(RushApi)) => actions$.pipe(
+    ofType(RushActions.payBill),
+    mergeMap(({ table }) => api.charge(table).pipe(
+      map(() => RushActions.billPaid({ table })),
+    )),
+  ),
+  { functional: true },
+);
+
+export const bakeInOrder$ = createEffect(
+  (actions$ = inject(Actions), api = inject(RushApi)) => actions$.pipe(
+    ofType(RushActions.bake),
+    mergeMap(({ id }) => api.bake(id).pipe(
+      map(() => RushActions.baked({ id })),
+    )),
+  ),
+  { functional: true },
+);`,
+          solution: `import { inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { concatMap, exhaustMap, map, mergeMap, switchMap } from 'rxjs';
+
+export const refreshMenu$ = createEffect(
+  (actions$ = inject(Actions), api = inject(RushApi)) => actions$.pipe(
+    ofType(RushActions.refreshMenu),
+    switchMap(({ version }) => api.getMenu(version).pipe(
+      map(() => RushActions.menuLoaded({ version })),
+    )),
+  ),
+  { functional: true },
+);
+
+export const payBill$ = createEffect(
+  (actions$ = inject(Actions), api = inject(RushApi)) => actions$.pipe(
+    ofType(RushActions.payBill),
+    exhaustMap(({ table }) => api.charge(table).pipe(
+      map(() => RushActions.billPaid({ table })),
+    )),
+  ),
+  { functional: true },
+);
+
+export const bakeInOrder$ = createEffect(
+  (actions$ = inject(Actions), api = inject(RushApi)) => actions$.pipe(
+    ofType(RushActions.bake),
+    concatMap(({ id }) => api.bake(id).pipe(
+      map(() => RushActions.baked({ id })),
+    )),
+  ),
+  { functional: true },
+);`,
+          hint: '<b>switchMap</b> cancels the running request when a new one comes (search, refresh). <b>exhaustMap</b> ignores new ones while one runs (pay, log in). <b>concatMap</b> queues them (save in order). <b>mergeMap</b> runs all at once, in any order.',
+          exports: ['refreshMenu$', 'payBill$', 'bakeInOrder$', 'RushActions', 'RushApi'],
+          transfer: 'Remember: <span class="inline-code">switchMap</span> for search and refresh, <span class="inline-code">exhaustMap</span> for submit and pay, <span class="inline-code">concatMap</span> for things that must stay in order, <span class="inline-code">mergeMap</span> when order doesn\'t matter.',
+          tests: [
+            ['Refresh menu: only the latest counts', async ({ refreshMenu$, RushApi, RushActions }) => {
+              needEffect(refreshMenu$, 'refreshMenu$');
+              const api = { getMenu: () => MiniRx.timer(40) };
+              const { actions$, out } = collectEffect(refreshMenu$, [[RushApi, api]], 'refreshMenu$');
+              actions$.next(RushActions.refreshMenu({ version: 1 }));
+              await wait(10);
+              actions$.next(RushActions.refreshMenu({ version: 2 }));
+              await wait(90);
+              const versions = out.values.map((a) => a.version);
+              expect(versions.join() === '2', `Menus loaded: ${show(versions)}. Version 1 is old news once version 2 is asked for: only [2] should load.`);
+            }],
+            ['Pay bill: charged once', async ({ payBill$, RushApi, RushActions }) => {
+              needEffect(payBill$, 'payBill$');
+              let charges = 0;
+              const api = { charge: () => { charges += 1; return MiniRx.timer(40); } };
+              const { actions$, out } = collectEffect(payBill$, [[RushApi, api]], 'payBill$');
+              actions$.next(RushActions.payBill({ table: 4 }));
+              await wait(10);
+              actions$.next(RushActions.payBill({ table: 4 }));
+              actions$.next(RushActions.payBill({ table: 4 }));
+              await wait(90);
+              expect(charges === 1 && out.values.length === 1, `The guest was charged ${charges} times and got ${out.values.length} receipts. Taps during a running payment should be ignored.`);
+            }],
+            ['Bake in order', async ({ bakeInOrder$, RushApi, RushActions }) => {
+              needEffect(bakeInOrder$, 'bakeInOrder$');
+              const api = { bake: (id) => MiniRx.timer(id === 'b1' ? 50 : 10) };
+              const { actions$, out } = collectEffect(bakeInOrder$, [[RushApi, api]], 'bakeInOrder$');
+              actions$.next(RushActions.bake({ id: 'b1' }));
+              actions$.next(RushActions.bake({ id: 'b2' }));
+              await wait(130);
+              const ids = out.values.map((a) => a.id);
+              expect(ids.join() === 'b1,b2', `Baked: ${show(ids)}. b1 goes in first and must come out first, and b2 must still be baked.`);
+            }],
+          ],
+        },
+        {
+          title: 'Kitchen on fire',
+          concept: 'everything',
+          story: 'The new cook "improved" the code. Now the kitchen freezes as soon as someone orders. Find the three bugs.',
+          task: `<p>This runs on a real store with effects. Fix it so that:</p>
+            <ul><li>placing an order puts it on the board and starts cooking it</li>
+            <li>serving an order prints exactly one receipt</li>
+            <li>nothing loops forever</li></ul>`,
+          given: `${ACTIONS_FULL}
+
+export const Printer = token('Printer');`,
+          starter: `import { inject } from '@angular/core';
+import { createReducer, on } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { map, tap } from 'rxjs';
+
+export const kitchenReducer = createReducer(
+  { orders: [] },
+  on(KitchenActions.orderPlaced, (state, { order }) => {
+    state.orders.push(order);
+    return state;
+  }),
+  on(KitchenActions.startCooking, (state, { id }) => ({
+    ...state,
+    orders: state.orders.map((o) => (o.id === id ? { ...o, status: 'cooking' } : o)),
+  })),
+  on(KitchenActions.orderServed, (state, { id }) => ({
+    ...state,
+    orders: state.orders.map((o) => (o.id === id ? { ...o, status: 'served' } : o)),
+  })),
+);
+
+export const startCooking$ = createEffect(
+  (actions$ = inject(Actions)) => actions$.pipe(
+    ofType(KitchenActions.orderPlaced),
+    map(({ order }) => KitchenActions.orderPlaced({ order })),
+  ),
+  { functional: true },
+);
+
+export const printReceipt$ = createEffect(
+  (actions$ = inject(Actions), printer = inject(Printer)) => actions$.pipe(
+    ofType(KitchenActions.orderServed),
+    tap(({ id }) => printer.print(id)),
+  ),
+  { functional: true },
+);`,
+          solution: `import { inject } from '@angular/core';
+import { createReducer, on } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { map, tap } from 'rxjs';
+
+export const kitchenReducer = createReducer(
+  { orders: [] },
+  on(KitchenActions.orderPlaced, (state, { order }) => ({
+    ...state,
+    orders: [...state.orders, order],
+  })),
+  on(KitchenActions.startCooking, (state, { id }) => ({
+    ...state,
+    orders: state.orders.map((o) => (o.id === id ? { ...o, status: 'cooking' } : o)),
+  })),
+  on(KitchenActions.orderServed, (state, { id }) => ({
+    ...state,
+    orders: state.orders.map((o) => (o.id === id ? { ...o, status: 'served' } : o)),
+  })),
+);
+
+export const startCooking$ = createEffect(
+  (actions$ = inject(Actions)) => actions$.pipe(
+    ofType(KitchenActions.orderPlaced),
+    map(({ order }) => KitchenActions.startCooking({ id: order.id, dish: order.dish })),
+  ),
+  { functional: true },
+);
+
+export const printReceipt$ = createEffect(
+  (actions$ = inject(Actions), printer = inject(Printer)) => actions$.pipe(
+    ofType(KitchenActions.orderServed),
+    tap(({ id }) => printer.print(id)),
+  ),
+  { functional: true, dispatch: false },
+);`,
+          hint: 'Bug 1: the reducer changes the frozen state. Bug 2: an effect that listens for an action and outputs the same action dispatches forever. Bug 3: <span class="inline-code">tap</span> passes the action through, and every effect dispatches what it outputs unless told not to.',
+          exports: ['kitchenReducer', 'startCooking$', 'printReceipt$', 'Printer', 'KitchenActions'],
+          transfer: 'Remember: an effect that only does something (navigate, show a message, print) needs <span class="inline-code">{ dispatch: false }</span>. An action that repeats in the log means a loop.',
+          run: async ({ kitchenReducer, startCooking$, printReceipt$, Printer, KitchenActions }) => {
+            const printed = [];
+            const store = new MiniStore({ kitchen: kitchenReducer }, { maxDispatches: 30, maxDepth: 20 });
+            const errors = [];
+            store.events$.subscribe((e) => {
+              if (e.kind === 'error' || e.kind === 'effect-error') errors.push(e.error);
+            });
+            store.addEffects({ startCooking$, printReceipt$ }, [[Printer, { print: (id) => printed.push(id) }]]);
+            const tryDispatch = (a) => { try { store.dispatch(a); } catch (e) { errors.push(e); } };
+            tryDispatch(KitchenActions.orderPlaced({ order: order('o1', 2, 'pasta') }));
+            const afterPlace = store.state.kitchen;
+            const placeErrors = errors.slice();
+            tryDispatch(KitchenActions.orderServed({ id: 'o1' }));
+            await wait(20);
+            return { store, printed, errors, afterPlace, placeErrors };
+          },
+          tests: [
+            ['Placing an order works', (x, ctx) => {
+              const { afterPlace, placeErrors } = ctx;
+              const err = placeErrors[0];
+              expect(!err || !/not extensible|read.only|frozen|object is not/i.test(err.message), `The reducer threw: ${err && err.message}. The state is frozen, like with NgRx runtime checks. Return a new state instead of push.`);
+              expect(!err || !/loop/i.test(err.message), `${err && err.message} An effect that outputs the action it listens for runs forever.`);
+              expect(!err, `Error: ${err && err.message}`);
+              expect(afterPlace.orders.length === 1, `There should be 1 order on the board, but there are ${afterPlace.orders.length}.`);
+            }],
+            ['The order starts cooking', (x, ctx) => {
+              const o = ctx.afterPlace.orders[0];
+              expect(o && o.status === 'cooking', `After placing, o1 should be cooking. Its status is ${show(o && o.status)}. The startCooking$ effect should output startCooking({ id, dish }).`);
+            }],
+            ['Exactly one receipt', (x, ctx) => {
+              const loop = ctx.errors.find((e) => /loop/i.test(e.message));
+              expect(!loop, `${loop && loop.message} printReceipt$ outputs the orderServed it got from tap, so the store dispatches it again. Add dispatch: false.`);
+              expect(ctx.printed.length === 1 && ctx.printed[0] === 'o1', `Receipts printed: ${show(ctx.printed)}. Expected exactly ['o1'].`);
+              expect(!ctx.store.halted && !ctx.errors.length, `Error: ${ctx.errors[0] && ctx.errors[0].message}`);
+            }],
+          ],
+        },
+      ];
+
+      const PARTS = { understand: 'Part 1 · Understand', code: 'Part 2 · Write the code', think: 'Part 3 · Think like the store' };
+
+      const ROLE_TABLE = `<table class="role-table">
+        <tr><th>In the store</th><th>What it does</th><th>In the kitchen</th></tr>
+        <tr><td><span class="tag">component</span></td><td>Shows data and dispatches actions. Never changes data itself.</td><td>🧑‍🍳 The waiter</td></tr>
+        <tr><td><span class="tag tag-action">action</span></td><td>An object that says what happened, like <span class="inline-code">[Kitchen] Order Placed</span>.</td><td>🎫 The ticket</td></tr>
+        <tr><td><span class="tag tag-reducer">reducer</span></td><td>Takes the state and an action, returns a <b>new</b> state. Never waits for anything.</td><td>👩‍🍳 The chef</td></tr>
+        <tr><td><span class="tag tag-store">store</span></td><td>Holds all the state in one place.</td><td>📋 The order board</td></tr>
+        <tr><td><span class="tag tag-selector">selector</span></td><td>Picks the piece of state a component needs.</td><td>📺 The screen</td></tr>
+        <tr><td><span class="tag tag-effect">effect</span></td><td>Does slow work like API calls, then dispatches a new action.</td><td>🏃 The runner</td></tr>
+      </table>`;
+
+      const UNDERSTAND = [
+        {
+          title: 'Who does what',
+          concept: 'roles',
+          story: 'Your first shift. Before you touch anything, learn who does what in this kitchen.',
+          task: `<p>Read the table, then answer.</p>${ROLE_TABLE}`,
+          transfer: 'Remember: one job per part. When you\'re not sure where code goes, ask "who does this in the kitchen?"',
+          questions: [
+            { q: 'A guest clicks "Order". Which part sends the ticket?', options: ['The reducer', 'The component', 'The effect', 'The selector'], answer: 1,
+              explain: 'The component handles the click and dispatches an action. It doesn\'t change any data itself.' },
+            { q: 'Which part is the only one that creates a new state?', options: ['The reducer', 'The component', 'The effect', 'The store service'], answer: 0,
+              explain: 'Only reducers produce new state. Everyone else sends actions.' },
+            { q: 'The table should show only the plates that are ready. Who picks them out of the store?', options: ['The reducer', 'The effect', 'The component, with a filter in its template', 'A selector'], answer: 3,
+              explain: 'A selector picks and shapes data for the view. It can be reused and it remembers its last answer.' },
+            { q: 'The pasta must be fetched from the kitchen API. Who does that?', options: ['The reducer', 'The component', 'An effect', 'A selector'], answer: 2,
+              explain: 'Anything slow or outside the app (HTTP, timers, localStorage) goes in an effect.' },
+          ],
+        },
+        {
+          title: 'Follow the ticket',
+          concept: 'the flow',
+          story: 'Watch one order travel through the kitchen. In what order do things happen?',
+          task: '<p>Think of the visualizer: one click, and the ticket goes around the loop. Answer about the order of things.</p>',
+          transfer: 'Remember: component → action → reducer → store → selector → component. Effects listen on the side and answer with new actions.',
+          questions: [
+            { q: 'The component calls this. What runs first?', code: "this.store.dispatch(KitchenActions.orderPlaced({ order }));", options: ['The effect', 'The reducer', 'The selector', 'The component re-renders'], answer: 1,
+              explain: 'The reducer runs first and the store gets the new state. Effects see the action after that.' },
+            { q: 'The effect got an answer from the API. How does the store learn about it?', options: ['The effect changes the state directly', 'The effect calls the reducer function', 'The effect dispatches a new action, like orderReady', 'The effect calls a selector'], answer: 2,
+              explain: 'Effects never touch the state. They output a new action, and that action goes through the reducer like any other.' },
+            { q: 'How many actions does one pasta order make?', options: ['One: Order Placed', 'Two: Order Placed and Order Ready', 'Three: Order Placed, Cooking, Order Ready', 'It depends on the reducer'], answer: 1,
+              explain: 'The request (Order Placed) and the result (Order Ready, or Order Failed). That\'s the pattern of every API call.' },
+            { q: 'A guest clicks "Clear table". Does the runner (effect) go to the kitchen?', code: "ofType(KitchenActions.orderPlaced)", options: ['Yes, effects react to every action', 'No, ofType lets only Order Placed through', 'Only if the table has plates', 'Yes, but only after the reducer'], answer: 1,
+              explain: 'Effects see every action, but ofType filters them. Table Cleared never reaches the kitchen.' },
+          ],
+        },
+        {
+          title: 'Kitchen rules',
+          concept: 'the rules',
+          story: 'The head chef has a few rules. Break them and the kitchen falls apart.',
+          task: '<p>Look at each piece of code and decide.</p>',
+          transfer: 'Remember: actions describe what happened, reducers return new objects, effects do the slow work, selectors do the picking.',
+          questions: [
+            { q: 'Is this reducer OK?', code: "on(KitchenActions.orderPlaced, (state, { order }) => {\n  state.orders.push(order);\n  return state;\n})", options: ['Yes, the order is added', 'No: it changes the old state instead of returning a new one', 'No: reducers must be async', 'No: reducers can\'t use arrays'], answer: 1,
+              explain: 'push changes the old state, and the same object comes back, so NgRx thinks nothing changed. Return { ...state, orders: [...state.orders, order] }.' },
+            { q: 'Which is the best name for an action?', options: ["'[Kitchen] Set Orders'", "'[Kitchen] Call API'", "'[Kitchen] Order Placed'", "'[Kitchen] Update State'"], answer: 2,
+              explain: 'Name actions after what happened (an event), not after what the code should do.' },
+            { q: 'Where should this call be?', code: "on(KitchenActions.orderPlaced, (state, { order }) => {\n  this.http.post('/api/orders', order);\n  return { ...state, orders: [...state.orders, order] };\n})", options: ['It\'s fine in the reducer', 'In an effect', 'In a selector', 'In the action'], answer: 1,
+              explain: 'Reducers must be pure: same input, same output, no outside calls. HTTP goes in an effect.' },
+            { q: 'A component needs the ready orders. Which is better?', code: "// A\nreadonly ready = computed(() =>\n  this.store.selectSignal(selectOrders)().filter((o) => o.status === 'ready'));\n\n// B\nexport const selectReadyOrders = createSelector(\n  selectOrders,\n  (orders) => orders.filter((o) => o.status === 'ready'),\n);", options: ['A: the filter stays in the component', 'B: a selector, reusable and memoized', 'They\'re exactly the same', 'Neither: filter in the reducer'], answer: 1,
+              explain: 'A selector can be used by any component and only recalculates when the orders change.' },
+          ],
+        },
+      ];
+
+      const THINK = [
+        {
+          title: 'Rush hour',
+          concept: 'flattening',
+          story: 'Friday night. Clicks come fast, requests overlap. Pick the right operator for each effect.',
+          task: '<p><b>switchMap</b> cancels the old request when a new one comes. <b>exhaustMap</b> ignores new ones while one runs. <b>concatMap</b> queues them in order. <b>mergeMap</b> runs them all at once.</p>',
+          transfer: 'Remember: search and refresh → switchMap. Submit and pay → exhaustMap. Must stay in order → concatMap. Independent → mergeMap.',
+          questions: [
+            { q: 'A search box loads dishes as the user types. Only the latest results matter.', options: ['mergeMap', 'concatMap', 'switchMap', 'exhaustMap'], answer: 2,
+              explain: 'switchMap drops the old request, so old results never overwrite new ones.' },
+            { q: 'The guest taps "Pay" three times. They must be charged once.', options: ['exhaustMap', 'switchMap', 'mergeMap', 'concatMap'], answer: 0,
+              explain: 'exhaustMap ignores the taps while the first payment is still running.' },
+            { q: 'The chef edits a recipe and saves after every change. The saves must reach the server in order.', options: ['switchMap', 'mergeMap', 'exhaustMap', 'concatMap'], answer: 3,
+              explain: 'concatMap waits for each save to finish before starting the next one.' },
+            { q: 'Three tables order at once. Each order is cooked separately, and the order of answers doesn\'t matter.', options: ['concatMap', 'mergeMap', 'exhaustMap', 'switchMap'], answer: 1,
+              explain: 'mergeMap runs them all at the same time.' },
+          ],
+        },
+        {
+          title: 'What\'s wrong here?',
+          concept: 'debugging',
+          story: 'The new cook "improved" a few effects. Each one has a bug. Find it.',
+          task: '<p>Read each piece of code and pick what goes wrong.</p>',
+          transfer: 'Remember: catchError inside the inner pipe, never output the action you listen for, and dispatch: false for effects that only do something.',
+          questions: [
+            { q: 'The kitchen fails once. What happens next?', code: "actions$.pipe(\n  ofType(KitchenActions.orderPlaced),\n  mergeMap(({ order }) => api.cook(order).pipe(\n    map(() => KitchenActions.orderReady({ id: order.id })),\n  )),\n  catchError(() => of(KitchenActions.orderFailed({ id: '?' }))),\n)", options: ['Nothing, it keeps working', 'The effect stops: no order after that is ever cooked', 'The app crashes', 'Every order fails from now on, but the effect keeps running'], answer: 1,
+              explain: 'catchError outside mergeMap replaces the whole stream, so the effect completes. Put it inside, next to map.' },
+            { q: 'What does this effect do?', code: "createEffect(\n  (actions$ = inject(Actions)) => actions$.pipe(\n    ofType(KitchenActions.orderPlaced),\n    map(({ order }) => KitchenActions.orderPlaced({ order })),\n  ),\n  { functional: true },\n)", options: ['Places the order twice', 'Nothing, effects ignore their own actions', 'Loops forever: it answers Order Placed with Order Placed', 'Throws an error when the app starts'], answer: 2,
+              explain: 'Every output is dispatched and comes back to the same effect. It should output a different action.' },
+            { q: 'This effect prints a receipt. What\'s missing?', code: "createEffect(\n  (actions$ = inject(Actions), printer = inject(Printer)) => actions$.pipe(\n    ofType(KitchenActions.orderServed),\n    tap(({ id }) => printer.print(id)),\n  ),\n  { functional: true },\n)", options: ['Nothing', 'map after tap', '{ dispatch: false }: tap passes the action through, so it\'s dispatched again and loops', 'catchError'], answer: 2,
+              explain: 'Effects dispatch what they output. An effect that only does something needs { functional: true, dispatch: false }.' },
+            { q: 'Why does this throw NG0203?', code: "export class TableComponent {\n  order(dish: string) {\n    const store = inject(Store);\n    store.dispatch(KitchenActions.orderPlaced({ order: { id: nextId(), dish } }));\n  }\n}", options: ['Store isn\'t provided', 'inject() only works while the class is created: in a field or the constructor', 'dispatch needs await', 'The action name is wrong'], answer: 1,
+              explain: 'Move it to a field: private readonly store = inject(Store);' },
+          ],
+        },
+        {
+          title: 'Same or new?',
+          concept: 'references',
+          story: 'The store decides what changed by comparing objects, not by reading them. Think like the store.',
+          task: '<p>"The same object" means <span class="inline-code">===</span> is true. Answer as the store would.</p>',
+          transfer: 'Remember: new object = something changed. Same object = nothing changed. That\'s how reducers, selectors and the screen stay fast.',
+          questions: [
+            { q: 'The guest changes the filter. Is state.orders a new array?', code: "on(KitchenActions.filterChanged, (state, { filter }) => ({ ...state, filter }))", options: ['Yes, the spread copies everything deeply', 'No, it\'s the same array: only the top object is new', 'It depends on the filter', 'Yes, because the state changed'], answer: 1,
+              explain: 'The spread is shallow. orders keeps the same reference, so selectors built only on orders don\'t run again.' },
+            { q: 'The reducer gets an action it doesn\'t handle. What does it return?', options: ['undefined', 'A copy of the state', 'The same state object', 'An empty state'], answer: 2,
+              explain: 'Same object means "nothing changed", so nothing re-renders.' },
+            { q: 'An action changes only the filter. What does this selector return?', code: "const selectReadyCount = createSelector(\n  selectOrders,\n  (orders) => orders.filter((o) => o.status === 'ready').length,\n);", options: ['It runs the filter again', 'Its last answer, without running: its input is the same array', 'An error', 'undefined'], answer: 1,
+              explain: 'Memoization: same input, so it returns the remembered answer.' },
+            { q: 'In development, a reducer runs state.orders.push(order). With NgRx runtime checks on, what happens?', options: ['It works, but the screen doesn\'t update', 'It throws right away: the state is frozen', 'NgRx copies the state for you', 'Nothing'], answer: 1,
+              explain: 'Runtime checks freeze the state, so mutations fail loudly instead of causing a silent bug.' },
+          ],
+        },
+      ];
+
+      const LEVELS = [
+        ...UNDERSTAND.map((l) => ({ ...l, part: 'understand', quiz: true })),
+        ...CODE_LEVELS.slice(0, 8).map((l) => ({ ...l, part: 'code' })),
+        ...THINK.map((l) => ({ ...l, part: 'think', quiz: true })),
+      ];
+
+      const storage = {
+        get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } },
+        set(key, value) { try { localStorage.setItem(key, value); } catch (e) { return undefined; } return undefined; },
+        remove(key) { try { localStorage.removeItem(key); } catch (e) { return undefined; } return undefined; },
+      };
+      const codeKey = (i) => `kitchen-rush-v2-code-${i}`;
+      let done = new Set();
+      try { done = new Set(JSON.parse(storage.get('kitchen-rush-v2-done') || '[]')); } catch (e) { done = new Set(); }
+      const saveDone = () => storage.set('kitchen-rush-v2-done', JSON.stringify([...done]));
+
+      let current = 0;
+      const n = Number(storage.get('kitchen-rush-v2-level'));
+      if (n >= 0 && n < LEVELS.length) current = n;
+
+      const editor = $('.code-editor');
+
+      function renderList() {
+        $('.level-list').innerHTML = LEVELS.map((l, i) => `${i === 0 || LEVELS[i - 1].part !== l.part ? `<li class="part-title">${PARTS[l.part]}</li>` : ''}<li><button class="level-button${i === current ? ' is-current' : ''}${done.has(i) ? ' is-done' : ''}" data-level="${i}" type="button">
+          <span class="level-number">${done.has(i) ? '✓' : i + 1}</span><span>${esc(l.title)}</span></button></li>`).join('');
+        $('.progress-line').textContent = `${done.size} of ${LEVELS.length} done`;
+      }
+
+      function renderLevel() {
+        const l = LEVELS[current];
+        $('.level-tag').textContent = `Level ${current + 1} · ${l.concept}`;
+        $('.level-title').textContent = l.title;
+        $('.story').textContent = l.story;
+        $('.task').innerHTML = l.task;
+        $('.quiz-area').hidden = !l.quiz;
+        $('.code-area').hidden = Boolean(l.quiz);
+        $('.code-note').hidden = Boolean(l.quiz);
+        $('.quiz-score').textContent = '';
+        if (l.quiz) {
+          $('.quiz-host').innerHTML = l.questions.map((q, qi) => `<div class="question" data-q="${qi}">
+            <div class="question-text">${qi + 1}. ${esc(q.q)}</div>
+            ${q.code ? `<pre class="code-block">${esc(q.code)}</pre>` : ''}
+            <div class="options">${q.options.map((o, oi) => `<label class="option"><input type="radio" name="q${qi}" value="${oi}"> <span>${esc(o)}</span></label>`).join('')}</div>
+            <div class="explain" hidden></div></div>`).join('');
+        }
+        $('.given-host').innerHTML = l.given ? `<div class="code-label">Already in the project (read only)</div><pre class="code-block given-code">${esc(l.given)}</pre>` : '';
+        if (!l.quiz) editor.value = storage.get(codeKey(current)) || l.starter;
+        $('.hint-host').innerHTML = '';
+        $('.results').innerHTML = '';
+        $('.success-host').innerHTML = '';
+        storage.set('kitchen-rush-v2-level', String(current));
+        renderList();
+      }
+
+      function compile(l, code) {
+        const source = MiniNgrx.stripTypes(`${l.given}\n${code}`)
+          .replace(/\b(private|public|protected)\s+(readonly\s+)?/g, '')
+          .replace(/^(\s*)readonly\s+/gm, '$1')
+          .replace(/<KitchenState>/g, '');
+        const ret = `\nreturn { ${l.exports.map((name) => `${JSON.stringify(name)}: typeof ${name} === 'undefined' ? undefined : ${name}`).join(', ')} };`;
+        return new Function(...API_NAMES, `'use strict';\n${source}${ret}`)(...API_NAMES.map((k) => API[k]));
+      }
+
+      function completeLevel(l) {
+        done.add(current);
+        saveDone();
+        renderList();
+        const last = current === LEVELS.length - 1;
+        $('.success-host').innerHTML = `<div class="success">
+          <div class="success-title">${last ? '🎉 The kitchen survived the night. All levels done!' : '✓ Level complete'}</div>
+          <p class="transfer">${l.transfer}</p>
+          ${last ? '' : '<button class="button button-primary next-level" type="button">Next level →</button>'}</div>`;
+      }
+
+      function checkQuiz() {
+        const l = LEVELS[current];
+        let right = 0;
+        l.questions.forEach((q, qi) => {
+          const box = document.querySelector(`[data-q="${qi}"]`);
+          const picked = box.querySelector('input:checked');
+          const explain = box.querySelector('.explain');
+          box.classList.remove('is-right', 'is-wrong');
+          if (!picked) {
+            explain.hidden = true;
+            return;
+          }
+          const ok = Number(picked.value) === q.answer;
+          if (ok) right += 1;
+          box.classList.add(ok ? 'is-right' : 'is-wrong');
+          explain.hidden = false;
+          explain.innerHTML = ok ? `✓ ${esc(q.explain)}` : '✗ Not quite. Think about it and try another answer.';
+        });
+        $('.quiz-score').textContent = `${right} of ${l.questions.length} right`;
+        if (right === l.questions.length) completeLevel(l);
+        else $('.success-host').innerHTML = '';
+      }
+
+      async function run() {
+        const l = LEVELS[current];
+        const results = [];
+        $('.success-host').innerHTML = '';
+        $('.results').innerHTML = '<li class="result">Running…</li>';
+        let exports;
+        try {
+          exports = compile(l, editor.value);
+        } catch (e) {
+          results.push({ name: 'Your code runs', pass: false, message: `${e.name}: ${e.message}` });
+        }
+        if (exports) {
+          let ctx = null;
+          if (l.run) {
+            try {
+              ctx = await l.run(exports);
+            } catch (e) {
+              results.push({ name: 'The kitchen opens', pass: false, message: e.message });
+            }
+          }
+          if (!l.run || ctx) {
+            for (const [name, fn] of l.tests) {
+              try {
+                await fn(exports, ctx);
+                results.push({ name, pass: true });
+              } catch (e) {
+                results.push({ name, pass: false, message: e instanceof Fail ? e.message : `${e.name}: ${e.message}` });
+              }
+            }
+          }
+        }
+        $('.results').innerHTML = results.map((r) => `<li class="result ${r.pass ? 'result-pass' : 'result-fail'}">
+          <div class="result-name">${r.pass ? '✓' : '✗'} ${esc(r.name)}</div>${r.message ? `<div class="result-message">${esc(r.message)}</div>` : ''}</li>`).join('');
+        if (results.every((r) => r.pass)) completeLevel(l);
+      }
+
+      editor.addEventListener('input', () => storage.set(codeKey(current), editor.value));
+      editor.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab' && !e.shiftKey) {
+          e.preventDefault();
+          const { selectionStart: s, selectionEnd: end } = editor;
+          editor.setRangeText('  ', s, end, 'end');
+          storage.set(codeKey(current), editor.value);
+        }
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          run();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        const lb = e.target.closest('.level-button');
+        if (lb) { current = Number(lb.dataset.level); renderLevel(); return; }
+        if (e.target.closest('.next-level')) { current += 1; renderLevel(); window.scrollTo(0, 0); }
+      });
+      $('.run-button').addEventListener('click', run);
+      $('.check-button').addEventListener('click', checkQuiz);
+      $('.hint-button').addEventListener('click', () => { $('.hint-host').innerHTML = `<div class="hint-box">💡 ${LEVELS[current].hint}</div>`; });
+      $('.solution-button').addEventListener('click', () => {
+        if (!confirm('Replace your code with the solution? Trying first teaches more.')) return;
+        editor.value = LEVELS[current].solution;
+        storage.set(codeKey(current), editor.value);
+      });
+      $('.reset-button').addEventListener('click', () => {
+        if (!confirm('Go back to the starting code for this level?')) return;
+        storage.remove(codeKey(current));
+        editor.value = LEVELS[current].starter;
+      });
+
+      window.KitchenRush = { LEVELS, compile, run, checkQuiz, setLevel: (i) => { current = i; renderLevel(); } };
+      renderLevel();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Store Visualizer</title>
+  <link rel="stylesheet" href="shared/kitchen.css">
+  <style>
+    .viz-controls {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.88rem;
+    }
+
+    .viz-layout {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr) 280px;
+      gap: 16px;
+      padding: 16px 20px 28px;
+      align-items: start;
+    }
+
+    .table-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .order-button {
+      font-size: 1.1rem;
+      padding: 10px 18px;
+    }
+
+    .dining-table {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+      gap: 8px;
+      width: 190px;
+      aspect-ratio: 1;
+      padding: 30px;
+      border-radius: 50%;
+      background: #c99a68;
+      border: 8px solid #a8784a;
+      box-shadow: var(--shadow);
+    }
+
+    .plate {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 3px solid #eadfce;
+      font-size: 1.35rem;
+    }
+
+    .plate.is-cooking {
+      background: #f4ecdf;
+      font-size: 1.05rem;
+    }
+
+    .table-note {
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
+    .flow-scroll {
+      overflow-x: auto;
+    }
+
+    .flow-diagram {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 46px 56px;
+      padding: 8px 4px 12px;
+      min-width: 460px;
+    }
+
+    .flow-arrows {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .flow-arrow {
+      stroke: var(--line);
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    .flow-arrow-dashed {
+      stroke-dasharray: 6 5;
+    }
+
+    .arrow-head {
+      fill: var(--line);
+    }
+
+    .flow-node {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      transition: border-color 0.25s, box-shadow 0.25s, opacity 0.25s;
+    }
+
+    .flow-diagram.is-running .flow-node {
+      opacity: 0.35;
+    }
+
+    .flow-diagram.is-running .flow-node.is-active {
+      opacity: 1;
+      border-color: var(--node-color);
+      box-shadow: 0 0 0 4px var(--node-soft);
+    }
+
+    .node-component { grid-column: 1; grid-row: 1; --node-color: var(--ink-soft); --node-soft: var(--surface-2); }
+    .node-action { grid-column: 2; grid-row: 1; --node-color: var(--mustard); --node-soft: var(--mustard-soft); }
+    .node-reducer { grid-column: 3; grid-row: 1; --node-color: var(--tomato); --node-soft: var(--tomato-soft); }
+    .node-selector { grid-column: 1; grid-row: 2; --node-color: var(--basil); --node-soft: var(--basil-soft); }
+    .node-store { grid-column: 3; grid-row: 2; --node-color: var(--sky); --node-soft: var(--sky-soft); }
+    .node-effect { grid-column: 2; grid-row: 3; --node-color: var(--plum); --node-soft: var(--plum-soft); }
+    .node-api { grid-column: 3; grid-row: 3; --node-color: var(--plum); --node-soft: var(--plum-soft); }
+
+    .node-icon {
+      font-size: 1.6rem;
+      line-height: 1.2;
+    }
+
+    .node-name {
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .ticket {
+      position: absolute;
+      z-index: 5;
+      left: 0;
+      top: 0;
+      background: #fffbe8;
+      color: #2b2420;
+      border: 1px solid #e0c97a;
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+      transform: translate(-50%, -50%);
+      transition-property: left, top;
+      transition-timing-function: ease-in-out;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .narration {
+      margin-top: 12px;
+      border-left: 4px solid var(--narration-color, var(--line));
+      background: var(--surface-2);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      font-size: 1.05rem;
+      min-height: 56px;
+    }
+
+    .step-line {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+      min-height: 34px;
+    }
+
+    .state-intro {
+      margin: 0 0 8px;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+    }
+
+    .state-view {
+      margin: 0;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      white-space: pre;
+      overflow: auto;
+      transition: box-shadow 0.3s;
+    }
+
+    .state-view.is-new {
+      box-shadow: 0 0 0 4px var(--sky-soft);
+    }
+
+    @media (max-width: 1100px) {
+      .viz-layout {
+        grid-template-columns: 220px minmax(0, 1fr);
+      }
+
+      .state-panel {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .viz-layout {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 12px 16px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="page-title">See the store work</div>
+    <div class="viz-controls">
+      <label class="control-label">Speed
+        <select class="select speed-select">
+          <option value="slow">Slow</option>
+          <option value="normal" selected>Normal</option>
+          <option value="step">Step by step</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="viz-layout">
+    <div class="panel table-panel">
+      <div class="panel-title">The table</div>
+      <button class="button button-primary order-button" type="button">Order 🍝</button>
+      <div class="dining-table"></div>
+      <button class="button clear-button" type="button">Clear table</button>
+      <div class="table-note">This is a component. It shows what the store has, and sends tickets.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">How an order travels</div>
+      <div class="flow-scroll">
+        <div class="flow-diagram">
+          <svg class="flow-arrows" aria-hidden="true"></svg>
+          <div class="flow-node node-component" data-node="component">
+            <div class="node-icon">🧑‍🍳</div>
+            <div class="node-name">Waiter</div>
+            <span class="tag">component</span>
+          </div>
+          <div class="flow-node node-action" data-node="action">
+            <div class="node-icon">🎫</div>
+            <div class="node-name">Ticket</div>
+            <span class="tag tag-action">action</span>
+          </div>
+          <div class="flow-node node-reducer" data-node="reducer">
+            <div class="node-icon">👩‍🍳</div>
+            <div class="node-name">Chef</div>
+            <span class="tag tag-reducer">reducer</span>
+          </div>
+          <div class="flow-node node-selector" data-node="selector">
+            <div class="node-icon">📺</div>
+            <div class="node-name">Screen</div>
+            <span class="tag tag-selector">selector</span>
+          </div>
+          <div class="flow-node node-store" data-node="store">
+            <div class="node-icon">📋</div>
+            <div class="node-name">Board</div>
+            <span class="tag tag-store">store</span>
+          </div>
+          <div class="flow-node node-effect" data-node="effect">
+            <div class="node-icon">🏃</div>
+            <div class="node-name">Runner</div>
+            <span class="tag tag-effect">effect</span>
+          </div>
+          <div class="flow-node node-api" data-node="api">
+            <div class="node-icon">🔥</div>
+            <div class="node-name">Kitchen</div>
+            <span class="tag tag-effect">API</span>
+          </div>
+        </div>
+      </div>
+      <div class="narration">Click "Order 🍝" and follow the ticket.</div>
+      <div class="step-line">
+        <button class="button button-primary next-button" type="button" hidden disabled>Next ▶</button>
+      </div>
+    </div>
+
+    <div class="panel state-panel">
+      <div class="panel-title">The board <span class="tag tag-store">store state</span></div>
+      <p class="state-intro">Everything the app knows, in one object. Only the chef (reducer) writes a new one.</p>
+      <pre class="state-view"></pre>
+    </div>
+  </div>
+
+  <script src="shared/mini-ngrx.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const { createActionGroup, props, emptyProps, createReducer, on, createSelector, createFeatureSelector, createEffect, ofType, inject, token, Actions, MiniStore } = MiniNgrx;
+      const { timer, map, mergeMap, tap } = MiniRx;
+      const $ = (selector) => document.querySelector(selector);
+
+      const KitchenActions = createActionGroup({
+        source: 'Kitchen',
+        events: {
+          'Order Placed': props(),
+          'Order Ready': props(),
+          'Table Cleared': emptyProps(),
+        },
+      });
+
+      const kitchenReducer = createReducer(
+        { orders: [] },
+        on(KitchenActions.orderPlaced, (state, { id }) => ({ ...state, orders: [...state.orders, { id, dish: 'pasta', status: 'cooking' }] })),
+        on(KitchenActions.orderReady, (state, { id }) => ({ ...state, orders: state.orders.map((o) => (o.id === id ? { ...o, status: 'ready' } : o)) })),
+        on(KitchenActions.tableCleared, (state) => ({ ...state, orders: state.orders.filter((o) => o.status === 'cooking') })),
+      );
+
+      const selectOrders = createSelector(createFeatureSelector('kitchen'), (kitchen) => kitchen.orders);
+
+      const SPEEDS = {
+        slow: { move: 1100, pause: 2600, cook: 3500 },
+        normal: { move: 700, pause: 1700, cook: 2500 },
+        step: { move: 600, pause: 0, cook: 1500 },
+      };
+      let speed = SPEEDS.normal;
+      let stepMode = false;
+
+      const queue = [];
+      let busy = false;
+      function enqueue(event) {
+        queue.push(event);
+        if (!busy) run();
+      }
+
+      const KitchenApi = token('KitchenApi');
+      const kitchenApi = { cook: () => timer(speed.cook) };
+
+      const cookOrder$ = createEffect(
+        (actions$ = inject(Actions), kitchen = inject(KitchenApi)) => actions$.pipe(
+          ofType(KitchenActions.orderPlaced),
+          tap(() => enqueue({ kind: 'effect' })),
+          mergeMap(({ id }) => kitchen.cook().pipe(map(() => KitchenActions.orderReady({ id })))),
+        ),
+        { functional: true },
+      );
+
+      const store = new MiniStore({ kitchen: kitchenReducer });
+      store.events$.subscribe((event) => {
+        if (event.kind === 'dispatch') enqueue(event);
+      });
+      store.addEffects({ cookOrder$ }, [[KitchenApi, kitchenApi]]);
+
+      let shownState = store.state;
+
+      const nodes = {};
+      document.querySelectorAll('.flow-node').forEach((el) => { nodes[el.dataset.node] = el; });
+      const diagram = $('.flow-diagram');
+
+      function drawArrows() {
+        const box = diagram.getBoundingClientRect();
+        const rect = (name) => {
+          const r = nodes[name].getBoundingClientRect();
+          return { l: r.left - box.left, r: r.right - box.left, t: r.top - box.top, b: r.bottom - box.top, cx: r.left - box.left + r.width / 2, cy: r.top - box.top + r.height / 2 };
+        };
+        const edges = [
+          ['component', 'action'], ['action', 'reducer'], ['reducer', 'store'], ['store', 'selector'], ['selector', 'component'],
+          ['action', 'effect', true], ['effect', 'api', true],
+        ];
+        let html = '<defs><marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrow-head" d="M0,0 L10,5 L0,10 z"/></marker></defs>';
+        edges.forEach(([from, to, dashed]) => {
+          const a = rect(from);
+          const b = rect(to);
+          let x1; let y1; let x2; let y2;
+          if (Math.abs(a.cy - b.cy) < 20) {
+            y1 = y2 = a.cy;
+            if (a.cx < b.cx) { x1 = a.r + 6; x2 = b.l - 6; } else { x1 = a.l - 6; x2 = b.r + 6; }
+          } else {
+            x1 = x2 = a.cx;
+            if (a.cy < b.cy) { y1 = a.b + 6; y2 = b.t - 6; } else { y1 = a.t - 6; y2 = b.b + 6; }
+          }
+          html += `<line class="flow-arrow${dashed ? ' flow-arrow-dashed' : ''}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#arrow-head)"${dashed ? ' marker-start="url(#arrow-head)"' : ''}/>`;
+        });
+        $('.flow-arrows').innerHTML = html;
+      }
+
+      function center(name) {
+        const box = diagram.getBoundingClientRect();
+        const r = nodes[name].getBoundingClientRect();
+        return { x: r.left - box.left + r.width / 2, y: r.top - box.top - 4 };
+      }
+
+      const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      let release = null;
+
+      function pause() {
+        if (!stepMode) return wait(speed.pause);
+        const button = $('.next-button');
+        button.disabled = false;
+        return new Promise((resolve) => {
+          release = () => {
+            button.disabled = true;
+            release = null;
+            resolve();
+          };
+        });
+      }
+
+      const COLORS = { component: 'var(--ink-soft)', action: 'var(--mustard)', reducer: 'var(--tomato)', store: 'var(--sky)', selector: 'var(--basil)', effect: 'var(--plum)', api: 'var(--plum)' };
+
+      let ticket = null;
+      async function step(node, text) {
+        if (ticket) {
+          const p = center(node);
+          ticket.style.transitionDuration = `${speed.move}ms`;
+          ticket.getBoundingClientRect();
+          ticket.style.left = `${p.x}px`;
+          ticket.style.top = `${p.y}px`;
+          await wait(speed.move + 30);
+        }
+        diagram.classList.add('is-running');
+        Object.entries(nodes).forEach(([name, el]) => el.classList.toggle('is-active', name === node));
+        const box = $('.narration');
+        box.style.setProperty('--narration-color', COLORS[node]);
+        box.innerHTML = text;
+        await pause();
+      }
+
+      function newTicket(label, at) {
+        if (ticket) ticket.remove();
+        ticket = document.createElement('div');
+        ticket.className = 'ticket';
+        ticket.textContent = label;
+        const p = center(at);
+        ticket.style.transitionDuration = '0ms';
+        ticket.style.left = `${p.x}px`;
+        ticket.style.top = `${p.y}px`;
+        diagram.appendChild(ticket);
+      }
+
+      function renderState(flash) {
+        const view = $('.state-view');
+        view.textContent = JSON.stringify(shownState, null, 2);
+        view.classList.toggle('is-new', flash);
+      }
+
+      function renderTable() {
+        const orders = selectOrders(shownState);
+        $('.dining-table').innerHTML = orders.map((o) => (o.status === 'ready'
+          ? '<span class="plate">🍝</span>'
+          : '<span class="plate is-cooking" title="cooking">⏳</span>')).join('');
+      }
+
+      async function showClear(next) {
+        newTicket('Table Cleared', 'component');
+        await step('component', 'The guest wants a clean table. The waiter (component) sends a ticket.');
+        await step('action', 'The ticket (action) says what happened: <b>Table Cleared</b>. It needs no extra data.');
+        await step('reducer', 'The chef (reducer) writes a new board without the served plates. Orders still cooking stay.');
+        shownState = next;
+        renderState(true);
+        await step('store', 'The board (store) now holds the new version. Look at it on the right.');
+        renderState(false);
+        await step('selector', 'The screen (selector) reads the orders again.');
+        renderTable();
+        await step('component', 'The table is clear. The runner (effect) didn\'t move: it only listens for <b>Order Placed</b>, so this ticket never goes to the kitchen.');
+      }
+
+      async function showDispatch({ action, next }) {
+        if (action.type === '[Kitchen] Table Cleared') return showClear(next);
+        const placed = action.type === '[Kitchen] Order Placed';
+        if (placed) {
+          newTicket('Order Placed', 'component');
+          await step('component', 'The guest clicked. The waiter (component) doesn\'t cook and doesn\'t touch the board. They just send a ticket.');
+        } else {
+          newTicket('Order Ready', 'effect');
+          await step('effect', 'The pasta is ready. The runner (effect) sends a new ticket: <b>Order Ready</b>.');
+        }
+        await step('action', placed
+          ? 'The ticket (action) says what happened: <b>Order Placed</b>. That\'s all it is: a note.'
+          : 'A new ticket (action): <b>Order Ready</b>. It takes the same road as the first one.');
+        await step('reducer', placed
+          ? 'The chef (reducer) reads the ticket and writes a <b>new</b> board, with the pasta marked "cooking".'
+          : 'The chef (reducer) writes a new board, with the pasta marked "ready".');
+        shownState = next;
+        renderState(true);
+        await step('store', 'The board (store) now holds the new version. Look at it on the right.');
+        renderState(false);
+        await step('selector', 'The screen (selector) reads only what the table needs from the board: the orders.');
+        renderTable();
+        await step('component', placed
+          ? 'The table shows the order as cooking ⏳. But the ticket isn\'t done yet…'
+          : 'The plate is on the table 🍝. One click, two tickets: <b>Order Placed</b> and <b>Order Ready</b>.');
+      }
+
+      async function showEffect() {
+        newTicket('Order Placed', 'action');
+        await step('effect', 'The runner (effect) also saw the <b>Order Placed</b> ticket, and takes it to the kitchen.');
+        ticket.textContent = 'cook 🍝';
+        await step('api', 'The kitchen (API) cooks. This takes time, and nobody waits: the table can keep ordering.');
+        if (ticket) ticket.remove();
+        ticket = null;
+      }
+
+      async function run() {
+        busy = true;
+        while (queue.length) {
+          const event = queue.shift();
+          if (event.kind === 'dispatch') await showDispatch(event);
+          else await showEffect();
+        }
+        if (ticket) ticket.remove();
+        ticket = null;
+        busy = false;
+        diagram.classList.remove('is-running');
+        Object.values(nodes).forEach((el) => el.classList.remove('is-active'));
+        $('.narration').style.removeProperty('--narration-color');
+        if (stepMode) $('.next-button').disabled = true;
+      }
+
+      let nextId = 1;
+      $('.order-button').addEventListener('click', () => {
+        store.dispatch(KitchenActions.orderPlaced({ id: `o${nextId++}` }));
+      });
+
+      $('.clear-button').addEventListener('click', () => {
+        store.dispatch(KitchenActions.tableCleared());
+      });
+
+      $('.next-button').addEventListener('click', () => {
+        if (release) release();
+      });
+
+      $('.speed-select').addEventListener('change', (e) => {
+        speed = SPEEDS[e.target.value];
+        stepMode = e.target.value === 'step';
+        $('.next-button').hidden = !stepMode;
+        $('.next-button').disabled = !release;
+        if (!stepMode && release) release();
+      });
+
+      window.addEventListener('resize', drawArrows);
+      renderState(false);
+      renderTable();
+      requestAnimationFrame(drawArrows);
+      setTimeout(drawArrows, 300);
+    })();
+  </script>
+</body>
+</html>

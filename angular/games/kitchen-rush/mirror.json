@@ -1,0 +1,6 @@
+{
+  "site": "kitchen-rush",
+  "source": "written for tohafifa",
+  "fallback": "index.html",
+  "port": 4213
+}

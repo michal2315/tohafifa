@@ -1,0 +1,108 @@
+module: 00-essentials
+title: 0. Essentials
+questions:
+  - id: ess-01
+    type: single
+    topic: bootstrap
+    difficulty: 1
+    placement: false
+    prompt: 'Where does an Angular 20 app start?'
+    options:
+      - text: '`main.ts` calls `bootstrapApplication(AppComponent, appConfig)`'
+        correct: true
+      - text: '`index.html` loads `app.component.ts` with a script tag'
+        correct: false
+      - text: '`app.module.ts` declares every component and bootstraps the app'
+        correct: false
+    explanation: '`main.ts` starts the app with the root component and the app config, which holds the providers. Standalone apps have no `AppModule`.'
+    reference: 09-architecture/01-style-guide.md
+
+  - id: ess-02
+    type: predict
+    topic: signals
+    difficulty: 1
+    placement: false
+    prompt: 'What does the last line return?'
+    code:
+      lang: ts
+      source: |
+        const likes = signal(10);
+        const label = computed(() => `${likes()} likes`);
+        label();
+        likes.set(11);
+        label();
+    options:
+      - text: '`"11 likes"`'
+        correct: true
+      - text: '`"10 likes"`: a computed value is calculated only once'
+        correct: false
+      - text: 'An error: `label` must be recalculated by hand'
+        correct: false
+    explanation: 'A `computed` signal remembers which signals it read. When `likes` changes, `label` is recalculated the next time someone reads it.'
+    reference: 01-essentials/04-signals.md
+
+  - id: ess-03
+    type: predict
+    topic: signals
+    difficulty: 2
+    placement: false
+    prompt: 'What happens when you build this?'
+    code:
+      lang: ts
+      label: like-button.component.ts
+      source: |
+        export class LikeButtonComponent {
+          readonly likes = signal(10);
+          readonly label = computed(() => `${this.likes()} likes`);
+
+          reset() {
+            this.label.set('0 likes');
+          }
+        }
+    options:
+      - text: 'The build fails: a computed signal is read-only and has no `set`'
+        correct: true
+      - text: 'It builds, and `label` shows "0 likes" until `likes` changes'
+        correct: false
+      - text: 'It builds, and `set` also changes `likes` to 0'
+        correct: false
+    explanation: '`computed` returns a read-only signal. Change the signal it is derived from instead: `this.likes.set(0)`.'
+    reference: 01-essentials/04-signals.md
+
+  - id: ess-04
+    type: spot-the-bug
+    topic: signals
+    difficulty: 2
+    placement: false
+    prompt: 'The feed throws an error as soon as it renders the post count. Click the buggy line.'
+    code:
+      lang: ts
+      label: feed.component.ts
+      source: |
+        export class FeedComponent {
+          readonly posts = signal<Post[]>([]);
+          readonly hasPosts = signal(false);
+          readonly postCount = computed(() => {
+            this.hasPosts.set(this.posts().length > 0);
+            return this.posts().length;
+          });
+        }
+    answer: 5
+    explanation: 'A `computed` must only read signals. Writing to a signal inside it throws (NG0600). Derive the second value too: `readonly hasPosts = computed(() => this.posts().length > 0);`.'
+    reference: 01-essentials/04-signals.md
+
+  - id: ess-05
+    type: single
+    topic: dependency-injection
+    difficulty: 1
+    placement: false
+    prompt: '`PostsApiService` is `@Injectable({ providedIn: ''root'' })`. The feed and the profile page both call `inject(PostsApiService)`. How many instances are there?'
+    options:
+      - text: 'One, shared by the whole app'
+        correct: true
+      - text: 'Two, one for each component'
+        correct: false
+      - text: 'None until it is added to a `providers` array'
+        correct: false
+    explanation: '`providedIn: ''root''` registers the service in the root injector, so every `inject()` gets the same instance. It is created the first time something asks for it.'
+    reference: 01-essentials/05-dependency-injection.md

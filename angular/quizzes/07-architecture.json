@@ -1,0 +1,197 @@
+{
+  "module": "07-architecture",
+  "title": "7. Architecture",
+  "questions": [
+    {
+      "id": "arch-01",
+      "type": "multiple",
+      "topic": "presentational",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "Which of these may a presentational component like `PostHeaderComponent` use? Pick all.",
+      "options": [
+        {
+          "text": "`input()` for the author and the date",
+          "correct": true
+        },
+        {
+          "text": "`output()` to report a click",
+          "correct": true
+        },
+        {
+          "text": "`routerLink` to link the username to the profile",
+          "correct": true
+        },
+        {
+          "text": "`inject(Store)` to read the author",
+          "correct": false
+        },
+        {
+          "text": "`inject(PostsApiService)` to load the author",
+          "correct": false
+        }
+      ],
+      "explanation": "Presentational components get data through inputs and report through outputs. A link is part of the template, not state, so `routerLink` is fine. Only the page components inject the store.",
+      "reference": "../guide/02-smart-and-presentational.md"
+    },
+    {
+      "id": "arch-02",
+      "type": "predict",
+      "topic": "route-params",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "The user is on `/profile/alice` and clicks a link to `/profile/bob`. What does the page show?",
+      "code": {
+        "lang": "ts",
+        "label": "profile-page.component.ts",
+        "source": "export class ProfilePageComponent implements OnInit {\n  private readonly store = inject(Store);\n\n  readonly username = input.required<string>();\n  readonly profile = this.store.selectSignal(selectProfile);\n\n  ngOnInit() {\n    this.store.dispatch(ProfileActions.open({ username: this.username() }));\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Still Alice's profile, with Bob's name in the URL",
+          "correct": true
+        },
+        {
+          "text": "Bob's profile",
+          "correct": false
+        },
+        {
+          "text": "An error: the input changed after `ngOnInit`",
+          "correct": false
+        }
+      ],
+      "explanation": "Only the parameter changed, so Angular reuses the same component and `ngOnInit` doesn't run again. The `username` input does update. React to it: dispatch inside `effect(() => ...)` in the constructor.",
+      "reference": "../guide/04-store-data-flow.md"
+    },
+    {
+      "id": "arch-03",
+      "type": "predict",
+      "topic": "route-params",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The routes have `{ path: 'profile/:username', component: ProfilePageComponent }`. What happens when the profile page opens?",
+      "context": {
+        "lang": "ts",
+        "label": "profile-page.component.ts",
+        "source": "export class ProfilePageComponent {\n  readonly username = input.required<string>();\n\n  constructor() {\n    effect(() => console.log(this.username()));\n  }\n}\n"
+      },
+      "code": {
+        "lang": "ts",
+        "label": "app.config.ts",
+        "source": "export const appConfig: ApplicationConfig = {\n  providers: [\n    provideRouter(routes),\n    provideHttpClient(),\n  ],\n};\n"
+      },
+      "options": [
+        {
+          "text": "An error: the required input never gets a value",
+          "correct": true
+        },
+        {
+          "text": "The username is logged",
+          "correct": false
+        },
+        {
+          "text": "`undefined` is logged",
+          "correct": false
+        }
+      ],
+      "explanation": "The router only passes route parameters to inputs with `provideRouter(routes, withComponentInputBinding())`. Without it, `username` is never set, and reading a required input with no value throws (NG0950).",
+      "reference": "../guide/03-instagram-component-tree.md"
+    },
+    {
+      "id": "arch-04",
+      "type": "single",
+      "topic": "devtools",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "In Redux DevTools you see `[Posts] Like` dispatched, but the state before and after is the same. What do you check first?",
+      "options": [
+        {
+          "text": "The reducer: does it have an `on(...)` for this action, and is the feature registered?",
+          "correct": true
+        },
+        {
+          "text": "The component: did it dispatch the action?",
+          "correct": false
+        },
+        {
+          "text": "The template: does it read the right selector?",
+          "correct": false
+        }
+      ],
+      "explanation": "The action is there, so the component did its job. If the state didn't change, the reducer didn't handle the action. If the state changes but the screen doesn't, look at the selector and the template.",
+      "reference": "../guide/04-store-data-flow.md"
+    },
+    {
+      "id": "arch-05",
+      "type": "single",
+      "topic": "effects",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The user likes three different posts quickly. Each like must reach the server, and the order doesn't matter. Which operator does the `like` effect use?",
+      "options": [
+        {
+          "text": "`mergeMap`",
+          "correct": true
+        },
+        {
+          "text": "`switchMap`",
+          "correct": false
+        },
+        {
+          "text": "`exhaustMap`",
+          "correct": false
+        }
+      ],
+      "explanation": "`mergeMap` runs the requests in parallel and keeps all of them. `switchMap` would cancel the earlier likes, and `exhaustMap` would ignore new likes while one is running.",
+      "reference": "../guide/04-store-data-flow.md"
+    },
+    {
+      "id": "arch-06",
+      "type": "single",
+      "topic": "state-shape",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "Why does the posts state use one `status` field instead of `isLoading` and `hasError` booleans?",
+      "options": [
+        {
+          "text": "The state can't end up \"loading and failed\" at the same time",
+          "correct": true
+        },
+        {
+          "text": "NgRx doesn't allow boolean fields in the state",
+          "correct": false
+        },
+        {
+          "text": "It makes the reducer run faster",
+          "correct": false
+        }
+      ],
+      "explanation": "Two booleans allow four combinations, and one of them makes no sense. One field with `'idle' | 'loading' | 'loaded' | 'error'` only allows the states that exist. (Your team may have its own shape for this.)",
+      "reference": "../guide/04-store-data-flow.md"
+    },
+    {
+      "id": "arch-07",
+      "type": "single",
+      "topic": "style-guide",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The like button calls a method when it is clicked. Which name does the Angular style guide prefer?",
+      "options": [
+        {
+          "text": "`(click)=\"like()\"`",
+          "correct": true
+        },
+        {
+          "text": "`(click)=\"onClick()\"`",
+          "correct": false
+        },
+        {
+          "text": "`(click)=\"handleClick()\"`",
+          "correct": false
+        }
+      ],
+      "explanation": "Name event handlers for what they do, not for the event that triggers them. `like()` says what happens; `onClick()` only repeats what the template already shows.",
+      "reference": "09-architecture/01-style-guide.md"
+    }
+  ]
+}

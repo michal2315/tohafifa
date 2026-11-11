@@ -1,0 +1,211 @@
+{
+  "module": "08-primeng",
+  "title": "8. PrimeNG",
+  "questions": [
+    {
+      "id": "prime-01",
+      "type": "predict",
+      "topic": "encapsulation",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "Does the Follow button get rounded corners?",
+      "context": {
+        "lang": "html",
+        "label": "profile-header.component.html",
+        "source": "<div class=\"profile-actions\">\n  <p-button class=\"follow-button\" label=\"Follow\" />\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "profile-header.component.scss",
+        "source": ":host {\n  .follow-button {\n    .p-button {\n      border-radius: 8px;\n    }\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "No: the real `<button>` is in PrimeNG's template, so this component's styles don't reach it",
+          "correct": true
+        },
+        {
+          "text": "Yes: `.p-button` is inside `.follow-button`",
+          "correct": false
+        },
+        {
+          "text": "Only after the page is refreshed",
+          "correct": false
+        }
+      ],
+      "explanation": "With emulated encapsulation, a component's styles apply only to its own template. Set a token instead, for example `--p-button-border-radius: 8px;` on `.follow-button`, or pass `[dt]`.",
+      "reference": "../guide/06-primeng-styled-mode.md"
+    },
+    {
+      "id": "prime-02",
+      "type": "predict",
+      "topic": "css-variables",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "What color is each button?",
+      "context": {
+        "lang": "html",
+        "label": "profile-header.component.html",
+        "source": "<div class=\"profile-actions\">\n  <p-button class=\"follow-button\" label=\"Follow\" />\n  <p-button label=\"Share\" />\n</div>\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "profile-header.component.scss",
+        "source": ":host {\n  .follow-button {\n    --p-button-primary-background: #0095f6;\n    --p-button-primary-border-color: #0095f6;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "Follow is blue, Share keeps the theme's primary color",
+          "correct": true
+        },
+        {
+          "text": "Both are blue",
+          "correct": false
+        },
+        {
+          "text": "Neither changes: encapsulation blocks it",
+          "correct": false
+        }
+      ],
+      "explanation": "CSS variables are inherited, and encapsulation doesn't stop that. The variable is set on `.follow-button` only, so only the button inside it picks it up.",
+      "reference": "../guide/06-primeng-styled-mode.md"
+    },
+    {
+      "id": "prime-03",
+      "type": "predict",
+      "topic": "presets",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "Aura defines `primary.color` separately for light and dark mode. What color are the primary buttons with this preset?",
+      "code": {
+        "lang": "ts",
+        "label": "app-preset.ts",
+        "source": "export const AppPreset = definePreset(Aura, {\n  semantic: {\n    primary: {\n      color: '#0095f6',\n    },\n  },\n});\n"
+      },
+      "options": [
+        {
+          "text": "Still Aura's green: the value under `colorScheme` wins over a plain value",
+          "correct": true
+        },
+        {
+          "text": "Blue",
+          "correct": false
+        },
+        {
+          "text": "Blue in light mode only",
+          "correct": false
+        }
+      ],
+      "explanation": "When the preset defines a token under `colorScheme.light` and `colorScheme.dark`, your override must use the same structure: `semantic: { colorScheme: { light: { primary: { color: '#0095f6' } }, dark: { ... } } }`.",
+      "reference": "../guide/06-primeng-styled-mode.md"
+    },
+    {
+      "id": "prime-04",
+      "type": "predict",
+      "topic": "dark-mode",
+      "difficulty": 2,
+      "placement": false,
+      "prompt": "The app is configured like this, and a trainee's laptop is set to dark mode. What does the feed look like?",
+      "code": {
+        "lang": "ts",
+        "label": "app.config.ts",
+        "source": "export const appConfig: ApplicationConfig = {\n  providers: [\n    provideAnimationsAsync(),\n    providePrimeNG({\n      theme: {\n        preset: AppPreset,\n      },\n    }),\n  ],\n};\n"
+      },
+      "options": [
+        {
+          "text": "PrimeNG components turn dark, while our own components stay light",
+          "correct": true
+        },
+        {
+          "text": "Everything stays light",
+          "correct": false
+        },
+        {
+          "text": "Everything turns dark",
+          "correct": false
+        }
+      ],
+      "explanation": "By default PrimeNG follows the operating system with `prefers-color-scheme`. Our SCSS doesn't, so the page mixes both. Add `options: { darkModeSelector: false }` when the design has no dark mode.",
+      "reference": "../guide/06-primeng-styled-mode.md"
+    },
+    {
+      "id": "prime-05",
+      "type": "spot-the-bug",
+      "topic": "setup",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The build fails with \"'p-button' is not a known element\". Click the buggy line.",
+      "context": {
+        "lang": "html",
+        "label": "profile-header.component.html",
+        "source": "<div class=\"profile-header\">\n  <p-avatar [image]=\"profile().imageUrl\" shape=\"circle\" />\n  <p-button label=\"Follow\" (onClick)=\"followed.emit()\" />\n</div>\n"
+      },
+      "code": {
+        "lang": "ts",
+        "label": "profile-header.component.ts",
+        "source": "@Component({\n  selector: 'app-profile-header',\n  imports: [AvatarModule],\n  templateUrl: './profile-header.component.html',\n  styleUrl: './profile-header.component.scss',\n})\nexport class ProfileHeaderComponent {\n  readonly profile = input.required<Profile>();\n  readonly followed = output<void>();\n}\n"
+      },
+      "answer": 3,
+      "explanation": "Each PrimeNG component is imported where it is used, like any standalone component. Add `ButtonModule` from `primeng/button`: `imports: [AvatarModule, ButtonModule]`.",
+      "reference": "../guide/06-primeng-styled-mode.md"
+    },
+    {
+      "id": "prime-06",
+      "type": "predict",
+      "topic": "passthrough",
+      "difficulty": 3,
+      "placement": false,
+      "prompt": "Is the button's label bold?",
+      "context": {
+        "lang": "html",
+        "label": "profile-header.component.html",
+        "source": "<p-button label=\"Follow\" [pt]=\"{ label: 'follow-label' }\" />\n"
+      },
+      "code": {
+        "lang": "scss",
+        "label": "profile-header.component.scss",
+        "source": ":host {\n  .follow-label {\n    font-weight: 700;\n  }\n}\n"
+      },
+      "options": [
+        {
+          "text": "No: the class lands on PrimeNG's element, which isn't in this template, so the encapsulated rule doesn't match it",
+          "correct": true
+        },
+        {
+          "text": "Yes: `pt` adds the class, and the rule matches it",
+          "correct": false
+        },
+        {
+          "text": "No: `pt` only accepts objects, not strings",
+          "correct": false
+        }
+      ],
+      "explanation": "The class does reach the label, but this component's rules only match elements in its own template. Use `pt` for attributes like `aria-label` or `data-*`, and tokens or CSS variables for styling.",
+      "reference": "../guide/06-primeng-styled-mode.md"
+    },
+    {
+      "id": "prime-07",
+      "type": "single",
+      "topic": "choosing",
+      "difficulty": 1,
+      "placement": false,
+      "prompt": "The design uses rounder buttons everywhere in the app. Where do you change it?",
+      "options": [
+        {
+          "text": "In the app preset, with `definePreset`",
+          "correct": true
+        },
+        {
+          "text": "With `[dt]` on every `<p-button>`",
+          "correct": false
+        },
+        {
+          "text": "With `::ng-deep .p-button` in each component",
+          "correct": false
+        }
+      ],
+      "explanation": "A change for the whole app belongs in the preset: `components: { button: { root: { borderRadius: '8px' } } }`. Use `[dt]` or CSS variables for one place, and never `::ng-deep`.",
+      "reference": "../guide/06-primeng-styled-mode.md"
+    }
+  ]
+}

@@ -1,15 +1,19 @@
 # Angular quiz bank
 
-42 questions for the Angular stage. Each one shows code with a real bug: it fails the build, throws, or quietly does the wrong thing in Angular 20. All code is from the Instagram project and follows the shared HTML & SCSS conventions. It doesn't use any team's Angular conventions: those quizzes live in each team's folder (for example `tavor/quizzes`).
+69 questions for the Angular stage: one quiz at the end of each group of modules, and a final review before the last mini boss. Most questions show code with a real bug: it fails the build, throws, or quietly does the wrong thing in Angular 20. All code is from the Instagram project and follows the shared HTML & SCSS conventions. It doesn't use any team's Angular conventions: those quizzes live in each team's folder (for example `tavor/quizzes`).
 
 | File | Module | Questions | Reading |
 |---|---|---|---|
+| `00-essentials.json` | 0. Essentials | 5 | `01-essentials` |
 | `01-components-and-templates.json` | 1. Components & templates | 8 | `02-components`, `03-templates` |
 | `02-signals.json` | 2. Signals | 6 | `04-signals` |
 | `03-routing-and-forms.json` | 3. Routing & forms | 8 | `06-routing`, `07-forms` |
 | `04-http-and-services.json` | 4. HTTP & services | 7 | `05-services-and-di`, `08-http` |
 | `05-rxjs.json` | 5. RxJS | 6 | `10-rxjs` |
 | `06-ngrx.json` | 6. NgRx | 7 | `11-ngrx-store` to `13-ngrx-entity-and-devtools` |
+| `07-architecture.json` | 7. Architecture | 7 | `09-architecture`, `guide/02` to `guide/04` |
+| `08-primeng.json` | 8. PrimeNG | 7 | `guide/06-primeng-styled-mode.md` |
+| `09-final-review.json` | 9. Final review | 8 | Everything: new questions that mix the topics |
 
 There's no placement quiz: Angular is new for most trainees.
 

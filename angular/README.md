@@ -8,7 +8,7 @@ Material for the Angular stage. Trainees rebuild the Instagram feed from the HTM
 angular/
 ├── guide/        the project: what to build each week, the component tree, store data flow (start here)
 ├── reading/      94 reading pages from angular.dev, NgRx and RxJS docs, grouped in 13 modules
-├── quizzes/      42 questions, one quiz per topic (see quizzes/README.md)
+├── quizzes/      69 questions: an end-of-module quiz per topic and a final review (see quizzes/README.md)
 ├── games/        RxMarbles and RxViz, offline (see games/README.md)
 ├── videos.md     recommended videos, with length and what each one covers
 └── SOURCES.md    where every item came from, its version and license
@@ -50,8 +50,11 @@ Pages use the same format as the HTML & SCSS reading: a level line, front matter
 ## Suggested order for week 1
 
 1. `guide/01-the-project.md`
-2. Reading modules 1–3, then quiz `01-components-and-templates`
-3. `guide/02-smart-and-presentational.md` and `guide/03-instagram-component-tree.md`
-4. Reading modules 4–9, then quizzes `02-signals`, `03-routing-and-forms`, `04-http-and-services`
+2. Reading module 1, then quiz `00-essentials`
+3. Reading modules 2–3, then quiz `01-components-and-templates`
+4. `guide/02-smart-and-presentational.md` and `guide/03-instagram-component-tree.md`
+5. Reading modules 4–8, then quizzes `02-signals`, `03-routing-and-forms`, `04-http-and-services`
 
-Week 2 starts with RxJS (module 10, RxMarbles and RxViz, quiz `05-rxjs`), then NgRx (modules 11–13, `guide/04-store-data-flow.md`, quiz `06-ngrx`).
+Week 2 starts with RxJS (module 10, RxMarbles and RxViz, quiz `05-rxjs`), then NgRx (modules 11–13, `guide/04-store-data-flow.md`, quiz `06-ngrx`). Quiz `07-architecture` comes after reading module 9 and the store data flow guide.
+
+Week 3: `guide/06-primeng-styled-mode.md`, then quiz `08-primeng`. Quiz `09-final-review` mixes every topic: take it before the last mini boss review.

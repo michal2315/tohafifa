@@ -1,0 +1,230 @@
+module: 09-final-review
+title: 9. Final review
+questions:
+  - id: final-01
+    type: predict
+    topic: signals-in-templates
+    difficulty: 1
+    placement: false
+    prompt: 'What happens when you build this?'
+    context:
+      lang: ts
+      label: post-grid.component.ts
+      source: |
+        export class PostGridComponent {
+          readonly posts = input.required<Post[]>();
+        }
+    code:
+      lang: html
+      label: post-grid.component.html
+      source: |
+        <div class="post-grid">
+          @for (post of posts; track post.id) {
+            <img class="post-thumbnail" [src]="post.imageUrl" [alt]="post.caption">
+          }
+        </div>
+    options:
+      - text: 'The build fails: `posts` is a signal, which can''t be looped over'
+        correct: true
+      - text: 'It builds, and the grid is empty'
+        correct: false
+      - text: 'It works: Angular reads signals in `@for` automatically'
+        correct: false
+    explanation: 'An input is a signal, and a signal is a function. Call it: `@for (post of posts(); track post.id)`.'
+    reference: 03-templates/05-control-flow.md
+
+  - id: final-02
+    type: spot-the-bug
+    topic: routing
+    difficulty: 2
+    placement: false
+    prompt: 'The build fails with "Can''t bind to ''routerLink'' since it isn''t a known property of ''a''". Click the buggy line.'
+    context:
+      lang: html
+      label: post-header.component.html
+      source: |
+        <div class="post-header">
+          <app-avatar [imageUrl]="author().imageUrl" [username]="author().username" />
+          <a class="username" [routerLink]="['/profile', author().username]">{{ author().username }}</a>
+        </div>
+    code:
+      lang: ts
+      label: post-header.component.ts
+      source: |
+        @Component({
+          selector: 'app-post-header',
+          imports: [AvatarComponent],
+          templateUrl: './post-header.component.html',
+          styleUrl: './post-header.component.scss',
+        })
+        export class PostHeaderComponent {
+          readonly author = input.required<Author>();
+          readonly createdAt = input.required<string>();
+        }
+    answer: 3
+    explanation: '`routerLink` is a directive, and a standalone component only knows what its `imports` list. Add `RouterLink` from `@angular/router`.'
+    reference: 06-routing/04-navigate-to-routes.md
+
+  - id: final-03
+    type: predict
+    topic: forms
+    difficulty: 2
+    placement: false
+    prompt: 'The caption field is disabled while the image uploads. What does `submit()` send?'
+    code:
+      lang: ts
+      label: new-post-form.component.ts
+      source: |
+        export class NewPostFormComponent {
+          readonly posted = output<{ imageUrl: string; caption: string }>();
+
+          readonly form = new FormGroup({
+            imageUrl: new FormControl('', { nonNullable: true }),
+            caption: new FormControl({ value: 'Sunset', disabled: true }, { nonNullable: true }),
+          });
+
+          submit() {
+            this.posted.emit(this.form.value as { imageUrl: string; caption: string });
+          }
+        }
+    options:
+      - text: 'Only `imageUrl`: disabled controls are left out of `form.value`'
+        correct: true
+      - text: 'Both fields, with the caption "Sunset"'
+        correct: false
+      - text: 'Nothing: a form with a disabled control can''t be submitted'
+        correct: false
+    explanation: '`value` skips disabled controls. Use `this.form.getRawValue()` to get every control. The `as` cast hid the problem: `value` is typed with optional fields for exactly this reason.'
+    reference: 07-forms/02-reactive-forms.md
+
+  - id: final-04
+    type: predict
+    topic: rxjs-interop
+    difficulty: 2
+    placement: false
+    prompt: 'What happens when you build this?'
+    context:
+      lang: ts
+      label: profile-page.component.ts
+      source: |
+        export class ProfilePageComponent {
+          readonly posts = toSignal(inject(PostsApiService).getFeed());
+        }
+    code:
+      lang: html
+      label: profile-page.component.html
+      source: |
+        <span class="post-count">{{ posts().length }} posts</span>
+    options:
+      - text: 'The build fails: `posts()` can be `undefined` until the request answers'
+        correct: true
+      - text: 'It builds and shows "0 posts" until the data arrives'
+        correct: false
+      - text: 'It builds, and `toSignal` waits for the data before the page renders'
+        correct: false
+    explanation: 'Without `initialValue`, `toSignal` starts as `undefined`, so its type is `Post[] | undefined` and strict templates reject `.length`. Pass `{ initialValue: [] }`, or write `posts()?.length`.'
+    reference: 04-signals/02-signals-interop.md
+
+  - id: final-05
+    type: predict
+    topic: store
+    difficulty: 2
+    placement: false
+    prompt: 'The app runs in development mode. What happens when the user sorts the feed?'
+    code:
+      lang: ts
+      label: feed-page.component.ts
+      source: |
+        export class FeedPageComponent {
+          private readonly store = inject(Store);
+          readonly posts = this.store.selectSignal(selectAllPosts);
+
+          sortByLikes() {
+            this.posts().sort((a, b) => b.likes - a.likes);
+          }
+        }
+    options:
+      - text: 'An error: the array comes from the store, which is frozen in development'
+        correct: true
+      - text: 'The feed is sorted'
+        correct: false
+      - text: 'Nothing visible, but the store is now sorted'
+        correct: false
+    explanation: '`sort` changes the array in place, and that array is the store''s own state. Sort a copy in a `computed`: `readonly sortedPosts = computed(() => [...this.posts()].sort(...))`, or write a selector.'
+    reference: 11-ngrx-store/11-runtime-checks.md
+
+  - id: final-06
+    type: predict
+    topic: effects
+    difficulty: 3
+    placement: false
+    prompt: 'The posts reducer sets `status: ''loading''` on `loadFeed`. The server is down. What does the user see?'
+    code:
+      lang: ts
+      label: posts.effects.ts
+      source: |
+        export const loadFeed = createEffect(
+          (actions$ = inject(Actions), postsApi = inject(PostsApiService)) =>
+            actions$.pipe(
+              ofType(PostsActions.loadFeed),
+              switchMap(() => postsApi.getFeed().pipe(
+                map((posts) => PostsActions.loadFeedSuccess({ posts })),
+              )),
+            ),
+          { functional: true },
+        );
+    options:
+      - text: 'A spinner that never stops: no failure action is dispatched, so the status stays `loading`'
+        correct: true
+      - text: 'An error message from the store'
+        correct: false
+      - text: 'An empty feed'
+        correct: false
+    explanation: 'Without `catchError`, the error only reaches the console. Nothing tells the reducer the request failed. Add `catchError((error: HttpErrorResponse) => of(PostsActions.loadFeedFailure({ errorMessage: error.message })))` inside the inner pipe.'
+    reference: ../guide/04-store-data-flow.md
+
+  - id: final-07
+    type: predict
+    topic: http
+    difficulty: 1
+    placement: false
+    prompt: 'The comment form calls this method when it is submitted. What reaches the server?'
+    code:
+      lang: ts
+      label: comments-section.component.ts
+      source: |
+        export class CommentsSectionComponent {
+          private readonly commentsApi = inject(CommentsApiService);
+          readonly postId = input.required<string>();
+
+          addComment(text: string) {
+            this.commentsApi.add(this.postId(), text).pipe(
+              map((comment) => comment.id),
+            );
+          }
+        }
+    options:
+      - text: 'Nothing: adding `pipe` doesn''t subscribe, so no request is sent'
+        correct: true
+      - text: 'The comment, and its new id is returned'
+        correct: false
+      - text: 'The comment, but the response is ignored'
+        correct: false
+    explanation: '`pipe` only builds a new observable. Nothing subscribes, so `HttpClient` never sends the request. It''s also the wrong place: this is a presentational component, so it should emit an output and let the container dispatch an action.'
+    reference: 08-http/03-making-requests.md
+
+  - id: final-08
+    type: single
+    topic: styling
+    difficulty: 1
+    placement: false
+    prompt: 'A trainee writes `::ng-deep .p-dialog { border-radius: 8px; }` in the post card''s SCSS. What does it do?'
+    options:
+      - text: 'It becomes a global rule and changes every dialog in the app, not only the post card''s'
+        correct: true
+      - text: 'It changes only the dialog inside the post card'
+        correct: false
+      - text: 'Nothing: Angular 20 removed `::ng-deep`'
+        correct: false
+    explanation: '`::ng-deep` turns off encapsulation for that rule, so it leaks to every component. Angular strongly discourages it. Use the preset, `[dt]`, or a CSS variable on your own element.'
+    reference: ../guide/06-primeng-styled-mode.md

@@ -43,7 +43,7 @@ const STYLE_RULES = [
 ];
 const HTML_RULES = [
   [/<!--/, 'has a comment'],
-  [/<(html|body|head|h[1-6]|p|article|section|nav|header|footer|main|aside|style)\b/, 'uses a tag we do not use'],
+  [/<(html|body|head|h[1-6]|p|article|section|nav|header|footer|main|aside|style)(?![\w-])/, 'uses a tag we do not use'],
   [/\b(class|id|for)="[^"]*[A-Z]/, 'has a name that is not kebab-case'],
 ];
 const TS_RULES = [

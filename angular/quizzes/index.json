@@ -1,5 +1,17 @@
 [
   {
+    "module": "00-essentials",
+    "title": "0. Essentials",
+    "file": "00-essentials.json",
+    "questions": 5,
+    "placement": 0,
+    "byType": {
+      "single": 2,
+      "predict": 2,
+      "spot-the-bug": 1
+    }
+  },
+  {
     "module": "01-components-and-templates",
     "title": "1. Components & templates",
     "file": "01-components-and-templates.json",
@@ -64,6 +76,42 @@
     "placement": 0,
     "byType": {
       "predict": 5,
+      "spot-the-bug": 1,
+      "single": 1
+    }
+  },
+  {
+    "module": "07-architecture",
+    "title": "7. Architecture",
+    "file": "07-architecture.json",
+    "questions": 7,
+    "placement": 0,
+    "byType": {
+      "multiple": 1,
+      "predict": 2,
+      "single": 4
+    }
+  },
+  {
+    "module": "08-primeng",
+    "title": "8. PrimeNG",
+    "file": "08-primeng.json",
+    "questions": 7,
+    "placement": 0,
+    "byType": {
+      "predict": 5,
+      "spot-the-bug": 1,
+      "single": 1
+    }
+  },
+  {
+    "module": "09-final-review",
+    "title": "9. Final review",
+    "file": "09-final-review.json",
+    "questions": 8,
+    "placement": 0,
+    "byType": {
+      "predict": 6,
       "spot-the-bug": 1,
       "single": 1
     }

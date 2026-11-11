@@ -22,6 +22,8 @@ The examples use the Instagram project from the training.
 | What | Rule | Example |
 |---|---|---|
 | Signals | `$camelCase` | `$posts`, `$callState` |
+| Signal inputs | `$camelCase`, like any signal | `$post = input.required<Post>()` |
+| Outputs | `camelCase`, no `$` (an output is not a signal) | `liked = output<void>()` |
 | Observables | `camelCase$` | `actions$` |
 | Private members | `_camelCase` | `_store`, `_apiUrl` |
 | Booleans | start with `is`, `should`, `has` or `can` | `$isOwnProfile`, `$canComment`, `hasMorePosts` |
@@ -35,6 +37,16 @@ export class ProfileComponent {
 }
 ```
 
+```ts
+export class PostCardComponent {
+  readonly $post = input.required<Post>();
+  readonly $isCompact = input(false);
+  readonly liked = output<void>();
+}
+```
+
+The parent binds the input by its full name: `<app-post-card [$post]="post" (liked)="like(post.id)" />`.
+
 ## Folder structure
 
 ```text
@@ -42,6 +54,7 @@ src/app/
   core/
     guards/
     interceptors/
+    pages/
     services/
     store/
   features/
@@ -50,6 +63,7 @@ src/app/
         atoms/
         molecules/
         organisms/
+      pages/
       pipes/
       services/
       store/
@@ -64,6 +78,9 @@ src/app/
   - **atoms:** one small element that can't be split further, e.g. `like-button`, `avatar`.
   - **molecules:** a few atoms working together, e.g. `post-header` (avatar + username + time).
   - **organisms:** a complete section of the UI, e.g. `post-card`, `comments-section`.
+- **Routed pages** go in a `pages/` folder:
+  - a page that belongs to a feature goes in that feature's `pages/`, e.g. `features/feed/pages/feed-page`, `features/profile/pages/profile-page`.
+  - an app-level page that isn't part of any feature goes in `core/pages/`, e.g. `core/pages/not-found-page`.
 - **`shared/`** is for things used by more than one feature. A component used only in the feed stays in the feed.
 
 ### File suffixes
@@ -155,6 +172,7 @@ export enum LoadingState {
   Init = 'init',
   Loading = 'loading',
   Loaded = 'loaded',
+  LoadingMore = 'loading-more',
 }
 
 export interface ErrorState {
@@ -163,6 +181,16 @@ export interface ErrorState {
 
 export type CallState = LoadingState | ErrorState;
 ```
+
+| State | When |
+|---|---|
+| `Init` | Nothing was requested yet |
+| `Loading` | The first request is running. There is no data to show yet |
+| `Loaded` | The data arrived |
+| `LoadingMore` | The next page is loading. The data already loaded stays on screen |
+| `ErrorState` | The request failed. `errorMessage` says why |
+
+`LoadingMore` is what lets the feed keep its posts on screen and show a small spinner at the bottom, instead of replacing everything with a full-page loader.
 
 ```ts
 export interface PostsState extends EntityState<Post> {
@@ -236,8 +264,9 @@ export class CommentFormComponent {
 ## Quick review checklist
 
 - [ ] Standalone component with its own `:host`-wrapped SCSS file
-- [ ] Signals `$name`, private members `_name`, booleans `is`/`should`/`has`/`can`
+- [ ] Signals and signal inputs `$name`, private members `_name`, booleans `is`/`should`/`has`/`can`
 - [ ] File is in the right folder: `core`, `features/<feature>/…` with atoms/molecules/organisms, or `shared`
+- [ ] Routed pages in `features/<feature>/pages/`, or `core/pages/` when they belong to no feature
 - [ ] Types in `.type.ts`, constants in `.consts.ts`, helpers in `.util.ts`, UI labels in `.label-map.ts`
 - [ ] The slice has all five files; actions use `createActionGroup`; effects are functional
 - [ ] Store read with `selectSignal` in a field

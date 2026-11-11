@@ -3,12 +3,12 @@
     "module": "01-angular-conventions",
     "title": "Tavor Angular conventions (code review)",
     "file": "01-angular-conventions.json",
-    "questions": 18,
+    "questions": 21,
     "placement": 0,
     "byType": {
-      "single": 9,
-      "multiple": 2,
-      "spot-the-bug": 6,
+      "single": 10,
+      "multiple": 3,
+      "spot-the-bug": 7,
       "text": 1
     }
   }

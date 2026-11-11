@@ -394,3 +394,61 @@ questions:
         correct: false
     explanation: 'Standalone components only. In Angular 20 that''s the default, so a component imports the components, directives and pipes it uses in its own `imports` array.'
     reference: 01-angular-conventions.md
+
+  - id: tav-19
+    type: spot-the-bug
+    topic: naming
+    difficulty: 1
+    placement: false
+    lint: false
+    prompt: 'Code review: one line breaks our naming conventions. Click it.'
+    code:
+      lang: ts
+      label: post-card.component.ts
+      source: |
+        export class PostCardComponent {
+          readonly post = input.required<Post>();
+          readonly $isCompact = input(false);
+          readonly liked = output<void>();
+        }
+    answer: 2
+    explanation: 'A signal input is a signal, so it gets the `$` prefix like any other signal: `readonly $post = input.required<Post>();`. The parent then binds `[$post]="post"`. Outputs are not signals and keep a plain name.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-20
+    type: multiple
+    topic: folders
+    difficulty: 2
+    placement: false
+    prompt: 'Where do these routed pages go? Pick all the correct locations.'
+    options:
+      - text: '`features/feed/pages/feed-page/`'
+        correct: true
+      - text: '`features/profile/pages/profile-page/`'
+        correct: true
+      - text: '`core/pages/not-found-page/`'
+        correct: true
+      - text: '`features/feed/components/organisms/feed-page/`'
+        correct: false
+      - text: '`shared/pages/not-found-page/`'
+        correct: false
+    explanation: 'A routed page that belongs to a feature goes in that feature''s `pages/` folder, not with its atoms, molecules and organisms. A page that belongs to no feature, like "not found", goes in `core/pages/`. `shared/` is for things several features reuse, and a page is reached by a route, not reused.'
+    reference: 01-angular-conventions.md
+
+  - id: tav-21
+    type: single
+    topic: call-state
+    difficulty: 2
+    placement: false
+    prompt: 'The feed shows 20 posts. The user scrolls to the bottom and the next 20 are requested. Which `callState` does the reducer set?'
+    options:
+      - text: '`LoadingState.LoadingMore`'
+        correct: true
+      - text: '`LoadingState.Loading`'
+        correct: false
+      - text: '`LoadingState.Init`'
+        correct: false
+      - text: 'It stays `LoadingState.Loaded` until the new posts arrive'
+        correct: false
+    explanation: '`LoadingMore` says "there is data on screen, and more is coming". The feed keeps showing its 20 posts with a small spinner at the bottom. `Loading` is for the first request, when there is nothing to show yet, so a page that checks it would hide the posts behind a full-page loader.'
+    reference: 01-angular-conventions.md

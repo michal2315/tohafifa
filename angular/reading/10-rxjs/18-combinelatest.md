@@ -1,0 +1,176 @@
+---
+title: "combineLatest"
+sidebar_position: 18
+mdx:
+  format: md
+tags: [skim]
+---
+
+**Skim**: read the headings and examples, come back when you need it.
+
+:::info[Source]
+
+Adapted from [combineLatest](https://www.learnrxjs.io/learn-rxjs/operators/combination/combinelatest) by Brian Troncone and contributors, Learn RxJS, licensed under [MIT](https://github.com/btroncone/learn-rxjs/blob/master/LICENSE). Changes: converted to Markdown for offline use; code examples inlined; interactive embeds and site navigation removed.
+
+:::
+
+#### signature: `combineLatest(observables: ...Observable, project: function): Observable`
+
+## When any observable emits a value, emit the last emitted value from each.
+
+---
+
+💡 [combineLatestAll](https://www.learnrxjs.io/learn-rxjs/operators/combination/combineall) can be used to apply combineLatest to emitted
+observables when a source completes!
+
+---
+
+### Why use `combineLatest`?
+
+This operator is best used when you have multiple, long-lived observables that
+rely on each other for some calculation or determination. Basic examples of this
+can be seen in [example three](#example-3-combining-events-from-2-buttons),
+where events from multiple buttons are being combined to produce a count of each
+and an overall total, or a
+[calculation of BMI](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-combineLatest)
+from the RxJS documentation.
+
+Be aware that **`combineLatest` will not emit an initial value until each
+observable emits at least one value**. This is the same behavior as
+[`withLatestFrom`](https://www.learnrxjs.io/learn-rxjs/operators/combination/withlatestfrom) and can be a _gotcha_ as there will be no
+output and no error but one (or more) of your inner observables is likely not
+functioning as intended, or a subscription is late.
+
+Lastly, if you are working with observables that only emit one value, or you
+only require the last value of each before completion, [`forkJoin`](https://www.learnrxjs.io/learn-rxjs/operators/combination/forkjoin)
+is likely a better option.
+
+### Examples
+
+##### Example 1: Combining observables emitting at 3 intervals
+
+(
+[StackBlitz](https://stackblitz.com/edit/typescript-vadvm2?file=index.ts&devtoolsheight=100)
+)
+
+```js
+// RxJS v6+
+import { timer, combineLatest } from 'rxjs';
+
+// timerOne emits first value at 1s, then once every 4s
+const timerOne$ = timer(1000, 4000);
+// timerTwo emits first value at 2s, then once every 4s
+const timerTwo$ = timer(2000, 4000);
+// timerThree emits first value at 3s, then once every 4s
+const timerThree$ = timer(3000, 4000);
+
+// when one timer emits, emit the latest values from each timer as an array
+combineLatest(timerOne$, timerTwo$, timerThree$).subscribe(
+  ([timerValOne, timerValTwo, timerValThree]) => {
+    /*
+  	Example:
+    timerThree first tick: 'Timer One Latest: 0, Timer Two Latest: 0, Timer Three Latest: 0
+    timerOne second tick: 'Timer One Latest: 1, Timer Two Latest: 0, Timer Three Latest: 0
+    timerTwo second tick: 'Timer One Latest: 1, Timer Two Latest: 1, Timer Three Latest: 0
+  */
+    console.log(
+      `Timer One Latest: ${timerValOne},
+     Timer Two Latest: ${timerValTwo},
+     Timer Three Latest: ${timerValThree}`
+    );
+  }
+);
+```
+
+##### Example 2: combineLatest with projection function
+
+(
+[StackBlitz](https://stackblitz.com/edit/typescript-prtbvd?file=index.ts&devtoolsheight=100)
+)
+
+```js
+// RxJS v6+
+import { timer, combineLatest } from 'rxjs';
+
+const timerOne$ = timer(1000, 4000);
+const timerTwo$ = timer(2000, 4000);
+const timerThree$ = timer(3000, 4000);
+
+combineLatest(
+  timerOne$,
+  timerTwo$,
+  timerThree$,
+  // combineLatest also takes an optional projection function
+  (one, two, three) => {
+    return `Timer One (Proj) Latest: ${one},
+              Timer Two (Proj) Latest: ${two},
+              Timer Three (Proj) Latest: ${three}`;
+  }
+).subscribe(console.log);
+```
+
+##### Example 3: Combining events from 2 buttons
+
+(
+[StackBlitz](https://stackblitz.com/edit/typescript-ihcxud?file=index.ts&devtoolsheight=50)
+)
+
+```js
+// RxJS v6+
+import { fromEvent, combineLatest } from 'rxjs';
+import { mapTo, startWith, scan, tap, map } from 'rxjs/operators';
+
+// elem refs
+const redTotal = document.getElementById('red-total');
+const blackTotal = document.getElementById('black-total');
+const total = document.getElementById('total');
+
+const addOneClick$ = id =>
+  fromEvent(document.getElementById(id), 'click').pipe(
+    // map every click to 1
+    mapTo(1),
+    // keep a running total
+    scan((acc, curr) => acc + curr, 0),
+    startWith(0)
+  );
+
+combineLatest(addOneClick$('red'), addOneClick$('black')).subscribe(
+  ([red, black]: any) => {
+    redTotal.innerHTML = red;
+    blackTotal.innerHTML = black;
+    total.innerHTML = red + black;
+  }
+);
+```
+
+###### HTML
+
+```html
+<div>
+  <button id="red">Red</button>
+  <button id="black">Black</button>
+</div>
+<div>Red: <span id="red-total"></span></div>
+<div>Black: <span id="black-total"></span></div>
+<div>Total: <span id="total"></span></div>
+```
+
+### Related Recipes
+
+- [Alphabet Invasion Game](https://www.learnrxjs.io/learn-rxjs/recipes/alphabet-invasion-game)
+- [Breakout Game](https://www.learnrxjs.io/learn-rxjs/recipes/breakout-game)
+- [Car Racing Game](https://www.learnrxjs.io/learn-rxjs/recipes/car-racing-game)
+- [Flappy Bird Game](https://www.learnrxjs.io/learn-rxjs/recipes/flappy-bird-game)
+- [Platform Jumper Game](https://www.learnrxjs.io/learn-rxjs/recipes/platform-jumper-game)
+- [Tank Battle Game](https://www.learnrxjs.io/learn-rxjs/recipes/tank-battle-game)
+- [Tetris Game](https://www.learnrxjs.io/learn-rxjs/recipes/tetris-game)
+
+### Additional Resources
+
+- [combineLatest](https://rxjs.dev/api/index/function/combineLatest) 📰 -
+  Official docs
+
+---
+
+> 📁 Source Code:
+> [https://github.com/ReactiveX/rxjs/blob/master/packages/rxjs/src/internal/operators/combineLatest.ts](https://github.com/ReactiveX/rxjs/blob/master/packages/rxjs/src/internal/operators/combineLatest.ts)

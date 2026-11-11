@@ -1,0 +1,1330 @@
+{
+  "importedAt": "2026-11-11T13:17:56.921Z",
+  "sources": [
+    {
+      "module": "1. Angular essentials",
+      "file": "01-essentials/01-overview.md",
+      "title": "Essentials",
+      "url": "https://v20.angular.dev/essentials",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "1. Angular essentials",
+      "file": "01-essentials/02-components.md",
+      "title": "Components",
+      "url": "https://v20.angular.dev/essentials/components",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "1. Angular essentials",
+      "file": "01-essentials/03-templates.md",
+      "title": "Templates",
+      "url": "https://v20.angular.dev/essentials/templates",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "1. Angular essentials",
+      "file": "01-essentials/04-signals.md",
+      "title": "Signals",
+      "url": "https://v20.angular.dev/essentials/signals",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "1. Angular essentials",
+      "file": "01-essentials/05-dependency-injection.md",
+      "title": "Dependency Injection",
+      "url": "https://v20.angular.dev/essentials/dependency-injection",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "2. Components",
+      "file": "02-components/01-anatomy-of-components.md",
+      "title": "Anatomy of a component",
+      "url": "https://v20.angular.dev/guide/components",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "2. Components",
+      "file": "02-components/02-selectors.md",
+      "title": "Component selectors",
+      "url": "https://v20.angular.dev/guide/components/selectors",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "2. Components",
+      "file": "02-components/03-styling.md",
+      "title": "Styling components",
+      "url": "https://v20.angular.dev/guide/components/styling",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "2. Components",
+      "file": "02-components/04-inputs.md",
+      "title": "Accepting data with input properties",
+      "url": "https://v20.angular.dev/guide/components/inputs",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "2. Components",
+      "file": "02-components/05-outputs.md",
+      "title": "Custom events with outputs",
+      "url": "https://v20.angular.dev/guide/components/outputs",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "2. Components",
+      "file": "02-components/06-content-projection.md",
+      "title": "Content projection with ng-content",
+      "url": "https://v20.angular.dev/guide/components/content-projection",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "2. Components",
+      "file": "02-components/07-host-elements.md",
+      "title": "Component host elements",
+      "url": "https://v20.angular.dev/guide/components/host-elements",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "2. Components",
+      "file": "02-components/08-lifecycle.md",
+      "title": "Component Lifecycle",
+      "url": "https://v20.angular.dev/guide/components/lifecycle",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "2. Components",
+      "file": "02-components/09-queries.md",
+      "title": "Referencing component children with queries",
+      "url": "https://v20.angular.dev/guide/components/queries",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/01-overview.md",
+      "title": "Template syntax",
+      "url": "https://v20.angular.dev/guide/templates",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/02-binding.md",
+      "title": "Binding dynamic text, properties and attributes",
+      "url": "https://v20.angular.dev/guide/templates/binding",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/03-event-listeners.md",
+      "title": "Adding event listeners",
+      "url": "https://v20.angular.dev/guide/templates/event-listeners",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/04-two-way-binding.md",
+      "title": "Two-way binding",
+      "url": "https://v20.angular.dev/guide/templates/two-way-binding",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/05-control-flow.md",
+      "title": "Control flow",
+      "url": "https://v20.angular.dev/guide/templates/control-flow",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/06-pipes.md",
+      "title": "Pipes",
+      "url": "https://v20.angular.dev/guide/templates/pipes",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/07-variables.md",
+      "title": "Variables in templates",
+      "url": "https://v20.angular.dev/guide/templates/variables",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/08-ng-template.md",
+      "title": "Create template fragments with ng-template",
+      "url": "https://v20.angular.dev/guide/templates/ng-template",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/09-ng-container.md",
+      "title": "Grouping elements with ng-container",
+      "url": "https://v20.angular.dev/guide/templates/ng-container",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "3. Templates",
+      "file": "03-templates/10-defer.md",
+      "title": "Deferred loading with @defer",
+      "url": "https://v20.angular.dev/guide/templates/defer",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "4. Signals & RxJS interop",
+      "file": "04-signals/01-signals-overview.md",
+      "title": "Angular Signals",
+      "url": "https://v20.angular.dev/guide/signals",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "4. Signals & RxJS interop",
+      "file": "04-signals/02-signals-interop.md",
+      "title": "RxJS interop with Angular signals",
+      "url": "https://v20.angular.dev/ecosystem/rxjs-interop",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "4. Signals & RxJS interop",
+      "file": "04-signals/03-take-until-destroyed.md",
+      "title": "Unsubscribing with takeUntilDestroyed",
+      "url": "https://v20.angular.dev/ecosystem/rxjs-interop/take-until-destroyed",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "4. Signals & RxJS interop",
+      "file": "04-signals/04-linked-signal.md",
+      "title": "Dependent state with linkedSignal",
+      "url": "https://v20.angular.dev/guide/signals/linked-signal",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "4. Signals & RxJS interop",
+      "file": "04-signals/05-resource.md",
+      "title": "Async reactivity with resources",
+      "url": "https://v20.angular.dev/guide/signals/resource",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "5. Services & dependency injection",
+      "file": "05-services-and-di/01-di-overview.md",
+      "title": "Dependency injection in Angular",
+      "url": "https://v20.angular.dev/guide/di",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "5. Services & dependency injection",
+      "file": "05-services-and-di/02-creating-and-using-services.md",
+      "title": "Creating and using services",
+      "url": "https://v20.angular.dev/guide/di/creating-and-using-services",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "5. Services & dependency injection",
+      "file": "05-services-and-di/03-defining-dependency-providers.md",
+      "title": "Defining dependency providers",
+      "url": "https://v20.angular.dev/guide/di/defining-dependency-providers",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "5. Services & dependency injection",
+      "file": "05-services-and-di/04-hierarchical-dependency-injection.md",
+      "title": "Hierarchical injectors",
+      "url": "https://v20.angular.dev/guide/di/hierarchical-dependency-injection",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "6. Routing",
+      "file": "06-routing/01-routing-overview.md",
+      "title": "Angular Routing",
+      "url": "https://v20.angular.dev/guide/routing",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "6. Routing",
+      "file": "06-routing/02-define-routes.md",
+      "title": "Define routes",
+      "url": "https://v20.angular.dev/guide/routing/define-routes",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "6. Routing",
+      "file": "06-routing/03-show-routes-with-outlets.md",
+      "title": "Show routes with outlets",
+      "url": "https://v20.angular.dev/guide/routing/show-routes-with-outlets",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "6. Routing",
+      "file": "06-routing/04-navigate-to-routes.md",
+      "title": "Navigate to routes",
+      "url": "https://v20.angular.dev/guide/routing/navigate-to-routes",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "6. Routing",
+      "file": "06-routing/05-read-route-state.md",
+      "title": "Read route state",
+      "url": "https://v20.angular.dev/guide/routing/read-route-state",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "6. Routing",
+      "file": "06-routing/06-route-guards.md",
+      "title": "Control route access with guards",
+      "url": "https://v20.angular.dev/guide/routing/route-guards",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "6. Routing",
+      "file": "06-routing/07-data-resolvers.md",
+      "title": "Data resolvers",
+      "url": "https://v20.angular.dev/guide/routing/data-resolvers",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "7. Forms",
+      "file": "07-forms/01-forms-overview.md",
+      "title": "Forms in Angular",
+      "url": "https://v20.angular.dev/guide/forms",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "7. Forms",
+      "file": "07-forms/02-reactive-forms.md",
+      "title": "Reactive forms",
+      "url": "https://v20.angular.dev/guide/forms/reactive-forms",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "7. Forms",
+      "file": "07-forms/03-form-validation.md",
+      "title": "Validating form input",
+      "url": "https://v20.angular.dev/guide/forms/form-validation",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "7. Forms",
+      "file": "07-forms/04-typed-forms.md",
+      "title": "Typed Forms",
+      "url": "https://v20.angular.dev/guide/forms/typed-forms",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "8. HTTP",
+      "file": "08-http/01-http-overview.md",
+      "title": "Understanding communicating with backend services using HTTP",
+      "url": "https://v20.angular.dev/guide/http",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "8. HTTP",
+      "file": "08-http/02-setup.md",
+      "title": "Setting up HttpClient",
+      "url": "https://v20.angular.dev/guide/http/setup",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "8. HTTP",
+      "file": "08-http/03-making-requests.md",
+      "title": "Making HTTP requests",
+      "url": "https://v20.angular.dev/guide/http/making-requests",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "8. HTTP",
+      "file": "08-http/04-interceptors.md",
+      "title": "Interceptors",
+      "url": "https://v20.angular.dev/guide/http/interceptors",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "9. Architecture",
+      "file": "09-architecture/01-style-guide.md",
+      "title": "Angular coding style guide",
+      "url": "https://v20.angular.dev/style-guide",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "required"
+    },
+    {
+      "module": "9. Architecture",
+      "file": "09-architecture/02-error-handling.md",
+      "title": "Unhandled errors in Angular",
+      "url": "https://v20.angular.dev/best-practices/error-handling",
+      "site": "angular.dev (v20)",
+      "license": "CC BY 4.0 (text), MIT (code samples)",
+      "level": "skim"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/01-rxjs-overview.md",
+      "title": "Introduction",
+      "url": "https://rxjs.dev/guide/overview",
+      "site": "RxJS documentation (v7)",
+      "license": "Apache 2.0",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/02-observable.md",
+      "title": "Observable",
+      "url": "https://rxjs.dev/guide/observable",
+      "site": "RxJS documentation (v7)",
+      "license": "Apache 2.0",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/03-observer.md",
+      "title": "Observer",
+      "url": "https://rxjs.dev/guide/observer",
+      "site": "RxJS documentation (v7)",
+      "license": "Apache 2.0",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/04-subscription.md",
+      "title": "Subscription",
+      "url": "https://rxjs.dev/guide/subscription",
+      "site": "RxJS documentation (v7)",
+      "license": "Apache 2.0",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/05-operators.md",
+      "title": "RxJS Operators",
+      "url": "https://rxjs.dev/guide/operators",
+      "site": "RxJS documentation (v7)",
+      "license": "Apache 2.0",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/06-subject.md",
+      "title": "Subject",
+      "url": "https://rxjs.dev/guide/subject",
+      "site": "RxJS documentation (v7)",
+      "license": "Apache 2.0",
+      "level": "skim"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/07-higher-order-observables.md",
+      "title": "Higher-order Observables",
+      "url": "https://rxjs.dev/guide/higher-order-observables",
+      "site": "RxJS documentation (v7)",
+      "license": "Apache 2.0",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/08-switchmap.md",
+      "title": "switchMap",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/transformation/switchmap",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/09-mergemap.md",
+      "title": "mergeMap",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/transformation/mergemap",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/10-concatmap.md",
+      "title": "concatMap",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/transformation/concatmap",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/11-exhaustmap.md",
+      "title": "exhaustMap",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/transformation/exhaustmap",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/12-map.md",
+      "title": "map",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/transformation/map",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/13-filter.md",
+      "title": "filter",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/filtering/filter",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/14-tap.md",
+      "title": "tap / do",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/utility/do",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/15-catcherror.md",
+      "title": "catchError",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/error_handling/catch",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/16-debouncetime.md",
+      "title": "debounceTime",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/filtering/debouncetime",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/17-distinctuntilchanged.md",
+      "title": "distinctUntilChanged",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/filtering/distinctuntilchanged",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "10. RxJS",
+      "file": "10-rxjs/18-combinelatest.md",
+      "title": "combineLatest",
+      "url": "https://www.learnrxjs.io/learn-rxjs/operators/combination/combinelatest",
+      "site": "Learn RxJS",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/01-why.md",
+      "title": "Why use NgRx Store for State Management?",
+      "url": "https://v20.ngrx.io/guide/store/why",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/02-store-overview.md",
+      "title": "@ngrx/store",
+      "url": "https://v20.ngrx.io/guide/store",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/03-install.md",
+      "title": "Installation",
+      "url": "https://v20.ngrx.io/guide/store/install",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/04-architecture.md",
+      "title": "Architecture",
+      "url": "https://v20.ngrx.io/guide/store/architecture",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/05-walkthrough.md",
+      "title": "Walkthrough",
+      "url": "https://v20.ngrx.io/guide/store/walkthrough",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/06-actions.md",
+      "title": "Actions",
+      "url": "https://v20.ngrx.io/guide/store/actions",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/07-action-groups.md",
+      "title": "Action Groups",
+      "url": "https://v20.ngrx.io/guide/store/action-groups",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/08-reducers.md",
+      "title": "Reducers",
+      "url": "https://v20.ngrx.io/guide/store/reducers",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/09-selectors.md",
+      "title": "Selectors",
+      "url": "https://v20.ngrx.io/guide/store/selectors",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/10-feature-creators.md",
+      "title": "Feature Creators",
+      "url": "https://v20.ngrx.io/guide/store/feature-creators",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "11. NgRx Store",
+      "file": "11-ngrx-store/11-runtime-checks.md",
+      "title": "Runtime checks",
+      "url": "https://v20.ngrx.io/guide/store/configuration/runtime-checks",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "12. NgRx Effects",
+      "file": "12-ngrx-effects/01-effects-overview.md",
+      "title": "@ngrx/effects",
+      "url": "https://v20.ngrx.io/guide/effects",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "12. NgRx Effects",
+      "file": "12-ngrx-effects/02-effects-install.md",
+      "title": "Installation",
+      "url": "https://v20.ngrx.io/guide/effects/install",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "12. NgRx Effects",
+      "file": "12-ngrx-effects/03-lifecycle.md",
+      "title": "Lifecycle",
+      "url": "https://v20.ngrx.io/guide/effects/lifecycle",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "12. NgRx Effects",
+      "file": "12-ngrx-effects/04-effects-operators.md",
+      "title": "Effects operators",
+      "url": "https://v20.ngrx.io/guide/effects/operators",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "12. NgRx Effects",
+      "file": "12-ngrx-effects/05-concat-latest-from.md",
+      "title": "Operators",
+      "url": "https://v20.ngrx.io/guide/operators/operators",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/01-entity-overview.md",
+      "title": "@ngrx/entity",
+      "url": "https://v20.ngrx.io/guide/entity",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/02-entity-install.md",
+      "title": "Installation",
+      "url": "https://v20.ngrx.io/guide/entity/install",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/03-interfaces.md",
+      "title": "Entity Interfaces",
+      "url": "https://v20.ngrx.io/guide/entity/interfaces",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/04-adapter.md",
+      "title": "Entity Adapter",
+      "url": "https://v20.ngrx.io/guide/entity/adapter",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/05-entity-adapter-with-feature-creator.md",
+      "title": "Using Entity Adapter with Feature Creator",
+      "url": "https://v20.ngrx.io/guide/entity/recipes/entity-adapter-with-feature-creator",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/06-devtools-overview.md",
+      "title": "@ngrx/store-devtools",
+      "url": "https://v20.ngrx.io/guide/store-devtools",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/07-devtools-install.md",
+      "title": "Installation",
+      "url": "https://v20.ngrx.io/guide/store-devtools/install",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "required"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/08-devtools-config.md",
+      "title": "Instrumentation options",
+      "url": "https://v20.ngrx.io/guide/store-devtools/config",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/09-router-store-overview.md",
+      "title": "@ngrx/router-store",
+      "url": "https://v20.ngrx.io/guide/router-store",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "skim"
+    },
+    {
+      "module": "13. NgRx Entity & DevTools",
+      "file": "13-ngrx-entity-and-devtools/10-router-store-selectors.md",
+      "title": "Router selectors",
+      "url": "https://v20.ngrx.io/guide/router-store/selectors",
+      "site": "NgRx documentation (v20)",
+      "license": "MIT",
+      "level": "skim"
+    }
+  ],
+  "reports": [
+    {
+      "src": "ng:essentials",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:essentials/components",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "src": "ng:essentials/templates",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:essentials/signals",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:essentials/dependency-injection",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/components",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/components/selectors",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/components/styling",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/components/inputs",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/components/outputs",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/components/content-projection",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/components/host-elements",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/components/lifecycle",
+      "assets": 2,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/components/queries",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates/binding",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates/event-listeners",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates/two-way-binding",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates/control-flow",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates/pipes",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates/variables",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates/ng-template",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates/ng-container",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/templates/defer",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/signals",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:ecosystem/rxjs-interop",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:ecosystem/rxjs-interop/take-until-destroyed",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/signals/linked-signal",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/signals/resource",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/di",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/di/creating-and-using-services",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/di/defining-dependency-providers",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/di/hierarchical-dependency-injection",
+      "assets": 3,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/routing",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/routing/define-routes",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/routing/show-routes-with-outlets",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/routing/navigate-to-routes",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/routing/read-route-state",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/routing/route-guards",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/routing/data-resolvers",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/forms",
+      "assets": 4,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/forms/reactive-forms",
+      "assets": 0,
+      "warnings": [
+        "custom elements left: docs-workflow, docs-step"
+      ]
+    },
+    {
+      "src": "ng:guide/forms/form-validation",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/forms/typed-forms",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/http",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/http/setup",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/http/making-requests",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:guide/http/interceptors",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:style-guide",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ng:best-practices/error-handling",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "rx:overview",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "rx:observable",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "rx:observer",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "rx:subscription",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "rx:operators",
+      "assets": 1,
+      "warnings": []
+    },
+    {
+      "src": "rx:subject",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "rx:higher-order-observables",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/transformation/switchmap",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/transformation/mergemap",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/transformation/concatmap",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/transformation/exhaustmap",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/transformation/map",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/filtering/filter",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/utility/do",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/error_handling/catch",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/filtering/debouncetime",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/filtering/distinctuntilchanged",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "lrx:operators/combination/combinelatest",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/why",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/index",
+      "assets": 1,
+      "warnings": [
+        "example missing: store/src/app/counter.actions.ts",
+        "example missing: store/src/app/counter.reducer.ts",
+        "example missing: store/src/app/app.module.ts",
+        "example missing: store/src/app/app.module.1.ts"
+      ]
+    },
+    {
+      "src": "ngrx:store/install",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/architecture",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/walkthrough",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/actions",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/action-groups",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/reducers",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/selectors",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/feature-creators",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store/configuration/runtime-checks",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:effects/index",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:effects/install",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:effects/lifecycle",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:effects/operators",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:operators/operators",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:entity/index",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:entity/install",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:entity/interfaces",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:entity/adapter",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:entity/recipes/entity-adapter-with-feature-creator",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store-devtools/index",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store-devtools/install",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:store-devtools/config",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:router-store/index",
+      "assets": 0,
+      "warnings": []
+    },
+    {
+      "src": "ngrx:router-store/selectors",
+      "assets": 0,
+      "warnings": []
+    }
+  ]
+}

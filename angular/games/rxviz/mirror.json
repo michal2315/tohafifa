@@ -1,0 +1,21 @@
+{
+  "site": "rxviz",
+  "origin": "https://rx-viz.vercel.app",
+  "fallback": "index.html",
+  "recordedAt": "2026-11-11T13:47:13.857Z",
+  "pages": [
+    "/",
+    "/examples/basic-interval",
+    "/examples/chess-game",
+    "/examples/custom",
+    "/examples/custom-operator",
+    "/examples/grouped-fibonacci",
+    "/examples/higher-order-observable",
+    "/examples/input-element",
+    "/examples/mouse-move",
+    "/examples/pause-and-resume",
+    "/examples/random-error",
+    "/examples/today-is",
+    "/feedback"
+  ]
+}

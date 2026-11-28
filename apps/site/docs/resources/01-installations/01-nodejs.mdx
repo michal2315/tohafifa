@@ -1,0 +1,34 @@
+---
+title: Node.js
+---
+
+# Node.js
+
+**Needed from:** stage 3, JavaScript.
+
+:::info[Draft]
+This page is an example of an installation guide. Replace the steps with the real ones for our
+network.
+:::
+
+## Install
+
+1. Download the Node.js 20 installer from the internal software portal.
+2. Run it with the default options.
+
+## Configure npm
+
+Point npm at Artifactory so `npm install` works inside the network:
+
+```bash
+npm config set registry <artifactory-npm-url>
+```
+
+## Check that it works
+
+Open a **new** terminal and run:
+
+```bash
+node -v   # v20.x.x
+npm -v
+```

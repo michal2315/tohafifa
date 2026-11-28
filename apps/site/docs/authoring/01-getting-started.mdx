@@ -1,0 +1,65 @@
+---
+title: Getting started
+---
+
+# Writing content for the Hafifa
+
+This section is for the people writing the content. Every page is a Markdown (`.mdx`) file in
+`apps/site/docs/`. Adding content means editing files and opening a merge request, just like code.
+
+## Run the site locally
+
+```bash
+npm install
+npm start
+```
+
+The site opens at http://localhost:4300 and reloads when you save a file.
+
+## Where things go
+
+```text
+apps/site/docs/
+├── index.mdx                 ← Welcome page
+├── stages/
+│   ├── 01-git/
+│   │   ├── _category_.json   ← Stage name in the sidebar
+│   │   ├── index.mdx         ← Stage page: overview, materials, milestone
+│   │   └── 01-branching.mdx  ← Extra pages for the stage (optional)
+│   ├── 06-databases/
+│   │   ├── index.mdx
+│   │   ├── mongodb/          ← Track-specific part, see "Tracks"
+│   │   └── postgres/
+│   └── ...
+└── authoring/                ← This guide
+```
+
+- The **number prefix** (`01-`) sets the order in the sidebar and is removed from the URL.
+- The sidebar is generated from the folders, so you never have to edit a sidebar file.
+- A stage can be a single `index.mdx`, or have extra pages next to it when there is a lot to cover.
+
+## Writing a page
+
+Use plain Markdown for text, plus our [components](./components) for videos, resources, exercises
+and the milestone. Components work in every `.mdx` file without importing them.
+
+For notes and warnings, use the built-in admonitions:
+
+```md
+:::tip
+Use `git status` all the time.
+:::
+
+:::warning[Careful]
+Never force-push to a shared branch.
+:::
+```
+
+## Before you open a merge request
+
+```bash
+npm run check
+```
+
+This formats, lints and builds the site. The build fails on broken links, so if it passes, your
+pages are fine.

@@ -1,0 +1,15 @@
+node_modules/
+build/
+dist/
+*.tsbuildinfo
+.docusaurus/
+.cache-loader/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Local copy of media files for development (in production they come from the mount)
+apps/site/static/media/*
+!apps/site/static/media/README.md

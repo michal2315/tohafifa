@@ -1,0 +1,8 @@
+{
+  "label": "MongoDB",
+  "customProps": {
+    "track": {
+      "database": "mongodb"
+    }
+  }
+}

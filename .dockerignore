@@ -1,0 +1,5 @@
+**/node_modules
+**/build
+**/.docusaurus
+apps/site/static/media
+.git

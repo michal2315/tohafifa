@@ -1,0 +1,53 @@
+---
+title: Tracks and media
+---
+
+# Tracks and media
+
+## Tracks
+
+Some parts of the training differ between teams. The trainee picks their track in their profile menu (top right),
+and the site hides content from other tracks. The tracks are defined in `packages/shared/src/tracks.ts`:
+
+| Dimension  | Options               |
+| ---------- | --------------------- |
+| `frontend` | `react`, `angular`    |
+| `database` | `mongodb`, `postgres` |
+
+There are two ways to write track-specific content.
+
+**A whole section of pages.** Put the pages in a sub-folder of the stage and set the track in the
+folder's `_category_.json`. The sidebar hides the folder for other tracks:
+
+```json title="docs/stages/08-frontend/react/_category_.json"
+{
+  "label": "React",
+  "customProps": { "track": { "frontend": "react" } }
+}
+```
+
+**A part of a page.** Wrap it in `<TrackOnly>`:
+
+```mdx
+<TrackOnly database="postgres">Run migrations with `npm run migrate`.</TrackOnly>
+```
+
+Keep everything that's shared between tracks outside track-specific content, so it's written only
+once.
+
+## Videos and other media
+
+Videos and other large files **never go in git**. They live on the media mount, which is served
+under `/media`.
+
+1. Put the file on the mount in a folder named after the stage, e.g. `git/branching.mp4`.
+2. Reference it by that path: `<Video src="git/branching.mp4" title="..." />`.
+
+Use **MP4 (H.264)** so it plays in every browser. To see a video locally, copy it to
+`apps/site/static/media/` under the same path. That folder is git-ignored.
+
+Small images that belong to a page (screenshots, diagrams) can go in git, next to the page:
+
+```md
+![The GitLab merge request page](./img/merge-request.png)
+```

@@ -1,0 +1,38 @@
+# nginx config template. At startup the nginx image substitutes environment variables like
+# ${API_UPSTREAM} (only variables that are set, so nginx's own $uri etc. are left alone).
+
+server {
+    listen 8080;
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # The API (apps/api). Same origin as the site, so no CORS is needed.
+    location /api/ {
+        proxy_pass ${API_UPSTREAM};
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Videos and other large files, from the media mount (mounted as a volume in OpenShift).
+    # nginx supports range requests out of the box, so trainees can seek inside videos.
+    location /media/ {
+        alias /mnt/media/;
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+
+    # Hashed build assets never change, so they can be cached forever.
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location / {
+        try_files $uri $uri/ $uri.html =404;
+    }
+
+    error_page 404 /404.html;
+}

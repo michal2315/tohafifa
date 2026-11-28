@@ -1,0 +1,23 @@
+.example {
+  margin: 0 0 var(--ifm-spacing-vertical);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-card-border-radius);
+  overflow: hidden;
+}
+
+.caption {
+  padding: 0.3rem 0.75rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-color-emphasis-100);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.frame {
+  display: block;
+  width: 100%;
+  border: none;
+  background: #fff;
+}

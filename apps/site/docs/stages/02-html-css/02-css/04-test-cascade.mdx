@@ -1,0 +1,137 @@
+---
+title: "Test your skills: The Cascade"
+sidebar_label: "Test: Cascade"
+---
+
+{/* Imported from MDN Web Docs by an import script - do not edit the text by hand. */}
+
+The aim of this skill test is to help you assess whether you understand universal property values for [controlling inheritance in CSS](./03-cascade.mdx).
+
+:::note
+
+To get help, read our Test your skills usage guide. You can also reach out to us using one of our communication channels.
+
+:::
+
+## Cascade 1 {#cascade_1}
+
+In this task, we want you to use one of the special values we looked at in the [controlling inheritance](./03-cascade.mdx#controlling_inheritance) section.
+
+To complete the task, write a declaration in a new rule that will reset the background color back to white, without using an actual color value.
+
+The starting point of the task looks like this:
+
+<LiveExample html={"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n"} css={"#outer div ul .nav a {\n  background-color: powderblue;\n  padding: 5px;\n  display: inline-block;\n  margin-bottom: 10px;\n}\n\ndiv div li a {\n  color: rebeccapurple;\n}\n"} height="110px" />
+
+Here's the underlying code for this starting point:
+
+```html
+<div class="container" id="outer">
+  <div class="container" id="inner">
+    <ul>
+      <li class="nav"><a href="#">One</a></li>
+      <li class="nav"><a href="#">Two</a></li>
+    </ul>
+  </div>
+</div>
+```
+
+```css
+#outer div ul .nav a {
+  background-color: powderblue;
+  padding: 5px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+div div li a {
+  color: rebeccapurple;
+}
+```
+
+The updated styling should look like this:
+
+<LiveExample html={"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n"} css={"#outer div ul .nav a {\n  background-color: powderblue;\n  padding: 5px;\n  display: inline-block;\n  margin-bottom: 10px;\n}\n\ndiv div li a {\n  color: rebeccapurple;\n}\n#outer #inner a {\n  background-color: inherit;\n}\n"} height="110px" />
+
+<details>
+<summary>Click here to show the solution</summary>
+
+One possible solution is as follows:
+
+```css
+#outer #inner a {
+  background-color: inherit;
+}
+```
+
+There are two things you need to do in this task. First, write a selector for the `a` element which is more specific than the selector used to turn the background powderblue. In this solution, this is achieved by using the `id` selector, which has very high specificity.
+
+Then you need to remember there are special keyword values for all properties. In this case, using `inherit` sets the background color back to be the same as its parent element.
+
+</details>
+
+## Cascade 2 {#cascade_2}
+
+To complete this task, manipulate the cascade layer order to color the links `rebeccapurple`. No editing the `lightgreen` declaration!
+
+This task is a stretch goal — it requires knowledge of cascade layers, which we didn't cover in the [Handling conflicts](./03-cascade.mdx) article. You can find the information you need to attempt this task at Cascade layers > Determining the precedence based on the order of layers.
+
+The starting point of the task looks like this:
+
+<LiveExample html={"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n"} css={"@layer yellow, purple, green;\n\n@layer yellow {\n  #outer div ul .nav a {\n    padding: 5px;\n    display: inline-block;\n    margin-bottom: 10px;\n  }\n}\n@layer purple {\n  div div li a {\n    color: rebeccapurple;\n  }\n}\n@layer green {\n  a {\n    color: lightgreen;\n  }\n}\n"} height="110px" />
+
+Here's the underlying code for this starting point:
+
+```html
+<div class="container" id="outer">
+  <div class="container" id="inner">
+    <ul>
+      <li class="nav"><a href="#">One</a></li>
+      <li class="nav"><a href="#">Two</a></li>
+    </ul>
+  </div>
+</div>
+```
+
+```css
+@layer yellow, purple, green;
+
+@layer yellow {
+  #outer div ul .nav a {
+    padding: 5px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+}
+@layer purple {
+  div div li a {
+    color: rebeccapurple;
+  }
+}
+@layer green {
+  a {
+    color: lightgreen;
+  }
+}
+```
+
+The updated styling should look like this:
+
+<LiveExample html={"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n"} css={"@layer yellow, green, purple;\n@layer yellow {\n  #outer div ul .nav a {\n    padding: 5px;\n    display: inline-block;\n    margin-bottom: 10px;\n  }\n}\n@layer purple {\n  div div li a {\n    color: rebeccapurple;\n  }\n}\n@layer green {\n  a {\n    color: lightgreen;\n  }\n}\n"} height="110px" />
+
+<details>
+<summary>Click here to show the solution</summary>
+
+One possible solution is as follows:
+
+```css
+@layer yellow, green, purple;
+```
+
+There is one thing you need to do in this task: change the order of precedence so the declaration for the desired color is in the last declared layer, which is what this solution shows.
+
+You need to remember that unlayered normal styles take precedence over layered normal styles. But, if all styles are within layers — as in the case of this task — styles in later declared layers take precedence over styles declared in earlier layers. Moving the purple layer to the end means it has precedence over the green and yellow layers.
+
+</details>
+
+<SourceAttribution source="mdn" title="Test your skills: The Cascade" url="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Test_your_skills/Cascade" />

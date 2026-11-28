@@ -1,0 +1,201 @@
+---
+title: Components
+---
+
+# Components
+
+These components work in every `.mdx` file without importing them. Each one is shown below, with
+the code that produces it.
+
+## StageOverview
+
+The box at the top of every stage page.
+
+```mdx
+<StageOverview
+  duration="1 week"
+  owner="Your name"
+  goals={['Work with branches, commits and merges', 'Open and review merge requests']}
+/>
+```
+
+<StageOverview
+  duration="1 week"
+  owner="Your name"
+  goals={['Work with branches, commits and merges', 'Open and review merge requests']}
+/>
+
+## Resources
+
+A list of learning materials. The available `type`s are `article`, `docs`, `video`, `course`,
+`interactive` and `tool`. The text inside a `<Resource>` tells the trainee what to focus on.
+
+```mdx
+<Resources>
+  <Resource type="docs" title="Pro Git, chapters 1-3" href="https://git-scm.com/book" time="1.5 h">
+    Focus on branching. Skim the history part.
+  </Resource>
+  <Resource
+    type="article"
+    title="How to write a commit message"
+    href="https://cbea.ms/git-commit/"
+    time="10 min"
+    optional
+  />
+</Resources>
+```
+
+<Resources>
+  <Resource type="docs" title="Pro Git, chapters 1-3" href="https://git-scm.com/book" time="1.5 h">
+    Focus on branching. Skim the history part.
+  </Resource>
+  <Resource
+    type="article"
+    title="How to write a commit message"
+    href="https://cbea.ms/git-commit/"
+    time="10 min"
+    optional
+  />
+</Resources>
+
+## Video
+
+A video from the media mount. `src` is the path on the mount. See [Tracks and media](./tracks-and-media).
+
+```mdx
+<Video src="git/branching.mp4" title="Branching explained" duration="12 min" />
+```
+
+<Video src="examples/sample.mp4" title="Branching explained" duration="12 min" />
+
+## Exercise, Hint and Solution
+
+A small practice task. `difficulty` is `easy`, `medium` or `hard`. `<Hint>` and `<Solution>` are
+collapsed until clicked.
+
+````mdx
+<Exercise title="Resolve a merge conflict" difficulty="medium">
+  Create two branches that change the same line of a file, then merge one into the other.
+
+  <Hint>Read what `git status` tells you.</Hint>
+  <Solution>
+
+    ```bash
+    git merge feature
+    # fix the file, then:
+    git add file.txt && git commit
+    ```
+
+  </Solution>
+</Exercise>
+````
+
+<Exercise title="Resolve a merge conflict" difficulty="medium">
+  Create two branches that change the same line of a file, then merge one into the other.
+
+  <Hint>Read what `git status` tells you.</Hint>
+  <Solution>
+
+    ```bash
+    git merge feature
+    # fix the file, then:
+    git add file.txt && git commit
+    ```
+
+  </Solution>
+</Exercise>
+
+## Milestone
+
+The Instagram project milestone. Every stage has exactly one, at the end. Leave empty lines around
+the content so the Markdown inside it renders.
+
+```mdx
+<Milestone title="Set up your project">
+
+- Create your project folder in the training repo, on your own branch.
+- Open your first merge request and assign your trainer.
+
+</Milestone>
+```
+
+<Milestone title="Set up your project">
+
+- Create your project folder in the training repo, on your own branch.
+- Open your first merge request and assign your trainer.
+
+</Milestone>
+
+## Checklist
+
+Checkboxes the trainee can tick. Progress is remembered in their browser. If a page has more than
+one checklist, give each one a different `id`.
+
+```mdx
+<Checklist
+  title="Before opening your MR"
+  items={['The app runs without errors', 'No commented-out code', 'Commit messages are clear']}
+/>
+```
+
+<Checklist
+  title="Before opening your MR"
+  items={['The app runs without errors', 'No commented-out code', 'Commit messages are clear']}
+/>
+
+## TrackOnly
+
+Content for one track only. See [Tracks and media](./tracks-and-media).
+
+```mdx
+<TrackOnly frontend="react">Use `useState` for local component state.</TrackOnly>
+<TrackOnly frontend="angular">Use signals for local component state.</TrackOnly>
+```
+
+<TrackOnly frontend="react">Use `useState` for local component state.</TrackOnly>
+<TrackOnly frontend="angular">Use signals for local component state.</TrackOnly>
+
+## LiveExample
+
+Renders HTML, CSS and (optionally) JavaScript in an isolated frame, so trainees see the result
+next to the code. Show the code itself in normal code blocks above it.
+
+```mdx
+<LiveExample
+  html={'<button class="btn">Click me</button>'}
+  css={'.btn { padding: 0.5rem 1rem; border-radius: 4px; }'}
+  height="80px"
+/>
+```
+
+<LiveExample
+  html={'<button class="btn">Click me</button>'}
+  css={'.btn { padding: 0.5rem 1rem; border-radius: 4px; }'}
+  height="80px"
+/>
+
+## SourceAttribution
+
+The credit line at the bottom of pages copied from other documentation. The licenses of the
+sources require it, so never remove it from an imported page. `source` is `mdn` or `sass`.
+
+```mdx
+<SourceAttribution
+  source="mdn"
+  title="The box model"
+  url="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Box_model"
+/>
+```
+
+## Importing documentation
+
+Instead of writing explanations from scratch, you can import lessons from MDN (and the Sass guide)
+with `tools/import-docs`. It converts them to pages with live examples, credits the source, and
+makes them work inside the closed network. See `tools/import-docs/README.md`. The HTML, CSS &
+SCSS stage is built this way.
+
+## Adding a new component
+
+Need something that isn't here? Talk to the app maintainers first, since someone may already be
+building it. A new component goes in `src/components/<Name>/`, gets exported from
+`src/components/index.ts`, and gets documented on this page.

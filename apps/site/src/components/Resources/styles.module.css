@@ -1,0 +1,52 @@
+.list {
+  margin-bottom: var(--ifm-spacing-vertical);
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-card-border-radius);
+}
+
+.item + .item {
+  margin-top: 0.5rem;
+}
+
+.optional {
+  border-style: dashed;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.type {
+  min-width: 5.5rem;
+  background: var(--ifm-color-primary-lightest);
+  color: var(--ifm-color-primary-darkest);
+  border: none;
+}
+
+.title {
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+.time {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.description {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.description > :last-child {
+  margin-bottom: 0;
+}

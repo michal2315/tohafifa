@@ -1,0 +1,108 @@
+---
+title: HTML, CSS & SCSS
+---
+
+<StageOverview
+  duration="5 days"
+  owner="Michal Golan"
+  goals={['Build semantic page layouts', 'Style responsive pages with SCSS']}
+/>
+
+## Learn
+
+### HTML
+
+<Resources>
+  <Resource
+    type="docs"
+    title="Document and website structure"
+    href="./html/document-structure"
+    time="30 min"
+  />
+  <Resource type="docs" title="HTML images" href="./html/images" time="20 min" />
+</Resources>
+
+### CSS
+
+<Resources>
+  <Resource type="docs" title="Basic CSS selectors" href="./css/selectors" time="20 min" />
+  <Resource
+    type="interactive"
+    title="CSS Diner"
+    href="pathname:///games/css-diner/index.html"
+    time="30 min"
+  />
+  <Resource type="docs" title="Conflicting styles" href="./css/cascade" time="40 min" />
+  <Resource type="docs" title="The box model" href="./css/box-model" time="30 min" />
+  <Resource type="docs" title="Debugging CSS" href="./css/debugging-css" time="20 min" />
+</Resources>
+
+### Layout
+
+<Resources>
+  <Resource type="docs" title="Flexbox" href="./layout/flexbox" time="40 min" />
+  <Resource
+    type="interactive"
+    title="Flexbox Froggy"
+    href="pathname:///games/flexbox-froggy/index.html"
+    time="30 min"
+  />
+  <Resource type="docs" title="Grids" href="./layout/grid" time="40 min" />
+  <Resource
+    type="interactive"
+    title="Grid Garden"
+    href="pathname:///games/grid-garden/index.html"
+    time="30 min"
+  />
+  <Resource
+    type="docs"
+    title="Media query fundamentals"
+    href="./layout/media-queries"
+    time="40 min"
+  />
+</Resources>
+
+### SCSS
+
+<Resources>
+  <Resource type="docs" title="Sass Basics" href="./scss/sass-basics" time="20 min" />
+</Resources>
+
+## Practice
+
+<Resources>
+  <Resource type="interactive" title="Test your skills: Selectors" href="./css/test-selectors" />
+  <Resource type="interactive" title="Test your skills: The cascade" href="./css/test-cascade" />
+  <Resource
+    type="interactive"
+    title="Test your skills: The box model"
+    href="./css/test-box-model"
+  />
+  <Resource type="interactive" title="Test your skills: Flexbox" href="./layout/test-flexbox" />
+  <Resource type="interactive" title="Test your skills: Grid" href="./layout/test-grid" />
+  <Resource
+    type="interactive"
+    title="Test your skills: Responsive web design"
+    href="./layout/test-responsive"
+  />
+</Resources>
+
+<Milestone title="Feed page (UI only)">
+
+- Top bar: logo, search box and icons.
+- A horizontal stories row that scrolls sideways.
+- Post cards: avatar, username, image, like/comment/share buttons, like count, caption, "view all comments" and an "add a comment" input.
+- On desktop, a suggestions sidebar on the right.
+
+<Checklist
+  title="Requirements"
+  items={[
+    'Semantic HTML: header, main, an article per post, real <button> elements, alt text on images',
+    'SCSS split into partials, with variables for colors, spacing and font sizes',
+    'One consistent class naming convention',
+    'Layout with Flexbox and/or Grid - no CSS frameworks, no inline styles',
+    'Works at 375px (mobile) and 1280px (desktop); the sidebar is hidden on mobile',
+  ]}
+/>
+
+</Milestone>

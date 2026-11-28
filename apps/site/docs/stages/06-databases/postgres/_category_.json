@@ -1,0 +1,8 @@
+{
+  "label": "PostgreSQL",
+  "customProps": {
+    "track": {
+      "database": "postgres"
+    }
+  }
+}

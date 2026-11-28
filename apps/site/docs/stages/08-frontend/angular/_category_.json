@@ -1,0 +1,8 @@
+{
+  "label": "Angular",
+  "customProps": {
+    "track": {
+      "frontend": "angular"
+    }
+  }
+}

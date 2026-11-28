@@ -1,0 +1,61 @@
+---
+title: Stage structure
+---
+
+# Stage structure
+
+Every stage follows the same structure, so trainees always know where they are. All the stage
+pages already exist with this structure. Fill them in, don't restructure them.
+
+1. **Overview**: `<StageOverview>` with duration, goals and the content owner (you).
+2. **Learn**: the materials, as a mix of reading, videos and interactive material. Add a time
+   estimate to each one, and mark nice-to-haves as optional.
+3. **Practice**: a few small `<Exercise>` blocks that are quick to check.
+4. **Milestone**: exactly one `<Milestone>`. This is what the trainee adds to their Instagram
+   project, and what the trainer reviews.
+
+## Template
+
+```mdx
+---
+title: Git & GitLab
+---
+
+<StageOverview
+  duration="1 week"
+  owner="Your name"
+  goals={['Work with branches, commits and merges', 'Open and review merge requests in GitLab']}
+/>
+
+## Learn
+
+<Resources>
+  <Resource type="docs" title="Pro Git, chapters 1-3" href="https://..." time="1.5 h">
+    Focus on branching. Skim the history part.
+  </Resource>
+</Resources>
+
+<Video src="git/branching.mp4" title="Branching explained" duration="12 min" />
+
+## Practice
+
+<Exercise title="Resolve a merge conflict" difficulty="medium">
+  Create two branches that change the same line, then merge them.
+  <Hint>Look at what `git status` tells you.</Hint>
+</Exercise>
+
+<Milestone title="Set up your project">
+
+- Create your project folder in the training repo, on your own branch.
+- Open your first merge request and assign your trainer.
+
+</Milestone>
+```
+
+## Tips for good content
+
+- **Prefer short and focused material over long and complete.** Link to the docs for the details.
+- **Explain why, not just how.** Trainees remember a concept when they know what problem it solves.
+- **Make the milestone specific.** Write clear acceptance criteria, so the trainee and the trainer
+  agree on what "done" means.
+- **Links must work inside the closed network.** Use our internal mirrors of the documentation.

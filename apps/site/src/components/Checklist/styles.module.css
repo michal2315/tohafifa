@@ -1,0 +1,32 @@
+.checklist {
+  margin-bottom: var(--ifm-spacing-vertical);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-card-border-radius);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.progress {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.15rem 0;
+  cursor: pointer;
+}

@@ -1,0 +1,36 @@
+.overview {
+  margin-bottom: var(--ifm-spacing-vertical);
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--ifm-color-primary-lightest);
+  border-radius: var(--ifm-card-border-radius);
+  background: var(--hafifa-surface-accent);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.meta dt {
+  font-size: 0.75rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.meta dd {
+  margin: 0;
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+.goalsTitle {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.goals {
+  margin-bottom: 0;
+}

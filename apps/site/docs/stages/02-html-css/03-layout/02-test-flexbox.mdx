@@ -1,0 +1,244 @@
+---
+title: "Test your skills: Flexbox"
+sidebar_label: "Test: Flexbox"
+---
+
+{/* Imported from MDN Web Docs by an import script - do not edit the text by hand. */}
+
+The aim of this skill test is to help you assess whether you understand how [flexbox and flex items](./01-flexbox.mdx) behave. Below are four sets of design problems you can solve using flexbox. Your task is to fix the problems.
+
+:::note
+
+To get help, read our Test your skills usage guide. You can also reach out to us using one of our communication channels.
+
+:::
+
+## Interactive challenge {#interactive_challenge}
+
+First of all, we are giving you a fun, interactive flexbox challenge created by our learning partner, [Scrimba](https://scrimba.com/home).
+
+Watch the embedded scrim, and complete all the tasks on the timeline (the little ghost icons) by following the instructions and editing the code. When you are done, you can resume watching the scrim to check how the teacher's solution matches up with yours.
+
+## Flexbox 1 {#flexbox_1}
+
+In this task, we use some list items to create the navigation for a site. To complete the task, use flexbox to lay out the list items as a row, with an equal amount of space between each item.
+
+The starting point of the task looks like this:
+
+<LiveExample html={"<nav>\n  <ul>\n    <li><a href=\"/\">Home</a></li>\n    <li><a href=\"/about\">About Us</a></li>\n    <li><a href=\"/products\">Our Products</a></li>\n    <li><a href=\"/contact\">Contact Us</a></li>\n  </ul>\n</nav>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nnav ul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\nnav a:link,\nnav a:visited {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  display: inline-block;\n  text-decoration: none;\n}\n\nnav ul {\n  /* Add styles here */\n}\n"} height="240px" />
+
+Here's the underlying code for this starting point:
+
+```html
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About Us</a></li>
+    <li><a href="/products">Our Products</a></li>
+    <li><a href="/contact">Contact Us</a></li>
+  </ul>
+</nav>
+```
+
+```css
+body {
+  font: 1.2em / 1.5 sans-serif;
+}
+nav ul {
+  max-width: 750px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+nav a:link,
+nav a:visited {
+  background-color: #4d7298;
+  border: 2px solid #77a6b6;
+  border-radius: 0.5em;
+  color: white;
+  padding: 0.5em;
+  display: inline-block;
+  text-decoration: none;
+}
+
+nav ul {
+  /* Add styles here */
+}
+```
+
+When the task is complete, the items should look like this:
+
+<LiveExample html={"<nav>\n  <ul>\n    <li><a href=\"/\">Home</a></li>\n    <li><a href=\"/about\">About Us</a></li>\n    <li><a href=\"/products\">Our Products</a></li>\n    <li><a href=\"/contact\">Contact Us</a></li>\n  </ul>\n</nav>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nnav ul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\nnav a:link,\nnav a:visited {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  display: inline-block;\n  text-decoration: none;\n}\n\nnav ul {\n  /* Add styles here */\n}\nnav ul {\n  display: flex;\n  justify-content: space-between;\n}\n"} height="100px" />
+
+<details>
+<summary>Click here to show the solution</summary>
+
+You can apply `display: flex` and control spacing using the `justify-content` property:
+
+```css
+nav ul {
+  display: flex;
+  justify-content: space-between;
+}
+```
+
+</details>
+
+## Flexbox 2 {#flexbox_2}
+
+In this task, the list items are all different sizes, but we want them to be displayed as three equal-sized columns, no matter the content in each item.
+
+**Bonus question:** Can you now make the first item twice the size of the other items?
+
+The starting point of the task looks like this:
+
+<LiveExample html={"<ul>\n  <li>I am small</li>\n  <li>I have more content than the very small item.</li>\n  <li>\n    I have lots of content. So much content that I don't know where it is all\n    going to go. I'm glad that CSS is pretty good at dealing with situations\n    where we end up with more words than expected!\n  </li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\n"} height="240px" />
+
+Here's the underlying code for this starting point:
+
+```html
+<ul>
+  <li>I am small</li>
+  <li>I have more content than the very small item.</li>
+  <li>
+    I have lots of content. So much content that I don't know where it is all
+    going to go. I'm glad that CSS is pretty good at dealing with situations
+    where we end up with more words than expected!
+  </li>
+</ul>
+```
+
+```css
+body {
+  font: 1.2em / 1.5 sans-serif;
+}
+ul {
+  max-width: 750px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background-color: #4d7298;
+  border: 2px solid #77a6b6;
+  border-radius: 0.5em;
+  color: white;
+  padding: 0.5em;
+}
+
+ul {
+  /* Add styles here */
+}
+
+li {
+  /* Add styles here */
+}
+```
+
+When the task is complete, the items should look like this:
+
+<LiveExample html={"<ul>\n  <li>I am small</li>\n  <li>I have more content than the very small item.</li>\n  <li>\n    I have lots of content. So much content that I don't know where it is all\n    going to go. I'm glad that CSS is pretty good at dealing with situations\n    where we end up with more words than expected!\n  </li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\nul {\n  display: flex;\n}\n\nli {\n  flex: 1;\n}\nli:first-child {\n  flex: 2;\n}\n"} height="380px" />
+
+<details>
+<summary>Click here to show the solution</summary>
+
+It's best to use shorthands, so in this scenario `flex: 1` is probably the best answer, and so the most optimal result would be:
+
+```css
+ul {
+  display: flex;
+}
+
+li {
+  flex: 1;
+}
+```
+
+For the bonus question, add a selector that targets the first element and sets `flex: 2;` (or `flex: 2 0 0;` or `flex-grow: 2`):
+
+```css
+li:first-child {
+  flex: 2;
+}
+```
+
+</details>
+
+## Flexbox 3 {#flexbox_3}
+
+In this task, we'd like you to arrange the list items into rows.
+
+The starting point of the task looks like this:
+
+<LiveExample html={"<ul>\n  <li>Turnip</li>\n  <li>greens</li>\n  <li>yarrow</li>\n  <li>ricebean</li>\n  <li>rutabaga</li>\n  <li>endive</li>\n  <li>cauliflower</li>\n  <li>sea lettuce</li>\n  <li>kohlrabi</li>\n  <li>amaranth</li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  width: 450px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  margin: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\n"} height="260px" />
+
+Here's the underlying code for this starting point:
+
+```html
+<ul>
+  <li>Turnip</li>
+  <li>greens</li>
+  <li>yarrow</li>
+  <li>ricebean</li>
+  <li>rutabaga</li>
+  <li>endive</li>
+  <li>cauliflower</li>
+  <li>sea lettuce</li>
+  <li>kohlrabi</li>
+  <li>amaranth</li>
+</ul>
+```
+
+```css
+body {
+  font: 1.2em / 1.5 sans-serif;
+}
+ul {
+  width: 450px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background-color: #4d7298;
+  border: 2px solid #77a6b6;
+  border-radius: 0.5em;
+  color: white;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+
+ul {
+  /* Add styles here */
+}
+
+li {
+  /* Add styles here */
+}
+```
+
+When the task is complete, the items should look like this:
+
+<LiveExample html={"<ul>\n  <li>Turnip</li>\n  <li>greens</li>\n  <li>yarrow</li>\n  <li>ricebean</li>\n  <li>rutabaga</li>\n  <li>endive</li>\n  <li>cauliflower</li>\n  <li>sea lettuce</li>\n  <li>kohlrabi</li>\n  <li>amaranth</li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  width: 450px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  margin: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\nul {\n  display: flex;\n  flex-wrap: wrap;\n}\n\nli {\n  flex: auto;\n}\n"} height="260px" />
+
+<details>
+<summary>Click here to show the solution</summary>
+
+This task requires an understanding of the `flex-wrap` property to wrap flex lines. In addition, to ensure that you end up with something that looks like the example, you need to set `flex: auto` on the child (or `flex: 1 1 auto;`).
+
+```css
+ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+li {
+  flex: auto;
+}
+```
+
+</details>
+
+<SourceAttribution source="mdn" title="Test your skills: Flexbox" url="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Test_your_skills/Flexbox" />

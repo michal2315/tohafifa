@@ -1,0 +1,20 @@
+.trackOnly {
+  margin-bottom: var(--ifm-spacing-vertical);
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--ifm-color-emphasis-500);
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 0 var(--ifm-global-radius) var(--ifm-global-radius) 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.trackOnly > :last-child {
+  margin-bottom: 0;
+}

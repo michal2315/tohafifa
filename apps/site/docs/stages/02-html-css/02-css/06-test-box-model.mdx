@@ -1,9 +1,10 @@
 ---
 title: "Test your skills: The box model"
 sidebar_label: "Test: Box model"
+sidebar_custom_props: { kind: practice }
 ---
 
-{/* Imported from MDN Web Docs by an import script - do not edit the text by hand. */}
+{/* Imported by tools/import-docs from MDN Web Docs - do not edit the text by hand. */}
 
 The aim of this skill test is to help you assess whether you understand the [CSS box model](./05-box-model.mdx).
 
@@ -13,44 +14,13 @@ To get help, read our Test your skills usage guide. You can also reach out to us
 
 :::
 
-## Interactive challenge {#interactive_challenge}
-
-First of all, we are giving you a fun, interactive challenge involving margin shorthand, created by our learning partner, [Scrimba](https://scrimba.com/home).
-
-Watch the embedded scrim, and complete the tasks on the timeline (the little ghost icons) by following the instructions and editing the code. When you are done, you can resume watching the scrim to check how the teacher's solution matches up with yours.
-
 ## Box model 1 {#box_model_1}
 
 In this task, there are two boxes below, one is using the standard box model, the other the alternate box model. We'd like you to change the width of the second box by adding declarations to the `.alternate` class, so that it matches the visual width of the first box.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<div class=\"box\">I use the standard box model.</div>\n<div class=\"box alternate\">I use the alternate box model.</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n.box {\n  border: 5px solid rebeccapurple;\n  background-color: lightgray;\n  padding: 40px;\n  margin: 40px;\n  width: 300px;\n  height: 150px;\n}\n\n.alternate {\n  box-sizing: border-box;\n}\n"} height="540px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<div class="box">I use the standard box model.</div>
-<div class="box alternate">I use the alternate box model.</div>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-.box {
-  border: 5px solid rebeccapurple;
-  background-color: lightgray;
-  padding: 40px;
-  margin: 40px;
-  width: 300px;
-  height: 150px;
-}
-
-.alternate {
-  box-sizing: border-box;
-}
-```
+<Sandbox id="02-html-css/02-css/06-test-box-model/box-model1" title="Your solution" html={"<div class=\"box\">I use the standard box model.</div>\n<div class=\"box alternate\">I use the alternate box model.</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n.box {\n  border: 5px solid rebeccapurple;\n  background-color: lightgray;\n  padding: 40px;\n  margin: 40px;\n  width: 300px;\n  height: 150px;\n}\n\n.alternate {\n  box-sizing: border-box;\n}\n"} solution={{"html":"<div class=\"box\">I use the standard box model.</div>\n<div class=\"box alternate\">I use the alternate box model.</div>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n.box {\n  border: 5px solid rebeccapurple;\n  background-color: lightgray;\n  padding: 40px;\n  margin: 40px;\n  width: 300px;\n  height: 150px;\n}\n\n.alternate {\n  box-sizing: border-box;\n}\n.alternate {\n  box-sizing: border-box;\n  width: 390px;\n}\n"}} />
 
 The updated styling should look like this:
 
@@ -81,24 +51,9 @@ To complete this task, add the following features to the provided box:
 - A left margin of `2em`.
 - Padding on all sides of `1em`.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<div class=\"box\">I use the standard box model.</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.box {\n}\n"} height="100px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<div class="box">I use the standard box model.</div>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-
-.box {
-}
-```
+<Sandbox id="02-html-css/02-css/06-test-box-model/box-model2" title="Your solution" html={"<div class=\"box\">I use the standard box model.</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.box {\n}\n"} solution={{"html":"<div class=\"box\">I use the standard box model.</div>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.box {\n}\n.box {\n  border: 5px dotted black;\n  margin: 20px 1em 40px 2em;\n  padding: 1em;\n}\n"}} />
 
 The updated styling should look like this:
 
@@ -126,43 +81,13 @@ In this task, the inline element has a margin, padding, and border. However, the
 
 To complete this task, update the CSS to cause the size of the margin, padding, and border to be respected by the other lines, while still keeping the element inline.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<div class=\"box\">\n  <p>\n    Veggies es bonus vobis, <span>proinde vos postulo</span> essum magis\n    kohlrabi welsh onion daikon amaranth tatsoi tomatillo melon azuki bean\n    garlic.\n  </p>\n\n  <p>\n    Gumbo beet greens corn soko endive gumbo gourd. Parsley shallot courgette\n    tatsoi pea sprouts fava bean collard greens dandelion okra wakame tomato.\n    Dandelion cucumber earthnut pea peanut soko zucchini.\n  </p>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.box span {\n  background-color: pink;\n  border: 5px solid black;\n  padding: 1em;\n}\n"} height="220px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<div class="box">
-  <p>
-    Veggies es bonus vobis, <span>proinde vos postulo</span> essum magis
-    kohlrabi welsh onion daikon amaranth tatsoi tomatillo melon azuki bean
-    garlic.
-  </p>
-
-  <p>
-    Gumbo beet greens corn soko endive gumbo gourd. Parsley shallot courgette
-    tatsoi pea sprouts fava bean collard greens dandelion okra wakame tomato.
-    Dandelion cucumber earthnut pea peanut soko zucchini.
-  </p>
-</div>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-
-.box span {
-  background-color: pink;
-  border: 5px solid black;
-  padding: 1em;
-}
-```
+<Sandbox id="02-html-css/02-css/06-test-box-model/box-model3" title="Your solution" html={"<div class=\"box\">\n  <p>\n    This paragraph is filler, <span>and its only</span> job is\n    to take up some space so you can see the\n    layout.\n  </p>\n\n  <p>\n    Here is a second filler paragraph of text. This third paragraph\n    is filler too and is only here to add more length.\n    The words in it do not matter.\n  </p>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.box span {\n  background-color: pink;\n  border: 5px solid black;\n  padding: 1em;\n}\n"} solution={{"html":"<div class=\"box\">\n  <p>\n    This paragraph is filler, <span>and its only</span> job is\n    to take up some space so you can see the\n    layout.\n  </p>\n\n  <p>\n    Here is a second filler paragraph of text. This third paragraph\n    is filler too and is only here to add more length.\n    The words in it do not matter.\n  </p>\n</div>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.box span {\n  background-color: pink;\n  border: 5px solid black;\n  padding: 1em;\n}\n.box span {\n  background-color: pink;\n  border: 5px solid black;\n  padding: 1em;\n  display: inline-block;\n}\n"}} />
 
 The updated styling should look like this:
 
-<LiveExample html={"<div class=\"box\">\n  <p>\n    Veggies es bonus vobis, <span>proinde vos postulo</span> essum magis\n    kohlrabi welsh onion daikon amaranth tatsoi tomatillo melon azuki bean\n    garlic.\n  </p>\n\n  <p>\n    Gumbo beet greens corn soko endive gumbo gourd. Parsley shallot courgette\n    tatsoi pea sprouts fava bean collard greens dandelion okra wakame tomato.\n    Dandelion cucumber earthnut pea peanut soko zucchini.\n  </p>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.box span {\n  background-color: pink;\n  border: 5px solid black;\n  padding: 1em;\n}\n.box span {\n  background-color: pink;\n  border: 5px solid black;\n  padding: 1em;\n  display: inline-block;\n}\n"} height="260px" />
+<LiveExample html={"<div class=\"box\">\n  <p>\n    This paragraph is filler, <span>and its only</span> job is\n    to take up some space so you can see the\n    layout.\n  </p>\n\n  <p>\n    Here is a second filler paragraph of text. This third paragraph\n    is filler too and is only here to add more length.\n    The words in it do not matter.\n  </p>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.box span {\n  background-color: pink;\n  border: 5px solid black;\n  padding: 1em;\n}\n.box span {\n  background-color: pink;\n  border: 5px solid black;\n  padding: 1em;\n  display: inline-block;\n}\n"} height="260px" />
 
 <details>
 <summary>Click here to show the solution</summary>

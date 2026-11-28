@@ -12,16 +12,22 @@ interface VideoProps {
   duration?: string;
   /** Optional preview image, also a path on the media mount. */
   poster?: string;
+  /** English subtitles in WebVTT format (.vtt), also a path on the media mount. */
+  subtitles?: string;
 }
 
 /** A video served from the media mount. */
-export function Video({ src, title, duration, poster }: VideoProps) {
+export function Video({ src, title, duration, poster, subtitles }: VideoProps) {
   const videoUrl = useMediaUrl(src);
   const posterUrl = useMediaUrl(poster ?? '');
+  const subtitlesUrl = useMediaUrl(subtitles ?? '');
 
   return (
     <figure className={styles.video}>
       <video controls preload="metadata" src={videoUrl} poster={poster ? posterUrl : undefined}>
+        {subtitles && (
+          <track kind="subtitles" src={subtitlesUrl} srcLang="en" label="English" default />
+        )}
         Your browser cannot play this video. <a href={videoUrl}>Download it instead</a>.
       </video>
       <figcaption className={styles.caption}>

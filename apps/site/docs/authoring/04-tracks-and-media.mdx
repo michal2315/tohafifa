@@ -9,12 +9,13 @@ title: Tracks and media
 Some parts of the training differ between teams. The trainee picks their track in their profile menu (top right),
 and the site hides content from other tracks. The tracks are defined in `packages/shared/src/tracks.ts`:
 
-| Dimension  | Options               |
-| ---------- | --------------------- |
-| `frontend` | `react`, `angular`    |
-| `database` | `mongodb`, `postgres` |
+| Dimension  | Options                      |
+| ---------- | ---------------------------- |
+| `frontend` | `react`, `angular`           |
+| `database` | `mongodb`, `postgres`        |
+| `team`     | `team-1`, `team-2`, `team-3` |
 
-There are two ways to write track-specific content.
+There are three ways to write track-specific content.
 
 **A whole section of pages.** Put the pages in a sub-folder of the stage and set the track in the
 folder's `_category_.json`. The sidebar hides the folder for other tracks:
@@ -26,11 +27,24 @@ folder's `_category_.json`. The sidebar hides the folder for other tracks:
 }
 ```
 
+**A single page.** Set the track in the page's front matter. The sidebar hides the page for other
+tracks:
+
+```mdx
+---
+title: Atomic Design
+sidebar_custom_props: { kind: reading, track: { team: [team-1, team-3] } }
+---
+```
+
 **A part of a page.** Wrap it in `<TrackOnly>`:
 
 ```mdx
 <TrackOnly database="postgres">Run migrations with `npm run migrate`.</TrackOnly>
 ```
+
+Content can be for several options of a dimension: give a list, as in `track: { team: [team-1, team-3] }` or
+`<TrackOnly team={['team-1', 'team-3']}>`.
 
 Keep everything that's shared between tracks outside track-specific content, so it's written only
 once.

@@ -1,9 +1,10 @@
 ---
 title: "Test your skills: The Cascade"
 sidebar_label: "Test: Cascade"
+sidebar_custom_props: { kind: practice }
 ---
 
-{/* Imported from MDN Web Docs by an import script - do not edit the text by hand. */}
+{/* Imported by tools/import-docs from MDN Web Docs - do not edit the text by hand. */}
 
 The aim of this skill test is to help you assess whether you understand universal property values for [controlling inheritance in CSS](./03-cascade.mdx).
 
@@ -19,35 +20,9 @@ In this task, we want you to use one of the special values we looked at in the [
 
 To complete the task, write a declaration in a new rule that will reset the background color back to white, without using an actual color value.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n"} css={"#outer div ul .nav a {\n  background-color: powderblue;\n  padding: 5px;\n  display: inline-block;\n  margin-bottom: 10px;\n}\n\ndiv div li a {\n  color: rebeccapurple;\n}\n"} height="110px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<div class="container" id="outer">
-  <div class="container" id="inner">
-    <ul>
-      <li class="nav"><a href="#">One</a></li>
-      <li class="nav"><a href="#">Two</a></li>
-    </ul>
-  </div>
-</div>
-```
-
-```css
-#outer div ul .nav a {
-  background-color: powderblue;
-  padding: 5px;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-
-div div li a {
-  color: rebeccapurple;
-}
-```
+<Sandbox id="02-html-css/02-css/04-test-cascade/cascade1" title="Your solution" html={"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n"} css={"#outer div ul .nav a {\n  background-color: powderblue;\n  padding: 5px;\n  display: inline-block;\n  margin-bottom: 10px;\n}\n\ndiv div li a {\n  color: rebeccapurple;\n}\n"} solution={{"html":"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n","css":"#outer div ul .nav a {\n  background-color: powderblue;\n  padding: 5px;\n  display: inline-block;\n  margin-bottom: 10px;\n}\n\ndiv div li a {\n  color: rebeccapurple;\n}\n#outer #inner a {\n  background-color: inherit;\n}\n"}} />
 
 The updated styling should look like this:
 
@@ -76,44 +51,9 @@ To complete this task, manipulate the cascade layer order to color the links `re
 
 This task is a stretch goal — it requires knowledge of cascade layers, which we didn't cover in the [Handling conflicts](./03-cascade.mdx) article. You can find the information you need to attempt this task at Cascade layers > Determining the precedence based on the order of layers.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n"} css={"@layer yellow, purple, green;\n\n@layer yellow {\n  #outer div ul .nav a {\n    padding: 5px;\n    display: inline-block;\n    margin-bottom: 10px;\n  }\n}\n@layer purple {\n  div div li a {\n    color: rebeccapurple;\n  }\n}\n@layer green {\n  a {\n    color: lightgreen;\n  }\n}\n"} height="110px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<div class="container" id="outer">
-  <div class="container" id="inner">
-    <ul>
-      <li class="nav"><a href="#">One</a></li>
-      <li class="nav"><a href="#">Two</a></li>
-    </ul>
-  </div>
-</div>
-```
-
-```css
-@layer yellow, purple, green;
-
-@layer yellow {
-  #outer div ul .nav a {
-    padding: 5px;
-    display: inline-block;
-    margin-bottom: 10px;
-  }
-}
-@layer purple {
-  div div li a {
-    color: rebeccapurple;
-  }
-}
-@layer green {
-  a {
-    color: lightgreen;
-  }
-}
-```
+<Sandbox id="02-html-css/02-css/04-test-cascade/cascade2" title="Your solution" html={"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n"} css={"@layer yellow, purple, green;\n\n@layer yellow {\n  #outer div ul .nav a {\n    padding: 5px;\n    display: inline-block;\n    margin-bottom: 10px;\n  }\n}\n@layer purple {\n  div div li a {\n    color: rebeccapurple;\n  }\n}\n@layer green {\n  a {\n    color: lightgreen;\n  }\n}\n"} solution={{"html":"<div class=\"container\" id=\"outer\">\n  <div class=\"container\" id=\"inner\">\n    <ul>\n      <li class=\"nav\"><a href=\"#\">One</a></li>\n      <li class=\"nav\"><a href=\"#\">Two</a></li>\n    </ul>\n  </div>\n</div>\n","css":"@layer yellow, green, purple;\n@layer yellow {\n  #outer div ul .nav a {\n    padding: 5px;\n    display: inline-block;\n    margin-bottom: 10px;\n  }\n}\n@layer purple {\n  div div li a {\n    color: rebeccapurple;\n  }\n}\n@layer green {\n  a {\n    color: lightgreen;\n  }\n}\n"}} />
 
 The updated styling should look like this:
 

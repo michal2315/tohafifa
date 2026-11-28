@@ -1,0 +1,44 @@
+---
+title: 'Milestone: Instagram in Angular'
+sidebar_label: 'Milestone: Instagram in Angular'
+sidebar_position: 99
+sidebar_custom_props: { kind: milestone }
+---
+
+<Milestone title="Instagram in Angular">
+
+Rebuild the Instagram client as an Angular app that talks to your API from the NestJS stage. Reuse
+the SCSS from the HTML & CSS stage.
+
+- **Feed** (`/`): the posts of the people you follow, with likes and comments.
+- **Profile** (`/users/:username`): the user's details and a grid of their posts.
+- **Post** (`/posts/:id`): one post with all its comments.
+- **Upload** (`/upload`): a form to publish a new post.
+
+<Checklist
+  title="Requirements"
+  items={[
+    'Standalone components, signals, and the built-in control flow (@if, @for with track)',
+    'Folders follow our project structure: core, shared and one folder per feature',
+    'Routing with route parameters, and a "not found" page for unknown URLs',
+    'Components communicate through inputs and outputs; API calls are in services',
+    'The upload form is a reactive form with validation, and shows the errors to the user',
+    'NgRx Store holds the posts: actions named [Source] Event, reducers, selectors, and effects for the API calls',
+    'Loading and error states are shown on every page that calls the API',
+  ]}
+/>
+
+<TrackOnly team={['team-1']}>
+
+<Checklist
+  id="atomic-design"
+  title="Atomic Design"
+  items={[
+    'Shared components are split into atoms, molecules and organisms, as in the Atomic Design page',
+    'Atoms have no margins or positions; only molecules and organisms position them',
+  ]}
+/>
+
+</TrackOnly>
+
+</Milestone>

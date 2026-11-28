@@ -21,3 +21,23 @@
   border: none;
   background: #fff;
 }
+
+.caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  cursor: pointer;
+}
+
+.edit:hover {
+  text-decoration: underline;
+}

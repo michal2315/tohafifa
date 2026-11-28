@@ -19,6 +19,34 @@ const SOURCES = {
     licenseUrl: 'https://github.com/sass/sass-site/blob/main/LICENSE',
     note: '',
   },
+  angular: {
+    name: 'the Angular documentation',
+    authors: 'Google LLC',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    note: 'Code examples are under the MIT License.',
+  },
+  ngrx: {
+    name: 'the NgRx documentation',
+    authors: 'the NgRx team',
+    license: 'MIT',
+    licenseUrl: 'https://github.com/ngrx/platform/blob/main/LICENSE',
+    note: '',
+  },
+  rxjs: {
+    name: 'the RxJS documentation',
+    authors: 'the RxJS team',
+    license: 'Apache 2.0',
+    licenseUrl: 'https://github.com/ReactiveX/rxjs/blob/master/LICENSE.txt',
+    note: '',
+  },
+  'react-atomic-design': {
+    name: 'the react-atomic-design repository',
+    authors: 'Danilo Woznica and contributors',
+    license: 'MIT',
+    licenseUrl: 'https://github.com/danilowoz/react-atomic-design#license',
+    note: '',
+  },
 } as const;
 
 interface SourceAttributionProps {

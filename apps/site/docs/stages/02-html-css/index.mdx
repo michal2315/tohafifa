@@ -8,6 +8,8 @@ title: HTML, CSS & SCSS
   goals={['Build semantic page layouts', 'Style responsive pages with SCSS']}
 />
 
+Each section ends with a short quiz. Take it before you move on.
+
 ## Learn
 
 ### HTML
@@ -20,21 +22,18 @@ title: HTML, CSS & SCSS
     time="30 min"
   />
   <Resource type="docs" title="HTML images" href="./html/images" time="20 min" />
+  <Resource type="quiz" title="Quiz: HTML" href="./html/quiz" time="5 min" />
 </Resources>
 
 ### CSS
 
 <Resources>
   <Resource type="docs" title="Basic CSS selectors" href="./css/selectors" time="20 min" />
-  <Resource
-    type="interactive"
-    title="CSS Diner"
-    href="pathname:///games/css-diner/index.html"
-    time="30 min"
-  />
+  <Resource type="game" title="Game: CSS Diner" href="./css/game-css-diner" time="30 min" />
   <Resource type="docs" title="Conflicting styles" href="./css/cascade" time="40 min" />
   <Resource type="docs" title="The box model" href="./css/box-model" time="30 min" />
   <Resource type="docs" title="Debugging CSS" href="./css/debugging-css" time="20 min" />
+  <Resource type="quiz" title="Quiz: CSS" href="./css/quiz" time="5 min" />
 </Resources>
 
 ### Layout
@@ -42,30 +41,27 @@ title: HTML, CSS & SCSS
 <Resources>
   <Resource type="docs" title="Flexbox" href="./layout/flexbox" time="40 min" />
   <Resource
-    type="interactive"
-    title="Flexbox Froggy"
-    href="pathname:///games/flexbox-froggy/index.html"
+    type="game"
+    title="Game: Flexbox Froggy"
+    href="./layout/game-flexbox-froggy"
     time="30 min"
   />
   <Resource type="docs" title="Grids" href="./layout/grid" time="40 min" />
-  <Resource
-    type="interactive"
-    title="Grid Garden"
-    href="pathname:///games/grid-garden/index.html"
-    time="30 min"
-  />
+  <Resource type="game" title="Game: Grid Garden" href="./layout/game-grid-garden" time="30 min" />
   <Resource
     type="docs"
     title="Media query fundamentals"
     href="./layout/media-queries"
     time="40 min"
   />
+  <Resource type="quiz" title="Quiz: Layout" href="./layout/quiz" time="5 min" />
 </Resources>
 
 ### SCSS
 
 <Resources>
   <Resource type="docs" title="Sass Basics" href="./scss/sass-basics" time="20 min" />
+  <Resource type="quiz" title="Quiz: SCSS" href="./scss/quiz" time="5 min" />
 </Resources>
 
 ## Practice
@@ -87,22 +83,6 @@ title: HTML, CSS & SCSS
   />
 </Resources>
 
-<Milestone title="Feed page (UI only)">
+## Milestone
 
-- Top bar: logo, search box and icons.
-- A horizontal stories row that scrolls sideways.
-- Post cards: avatar, username, image, like/comment/share buttons, like count, caption, "view all comments" and an "add a comment" input.
-- On desktop, a suggestions sidebar on the right.
-
-<Checklist
-  title="Requirements"
-  items={[
-    'Semantic HTML: header, main, an article per post, real <button> elements, alt text on images',
-    'SCSS split into partials, with variables for colors, spacing and font sizes',
-    'One consistent class naming convention',
-    'Layout with Flexbox and/or Grid - no CSS frameworks, no inline styles',
-    'Works at 375px (mobile) and 1280px (desktop); the sidebar is hidden on mobile',
-  ]}
-/>
-
-</Milestone>
+When you finish the stage, build the [feed page milestone](./milestone) and open a merge request.

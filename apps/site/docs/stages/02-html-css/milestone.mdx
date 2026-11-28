@@ -1,0 +1,30 @@
+---
+title: 'Milestone: Feed page (UI only)'
+sidebar_label: 'Milestone: Feed page'
+sidebar_position: 99
+sidebar_custom_props: { kind: milestone }
+---
+
+<Milestone title="Feed page (UI only)">
+
+Build the Instagram feed page with HTML and SCSS only - no JavaScript yet. Use static content: a
+few hard-coded posts and stories are enough.
+
+- Top bar: logo, search box and icons.
+- A horizontal stories row that scrolls sideways.
+- Post cards: avatar, username, image, like/comment/share buttons, like count, caption, "view all
+  comments" and an "add a comment" input.
+- On desktop, a suggestions sidebar on the right.
+
+<Checklist
+  title="Requirements"
+  items={[
+    'Semantic HTML: header, main, an article per post, real <button> elements, alt text on images',
+    'SCSS split into partials, with variables for colors, spacing and font sizes',
+    'One consistent class naming convention',
+    'Layout with Flexbox and/or Grid - no CSS frameworks, no inline styles',
+    'Works at 375px (mobile) and 1280px (desktop); the sidebar is hidden on mobile',
+  ]}
+/>
+
+</Milestone>

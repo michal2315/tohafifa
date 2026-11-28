@@ -1,0 +1,40 @@
+---
+title: "Setting up `HttpClient`"
+sidebar_custom_props: { kind: reading }
+---
+
+{/* Imported by tools/import-docs from the Angular documentation - do not edit the text by hand. */}
+
+`HttpClient` is available for injection by default in Angular v21 and later.
+
+## Providing `HttpClient` through dependency injection
+
+You can use the `provideHttpClient` helper function to configure the default HTTP feature set or add features in the application `providers` in `app.config.ts`.
+
+```ts
+export const appConfig: ApplicationConfig = {
+  providers: [provideHttpClient(/* add features here, such as withInterceptors(...) */)],
+};
+```
+
+If your app is using NgModule-based bootstrap instead, you can include `provideHttpClient` in the providers of your app's NgModule to configure the default HTTP feature set or add features:
+
+```ts
+@NgModule({
+  providers: [provideHttpClient(/* add features here, such as withInterceptors(...) */)],
+  // ... other application configuration
+})
+export class AppModule {}
+```
+
+You can then inject the `HttpClient` service as a dependency of your components, services, or other classes:
+
+```ts
+@Service()
+export class ConfigService {
+  private http = inject(HttpClient);
+  // This service can now make HTTP requests via `this.http`.
+}
+```
+
+<SourceAttribution source="angular" title="Setting up `HttpClient`" url="https://angular.dev/guide/http/setup" />

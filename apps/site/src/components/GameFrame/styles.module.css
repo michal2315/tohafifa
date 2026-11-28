@@ -1,0 +1,21 @@
+.game {
+  margin: 0 0 var(--ifm-spacing-vertical);
+}
+
+.frame {
+  display: block;
+  width: 100%;
+  /* Tall enough for the game's instructions and board side by side. */
+  height: max(36rem, 75vh);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-card-border-radius);
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}

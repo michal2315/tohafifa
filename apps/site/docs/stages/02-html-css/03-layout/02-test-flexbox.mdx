@@ -1,9 +1,10 @@
 ---
 title: "Test your skills: Flexbox"
 sidebar_label: "Test: Flexbox"
+sidebar_custom_props: { kind: practice }
 ---
 
-{/* Imported from MDN Web Docs by an import script - do not edit the text by hand. */}
+{/* Imported by tools/import-docs from MDN Web Docs - do not edit the text by hand. */}
 
 The aim of this skill test is to help you assess whether you understand how [flexbox and flex items](./01-flexbox.mdx) behave. Below are four sets of design problems you can solve using flexbox. Your task is to fix the problems.
 
@@ -13,58 +14,13 @@ To get help, read our Test your skills usage guide. You can also reach out to us
 
 :::
 
-## Interactive challenge {#interactive_challenge}
-
-First of all, we are giving you a fun, interactive flexbox challenge created by our learning partner, [Scrimba](https://scrimba.com/home).
-
-Watch the embedded scrim, and complete all the tasks on the timeline (the little ghost icons) by following the instructions and editing the code. When you are done, you can resume watching the scrim to check how the teacher's solution matches up with yours.
-
 ## Flexbox 1 {#flexbox_1}
 
 In this task, we use some list items to create the navigation for a site. To complete the task, use flexbox to lay out the list items as a row, with an equal amount of space between each item.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<nav>\n  <ul>\n    <li><a href=\"/\">Home</a></li>\n    <li><a href=\"/about\">About Us</a></li>\n    <li><a href=\"/products\">Our Products</a></li>\n    <li><a href=\"/contact\">Contact Us</a></li>\n  </ul>\n</nav>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nnav ul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\nnav a:link,\nnav a:visited {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  display: inline-block;\n  text-decoration: none;\n}\n\nnav ul {\n  /* Add styles here */\n}\n"} height="240px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<nav>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About Us</a></li>
-    <li><a href="/products">Our Products</a></li>
-    <li><a href="/contact">Contact Us</a></li>
-  </ul>
-</nav>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-nav ul {
-  max-width: 750px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-nav a:link,
-nav a:visited {
-  background-color: #4d7298;
-  border: 2px solid #77a6b6;
-  border-radius: 0.5em;
-  color: white;
-  padding: 0.5em;
-  display: inline-block;
-  text-decoration: none;
-}
-
-nav ul {
-  /* Add styles here */
-}
-```
+<Sandbox id="02-html-css/03-layout/02-test-flexbox/flexbox1" title="Your solution" html={"<nav>\n  <ul>\n    <li><a href=\"/\">Home</a></li>\n    <li><a href=\"/about\">About Us</a></li>\n    <li><a href=\"/products\">Our Products</a></li>\n    <li><a href=\"/contact\">Contact Us</a></li>\n  </ul>\n</nav>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nnav ul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\nnav a:link,\nnav a:visited {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  display: inline-block;\n  text-decoration: none;\n}\n\nnav ul {\n  /* Add styles here */\n}\n"} solution={{"html":"<nav>\n  <ul>\n    <li><a href=\"/\">Home</a></li>\n    <li><a href=\"/about\">About Us</a></li>\n    <li><a href=\"/products\">Our Products</a></li>\n    <li><a href=\"/contact\">Contact Us</a></li>\n  </ul>\n</nav>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nnav ul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\nnav a:link,\nnav a:visited {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  display: inline-block;\n  text-decoration: none;\n}\n\nnav ul {\n  /* Add styles here */\n}\nnav ul {\n  display: flex;\n  justify-content: space-between;\n}\n"}} />
 
 When the task is complete, the items should look like this:
 
@@ -90,51 +46,9 @@ In this task, the list items are all different sizes, but we want them to be dis
 
 **Bonus question:** Can you now make the first item twice the size of the other items?
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<ul>\n  <li>I am small</li>\n  <li>I have more content than the very small item.</li>\n  <li>\n    I have lots of content. So much content that I don't know where it is all\n    going to go. I'm glad that CSS is pretty good at dealing with situations\n    where we end up with more words than expected!\n  </li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\n"} height="240px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<ul>
-  <li>I am small</li>
-  <li>I have more content than the very small item.</li>
-  <li>
-    I have lots of content. So much content that I don't know where it is all
-    going to go. I'm glad that CSS is pretty good at dealing with situations
-    where we end up with more words than expected!
-  </li>
-</ul>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-ul {
-  max-width: 750px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  background-color: #4d7298;
-  border: 2px solid #77a6b6;
-  border-radius: 0.5em;
-  color: white;
-  padding: 0.5em;
-}
-
-ul {
-  /* Add styles here */
-}
-
-li {
-  /* Add styles here */
-}
-```
+<Sandbox id="02-html-css/03-layout/02-test-flexbox/flexbox2" title="Your solution" html={"<ul>\n  <li>I am small</li>\n  <li>I have more content than the very small item.</li>\n  <li>\n    I have lots of content. So much content that I don't know where it is all\n    going to go. I'm glad that CSS is pretty good at dealing with situations\n    where we end up with more words than expected!\n  </li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\n"} solution={{"html":"<ul>\n  <li>I am small</li>\n  <li>I have more content than the very small item.</li>\n  <li>\n    I have lots of content. So much content that I don't know where it is all\n    going to go. I'm glad that CSS is pretty good at dealing with situations\n    where we end up with more words than expected!\n  </li>\n</ul>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  max-width: 750px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\nul {\n  display: flex;\n}\n\nli {\n  flex: 1;\n}\nli:first-child {\n  flex: 2;\n}\n"}} />
 
 When the task is complete, the items should look like this:
 
@@ -169,59 +83,13 @@ li:first-child {
 
 In this task, we'd like you to arrange the list items into rows.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<ul>\n  <li>Turnip</li>\n  <li>greens</li>\n  <li>yarrow</li>\n  <li>ricebean</li>\n  <li>rutabaga</li>\n  <li>endive</li>\n  <li>cauliflower</li>\n  <li>sea lettuce</li>\n  <li>kohlrabi</li>\n  <li>amaranth</li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  width: 450px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  margin: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\n"} height="260px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<ul>
-  <li>Turnip</li>
-  <li>greens</li>
-  <li>yarrow</li>
-  <li>ricebean</li>
-  <li>rutabaga</li>
-  <li>endive</li>
-  <li>cauliflower</li>
-  <li>sea lettuce</li>
-  <li>kohlrabi</li>
-  <li>amaranth</li>
-</ul>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-ul {
-  width: 450px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  background-color: #4d7298;
-  border: 2px solid #77a6b6;
-  border-radius: 0.5em;
-  color: white;
-  padding: 0.5em;
-  margin: 0.5em;
-}
-
-ul {
-  /* Add styles here */
-}
-
-li {
-  /* Add styles here */
-}
-```
+<Sandbox id="02-html-css/03-layout/02-test-flexbox/flexbox3" title="Your solution" html={"<ul>\n  <li>Photos</li>\n  <li>Videos</li>\n  <li>Stories</li>\n  <li>Reels</li>\n  <li>Messages</li>\n  <li>Profile</li>\n  <li>Settings</li>\n  <li>Saved posts</li>\n  <li>Explore</li>\n  <li>Search</li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  width: 450px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  margin: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\n"} solution={{"html":"<ul>\n  <li>Photos</li>\n  <li>Videos</li>\n  <li>Stories</li>\n  <li>Reels</li>\n  <li>Messages</li>\n  <li>Profile</li>\n  <li>Settings</li>\n  <li>Saved posts</li>\n  <li>Explore</li>\n  <li>Search</li>\n</ul>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  width: 450px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  margin: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\nul {\n  display: flex;\n  flex-wrap: wrap;\n}\n\nli {\n  flex: auto;\n}\n"}} />
 
 When the task is complete, the items should look like this:
 
-<LiveExample html={"<ul>\n  <li>Turnip</li>\n  <li>greens</li>\n  <li>yarrow</li>\n  <li>ricebean</li>\n  <li>rutabaga</li>\n  <li>endive</li>\n  <li>cauliflower</li>\n  <li>sea lettuce</li>\n  <li>kohlrabi</li>\n  <li>amaranth</li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  width: 450px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  margin: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\nul {\n  display: flex;\n  flex-wrap: wrap;\n}\n\nli {\n  flex: auto;\n}\n"} height="260px" />
+<LiveExample html={"<ul>\n  <li>Photos</li>\n  <li>Videos</li>\n  <li>Stories</li>\n  <li>Reels</li>\n  <li>Messages</li>\n  <li>Profile</li>\n  <li>Settings</li>\n  <li>Saved posts</li>\n  <li>Explore</li>\n  <li>Search</li>\n</ul>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\nul {\n  width: 450px;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nli {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n  margin: 0.5em;\n}\n\nul {\n  /* Add styles here */\n}\n\nli {\n  /* Add styles here */\n}\nul {\n  display: flex;\n  flex-wrap: wrap;\n}\n\nli {\n  flex: auto;\n}\n"} height="260px" />
 
 <details>
 <summary>Click here to show the solution</summary>

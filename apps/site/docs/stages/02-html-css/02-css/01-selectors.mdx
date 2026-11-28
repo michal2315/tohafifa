@@ -1,9 +1,10 @@
 ---
 title: "Basic CSS selectors"
 sidebar_label: "Basic selectors"
+sidebar_custom_props: { kind: reading }
 ---
 
-{/* Imported from MDN Web Docs by an import script - do not edit the text by hand. */}
+{/* Imported by tools/import-docs from MDN Web Docs - do not edit the text by hand. */}
 
 You've already seen how, in CSS, selectors are used to target the HTML elements on our web pages that we want to style. There is a wide variety of CSS selectors available, allowing for fine-grained precision when selecting elements to style, and in the next few articles, we'll look at the different types in depth. In this article, we'll recap some selector fundamentals, including the basic type, class, and ID selectors, and selector lists. We'll also introduce the universal selector.
 
@@ -48,21 +49,21 @@ Try editing the following example (click **"Play"** to open it in the MDN Playgr
 ```html
 <h1>Type selectors</h1>
 <p>
-  Veggies es bonus vobis, proinde vos postulo essum magis
-  <span>kohlrabi welsh onion</span> daikon amaranth tatsoi tomatillo melon azuki
-  bean garlic.
+  This paragraph is filler, and its only job is
+  <span>to take up</span> some space so you can see
+  the layout.
 </p>
 
 <p>
-  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley
-  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra
-  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.
+  Here is a second filler <strong>paragraph</strong> of text. This
+  third paragraph is filler too and is only here to add
+  more length. The words in it do not matter.
 </p>
 
 <p>
-  Turnip greens yarrow ricebean rutabaga <em>endive cauliflower</em> sea lettuce
-  kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter
-  purslane kale. Celery potato scallion desert raisin horseradish spinach
+  Look at the code of <em>each example</em> to understand
+  why the content looks the way it does on the
+  rendered page. Each sentence here is just more filler
 </p>
 ```
 
@@ -84,7 +85,7 @@ em {
 }
 ```
 
-<LiveExample html={"<h1>Type selectors</h1>\n<p>\n  Veggies es bonus vobis, proinde vos postulo essum magis\n  <span>kohlrabi welsh onion</span> daikon amaranth tatsoi tomatillo melon azuki\n  bean garlic.\n</p>\n\n<p>\n  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley\n  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra\n  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.\n</p>\n\n<p>\n  Turnip greens yarrow ricebean rutabaga <em>endive cauliflower</em> sea lettuce\n  kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter\n  purslane kale. Celery potato scallion desert raisin horseradish spinach\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\nspan {\n  background-color: yellow;\n}\n\nstrong {\n  color: rebeccapurple;\n}\n\nem {\n  color: rebeccapurple;\n}\n"} height="280px" />
+<LiveExample html={"<h1>Type selectors</h1>\n<p>\n  This paragraph is filler, and its only job is\n  <span>to take up</span> some space so you can see\n  the layout.\n</p>\n\n<p>\n  Here is a second filler <strong>paragraph</strong> of text. This\n  third paragraph is filler too and is only here to add\n  more length. The words in it do not matter.\n</p>\n\n<p>\n  Look at the code of <em>each example</em> to understand\n  why the content looks the way it does on the\n  rendered page. Each sentence here is just more filler\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\nspan {\n  background-color: yellow;\n}\n\nstrong {\n  color: rebeccapurple;\n}\n\nem {\n  color: rebeccapurple;\n}\n"} height="280px" />
 
 ## Class selectors {#class_selectors}
 
@@ -93,15 +94,15 @@ The case-sensitive class selector starts with a dot (`.`) character. It will sel
 ```html
 <h1 class="highlight">Class selectors</h1>
 <p>
-  Veggies es bonus vobis, proinde vos postulo essum magis
-  <span class="highlight">kohlrabi welsh onion</span> daikon amaranth tatsoi
-  tomatillo melon azuki bean garlic.
+  This paragraph is filler, and its only job is
+  <span class="highlight">to take up</span> some space so
+  you can see the layout.
 </p>
 
 <p class="highlight">
-  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley
-  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra
-  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.
+  Here is a second filler <strong>paragraph</strong> of text. This
+  third paragraph is filler too and is only here to add
+  more length. The words in it do not matter.
 </p>
 ```
 
@@ -115,7 +116,7 @@ body {
 }
 ```
 
-<LiveExample html={"<h1 class=\"highlight\">Class selectors</h1>\n<p>\n  Veggies es bonus vobis, proinde vos postulo essum magis\n  <span class=\"highlight\">kohlrabi welsh onion</span> daikon amaranth tatsoi\n  tomatillo melon azuki bean garlic.\n</p>\n\n<p class=\"highlight\">\n  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley\n  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra\n  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\n.highlight {\n  background-color: yellow;\n}\n"} height="220px" />
+<LiveExample html={"<h1 class=\"highlight\">Class selectors</h1>\n<p>\n  This paragraph is filler, and its only job is\n  <span class=\"highlight\">to take up</span> some space so\n  you can see the layout.\n</p>\n\n<p class=\"highlight\">\n  Here is a second filler <strong>paragraph</strong> of text. This\n  third paragraph is filler too and is only here to add\n  more length. The words in it do not matter.\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\n.highlight {\n  background-color: yellow;\n}\n"} height="220px" />
 
 ### Playing with class selectors {#playing_with_class_selectors}
 
@@ -132,15 +133,15 @@ You can create a selector that will target specific elements with the class appl
 ```html
 <h1 class="highlight">Class selectors</h1>
 <p>
-  Veggies es bonus vobis, proinde vos postulo essum magis
-  <span class="highlight">kohlrabi welsh onion</span> daikon amaranth tatsoi
-  tomatillo melon azuki bean garlic.
+  This paragraph is filler, and its only job is
+  <span class="highlight">to take up</span> some space so
+  you can see the layout.
 </p>
 
 <p class="highlight">
-  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley
-  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra
-  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.
+  Here is a second filler <strong>paragraph</strong> of text. This
+  third paragraph is filler too and is only here to add
+  more length. The words in it do not matter.
 </p>
 ```
 
@@ -158,7 +159,7 @@ h1.highlight {
 }
 ```
 
-<LiveExample html={"<h1 class=\"highlight\">Class selectors</h1>\n<p>\n  Veggies es bonus vobis, proinde vos postulo essum magis\n  <span class=\"highlight\">kohlrabi welsh onion</span> daikon amaranth tatsoi\n  tomatillo melon azuki bean garlic.\n</p>\n\n<p class=\"highlight\">\n  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley\n  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra\n  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\nspan.highlight {\n  background-color: yellow;\n}\n\nh1.highlight {\n  background-color: pink;\n}\n"} height="200px" />
+<LiveExample html={"<h1 class=\"highlight\">Class selectors</h1>\n<p>\n  This paragraph is filler, and its only job is\n  <span class=\"highlight\">to take up</span> some space so\n  you can see the layout.\n</p>\n\n<p class=\"highlight\">\n  Here is a second filler <strong>paragraph</strong> of text. This\n  third paragraph is filler too and is only here to add\n  more length. The words in it do not matter.\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\nspan.highlight {\n  background-color: yellow;\n}\n\nh1.highlight {\n  background-color: pink;\n}\n"} height="200px" />
 
 This approach reduces the scope of a rule. The rule will only apply to that particular element and class combination. You would need to add another selector if you wanted the rule to apply to other elements.
 
@@ -213,14 +214,14 @@ The case-sensitive ID selector begins with a `#` rather than a dot character, bu
 ```html
 <h1 id="heading">ID selector</h1>
 <p>
-  Veggies es bonus vobis, proinde vos postulo essum magis kohlrabi welsh onion
-  daikon amaranth tatsoi tomatillo melon azuki bean garlic.
+  This paragraph is filler, and its only job is to take up
+  some space so you can see the layout.
 </p>
 
 <p id="one">
-  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley
-  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra
-  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.
+  Here is a second filler <strong>paragraph</strong> of text. This
+  third paragraph is filler too and is only here to add
+  more length. The words in it do not matter.
 </p>
 ```
 
@@ -238,7 +239,7 @@ h1#heading {
 }
 ```
 
-<LiveExample html={"<h1 id=\"heading\">ID selector</h1>\n<p>\n  Veggies es bonus vobis, proinde vos postulo essum magis kohlrabi welsh onion\n  daikon amaranth tatsoi tomatillo melon azuki bean garlic.\n</p>\n\n<p id=\"one\">\n  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley\n  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra\n  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\n#one {\n  background-color: yellow;\n}\n\nh1#heading {\n  color: rebeccapurple;\n}\n"} height="200px" />
+<LiveExample html={"<h1 id=\"heading\">ID selector</h1>\n<p>\n  This paragraph is filler, and its only job is to take up\n  some space so you can see the layout.\n</p>\n\n<p id=\"one\">\n  Here is a second filler <strong>paragraph</strong> of text. This\n  third paragraph is filler too and is only here to add\n  more length. The words in it do not matter.\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\n#one {\n  background-color: yellow;\n}\n\nh1#heading {\n  color: rebeccapurple;\n}\n"} height="200px" />
 
 :::warning
 
@@ -291,21 +292,21 @@ In the example below, try combining the two selectors that have identical declar
 ```html
 <h1>Type selectors</h1>
 <p>
-  Veggies es bonus vobis, proinde vos postulo essum magis
-  <span>kohlrabi welsh onion</span> daikon amaranth tatsoi tomatillo melon azuki
-  bean garlic.
+  This paragraph is filler, and its only job is
+  <span>to take up</span> some space so you can see
+  the layout.
 </p>
 
 <p>
-  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley
-  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra
-  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.
+  Here is a second filler <strong>paragraph</strong> of text. This
+  third paragraph is filler too and is only here to add
+  more length. The words in it do not matter.
 </p>
 
 <p>
-  Turnip greens yarrow ricebean rutabaga <em>endive cauliflower</em> sea lettuce
-  kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter
-  purslane kale. Celery potato scallion desert raisin horseradish spinach
+  Look at the code of <em>each example</em> to understand
+  why the content looks the way it does on the
+  rendered page. Each sentence here is just more filler
 </p>
 ```
 
@@ -326,7 +327,7 @@ em {
 }
 ```
 
-<LiveExample html={"<h1>Type selectors</h1>\n<p>\n  Veggies es bonus vobis, proinde vos postulo essum magis\n  <span>kohlrabi welsh onion</span> daikon amaranth tatsoi tomatillo melon azuki\n  bean garlic.\n</p>\n\n<p>\n  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley\n  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra\n  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.\n</p>\n\n<p>\n  Turnip greens yarrow ricebean rutabaga <em>endive cauliflower</em> sea lettuce\n  kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter\n  purslane kale. Celery potato scallion desert raisin horseradish spinach\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\nspan {\n  background-color: yellow;\n}\n\nstrong {\n  color: rebeccapurple;\n}\n\nem {\n  color: rebeccapurple;\n}\n"} height="280px" />
+<LiveExample html={"<h1>Type selectors</h1>\n<p>\n  This paragraph is filler, and its only job is\n  <span>to take up</span> some space so you can see\n  the layout.\n</p>\n\n<p>\n  Here is a second filler <strong>paragraph</strong> of text. This\n  third paragraph is filler too and is only here to add\n  more length. The words in it do not matter.\n</p>\n\n<p>\n  Look at the code of <em>each example</em> to understand\n  why the content looks the way it does on the\n  rendered page. Each sentence here is just more filler\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\nspan {\n  background-color: yellow;\n}\n\nstrong {\n  color: rebeccapurple;\n}\n\nem {\n  color: rebeccapurple;\n}\n"} height="280px" />
 
 ### Invalid selectors in selector lists {#invalid_selectors_in_selector_lists}
 
@@ -361,15 +362,15 @@ In the following example, we use the universal selector to remove the margins on
 ```html
 <h1>Universal selector</h1>
 <p>
-  Veggies es bonus vobis, proinde vos postulo essum magis
-  <span>kohlrabi welsh onion</span> daikon amaranth tatsoi tomatillo melon azuki
-  bean garlic.
+  This paragraph is filler, and its only job is
+  <span>to take up</span> some space so you can see
+  the layout.
 </p>
 
 <p>
-  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley
-  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra
-  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.
+  Here is a second filler <strong>paragraph</strong> of text. This
+  third paragraph is filler too and is only here to add
+  more length. The words in it do not matter.
 </p>
 ```
 
@@ -383,7 +384,7 @@ body {
 }
 ```
 
-<LiveExample html={"<h1>Universal selector</h1>\n<p>\n  Veggies es bonus vobis, proinde vos postulo essum magis\n  <span>kohlrabi welsh onion</span> daikon amaranth tatsoi tomatillo melon azuki\n  bean garlic.\n</p>\n\n<p>\n  Gumbo beet greens corn soko <strong>endive</strong> gumbo gourd. Parsley\n  shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra\n  wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\n* {\n  margin: 0;\n}\n"} />
+<LiveExample html={"<h1>Universal selector</h1>\n<p>\n  This paragraph is filler, and its only job is\n  <span>to take up</span> some space so you can see\n  the layout.\n</p>\n\n<p>\n  Here is a second filler <strong>paragraph</strong> of text. This\n  third paragraph is filler too and is only here to add\n  more length. The words in it do not matter.\n</p>\n"} css={"body {\n  font-family: sans-serif;\n}\n\n* {\n  margin: 0;\n}\n"} />
 
 This kind of behavior can sometimes be seen in "reset stylesheets", which strip out all of the browser styling. Since the universal selector makes global changes, we use it for very specific situations, such as the one described below.
 

@@ -1,4 +1,5 @@
 /* Global theme. Component styles live next to each component in styles.module.css. */
+@import '../pageKinds/pageKinds.css';
 
 :root {
   --ifm-color-primary: #4f46e5;

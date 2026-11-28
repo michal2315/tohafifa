@@ -1,0 +1,193 @@
+---
+title: "Read route state"
+sidebar_custom_props: { kind: reading }
+---
+
+{/* Imported by tools/import-docs from the Angular documentation - do not edit the text by hand. */}
+
+Angular Router allows you to read and use information associated with a route to create responsive and context-aware components.
+
+## Get information about the current route with ActivatedRoute
+
+`ActivatedRoute` is a service from `@angular/router` that provides all the information associated with the current route.
+
+```ts
+import {Component, inject} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+
+@Component({
+  selector: 'app-product',
+})
+export class Product {
+  private activatedRoute = inject(ActivatedRoute);
+
+  constructor() {
+    console.log(this.activatedRoute);
+  }
+}
+```
+
+The `ActivatedRoute` can provide different information about the route. Some common properties include:
+
+| Property      | Details                                                                                                                           |
+| :------------ | :-------------------------------------------------------------------------------------------------------------------------------- |
+| `url`         | An `Observable` of the route paths, represented as an array of `UrlSegment` objects for each part of the route path.              |
+| `data`        | An `Observable` that contains the `data` object provided for the route. Also contains any resolved values from the resolve guard. |
+| `params`      | An `Observable` that contains the required and optional parameters specific to the route.                                         |
+| `queryParams` | An `Observable` that contains the query parameters available to all routes.                                                       |
+| `resources`   | An optional record of read-only `Resource` instances defined on or inherited by the route (requires `withRouterResources()`).     |
+
+Check out the `ActivatedRoute` API docs for a complete list of what you can access with in the route.
+
+## Reading parameters on a route
+
+There are two types of parameters that developers can utilize from a route: route and query parameters.
+
+### Route Parameters
+
+Route parameters allow you to pass data to a component through the URL. This is useful when you want to display specific content based on an identifier in the URL, like a user ID or a product ID.
+
+You can [define route parameters](./02-define-routes.mdx#define-url-paths-with-route-parameters) by prefixing the parameter name with a colon (`:`).
+
+```ts
+import {Routes} from '@angular/router';
+import {Product} from './product';
+
+const routes: Routes = [{path: 'product/:id', component: Product}];
+```
+
+You can access parameters by subscribing to `route.params`.
+
+```ts
+import {Component, inject, signal} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+
+@Component({
+  selector: 'app-product-detail',
+  template: `<h1>Product Details: {{ productId() }}</h1>`,
+})
+export class ProductDetail {
+  productId = signal('');
+  private activatedRoute = inject(ActivatedRoute);
+
+  constructor() {
+    // Access route parameters
+    this.activatedRoute.params.subscribe((params) => {
+      this.productId.set(params['id']);
+    });
+  }
+}
+```
+
+### Query Parameters
+
+Query parameters provide a flexible way to pass optional data through URLs without affecting the route structure. Unlike route parameters, query parameters can persist across navigation events and are perfect for handling filtering, sorting, pagination, and other stateful UI elements.
+
+```ts
+// Single parameter structure
+// /products?category=electronics
+router.navigate(['/products'], {
+  queryParams: {category: 'electronics'},
+});
+
+// Multiple parameters
+// /products?category=electronics&sort=price&page=1
+router.navigate(['/products'], {
+  queryParams: {
+    category: 'electronics',
+    sort: 'price',
+    page: 1,
+  },
+});
+```
+
+You can access query parameters with `route.queryParams`.
+
+Here is an example of a `ProductList` that updates the query parameters that affect how it displays a list of products:
+
+```ts
+import {Component, inject} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+
+@Component({
+  selector: 'app-product-list',
+  template: `
+    <div>
+      <select (change)="updateSort($event)">
+        <option value="price">Price</option>
+        <option value="name">Name</option>
+      </select>
+      <!-- Products list -->
+    </div>
+  `,
+})
+export class ProductList {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  constructor() {
+    // Access query parameters reactively
+    this.route.queryParams.subscribe((params) => {
+      const sort = params['sort'] || 'price';
+      const page = Number(params['page']) || 1;
+      this.loadProducts(sort, page);
+    });
+  }
+
+  updateSort(event: Event) {
+    const sort = (event.target as HTMLSelectElement).value;
+    // Update URL with new query parameter
+    this.router.navigate([], {
+      queryParams: {sort},
+      queryParamsHandling: 'merge', // Preserve other query parameters
+    });
+  }
+}
+```
+
+In this example, users can use a select element to sort the product list by name or price. The associated change handler updates the URL’s query parameters, which in turn triggers a change event that can read the updated query parameters and update the product list.
+
+For more information, check out the official docs on QueryParamsHandling.
+
+### Matrix Parameters
+
+Matrix parameters are optional parameters that belong to a specific URL segment, rather than applying to the entire route. Unlike query parameters which appear after a `?` and apply globally, matrix parameters use semicolons (`;`) and are scoped to individual path segments.
+
+Matrix parameters are useful when you need to pass auxiliary data to a specific route segment without affecting the route definition or matching behavior. Like query parameters, they don't need to be defined in your route configuration.
+
+```ts
+// URL format: /path;key=value
+// Multiple parameters: /path;key1=value1;key2=value2
+
+// Navigate with matrix parameters
+this.router.navigate(['/awesome-products', {view: 'grid', filter: 'new'}]);
+// Results in URL: /awesome-products;view=grid;filter=new
+```
+
+**Using ActivatedRoute**
+
+```ts
+import {Component, inject} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+
+@Component(/* ... */)
+export class AwesomeProducts {
+  private route = inject(ActivatedRoute);
+
+  constructor() {
+    // Access matrix parameters via params
+    this.route.params.subscribe((params) => {
+      const view = params['view']; // e.g., 'grid'
+      const filter = params['filter']; // e.g., 'new'
+    });
+  }
+}
+```
+
+:::note
+
+As an alternative to using `ActivatedRoute`, matrix parameters are also bound to component inputs when using the `withComponentInputBinding`.
+
+:::
+
+<SourceAttribution source="angular" title="Read route state" url="https://angular.dev/guide/routing/read-route-state" />

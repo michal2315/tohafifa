@@ -14,6 +14,11 @@ export const TRACKS = {
     label: 'Database',
     options: { mongodb: 'MongoDB', postgres: 'PostgreSQL' },
   },
+  team: {
+    label: 'Team',
+    // Placeholders - rename them to the real teams (and update content that uses them).
+    options: { 'team-1': 'Team 1', 'team-2': 'Team 2', 'team-3': 'Team 3' },
+  },
 } as const;
 
 export type TrackDimension = keyof typeof TRACKS;
@@ -21,6 +26,19 @@ export type TrackOption<D extends TrackDimension> = keyof (typeof TRACKS)[D]['op
 
 /** A choice per dimension. A missing dimension means "not chosen yet". */
 export type TrackSelection = { [D in TrackDimension]?: TrackOption<D> };
+
+/**
+ * Which tracks some content is for: one option per dimension, or a list when it is for several
+ * (e.g. `{ team: ['team-1', 'team-3'] }`). A missing dimension means "for everyone".
+ */
+export type TrackRequirement = {
+  [D in TrackDimension]?: TrackOption<D> | readonly TrackOption<D>[];
+};
+
+function requiredOptions(required: TrackRequirement, dimension: TrackDimension): string[] {
+  const options: string | readonly string[] | undefined = required[dimension];
+  return options === undefined ? [] : [options].flat();
+}
 
 export const TRACK_DIMENSIONS = Object.keys(TRACKS) as TrackDimension[];
 
@@ -37,19 +55,20 @@ export function getTrackOptionLabel(dimension: TrackDimension, option: string): 
  * Whether content restricted to `required` should be shown for `selection`.
  * Dimensions the trainee has not chosen yet never hide anything.
  */
-export function matchesTrack(required: TrackSelection, selection: TrackSelection): boolean {
+export function matchesTrack(required: TrackRequirement, selection: TrackSelection): boolean {
   return TRACK_DIMENSIONS.every((dimension) => {
-    const requiredOption = required[dimension];
+    const options = requiredOptions(required, dimension);
     const selectedOption = selection[dimension];
-    return !requiredOption || !selectedOption || requiredOption === selectedOption;
+    return options.length === 0 || !selectedOption || options.includes(selectedOption);
   });
 }
 
-/** Human-readable description of a track restriction, e.g. "React". */
-export function describeTrack(required: TrackSelection): string {
+/** Human-readable description of a track restriction, e.g. "React" or "Team 1 / Team 3". */
+export function describeTrack(required: TrackRequirement): string {
   return TRACK_DIMENSIONS.flatMap((dimension) => {
-    const option = required[dimension];
-    return option ? [getTrackOptionLabel(dimension, option)] : [];
+    const options = requiredOptions(required, dimension);
+    if (options.length === 0) return [];
+    return [options.map((option) => getTrackOptionLabel(dimension, option)).join(' / ')];
   }).join(' · ');
 }
 

@@ -1,9 +1,10 @@
 ---
 title: "Test your skills: CSS grids"
 sidebar_label: "Test: CSS grid"
+sidebar_custom_props: { kind: practice }
 ---
 
-{/* Imported from MDN Web Docs by an import script - do not edit the text by hand. */}
+{/* Imported by tools/import-docs from MDN Web Docs - do not edit the text by hand. */}
 
 This skill test aims to help you assess whether you understand how a [grid and grid items](./03-grid.mdx) behave. You will work through several small tasks that use different elements of the material you have just covered.
 
@@ -17,38 +18,9 @@ To get help, read our Test your skills usage guide. You can also reach out to us
 
 In this task, we want you to create a grid into which four child elements will be auto-placed. The grid should have three columns that share the available space equally, with a `20px` gap between the column and row tracks. After that, add more child elements inside the parent container with the `grid` class and see how they behave by default.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<div class=\"grid\">\n  <div>One</div>\n  <div>Two</div>\n  <div>Three</div>\n  <div>Four</div>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.grid > * {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\n.grid {\n  /* Add styles here */\n}\n"} height="220px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<div class="grid">
-  <div>One</div>
-  <div>Two</div>
-  <div>Three</div>
-  <div>Four</div>
-</div>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-
-.grid > * {
-  background-color: #4d7298;
-  border: 2px solid #77a6b6;
-  border-radius: 0.5em;
-  color: white;
-  padding: 0.5em;
-}
-
-.grid {
-  /* Add styles here */
-}
-```
+<Sandbox id="02-html-css/03-layout/04-test-grid/grid1" title="Your solution" html={"<div class=\"grid\">\n  <div>One</div>\n  <div>Two</div>\n  <div>Three</div>\n  <div>Four</div>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.grid > * {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\n.grid {\n  /* Add styles here */\n}\n"} solution={{"html":"<div class=\"grid\">\n  <div>One</div>\n  <div>Two</div>\n  <div>Three</div>\n  <div>Four</div>\n</div>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.grid > * {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\n.grid {\n  /* Add styles here */\n}\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  gap: 20px;\n}\n"}} />
 
 The finished layout should look like this:
 
@@ -75,54 +47,9 @@ In this task, we already have a grid defined. We want you to edit the CSS rules 
 
 **Bonus question:** Can you now cause the first item to display on top without changing the order of items in the source?
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<div class=\"grid\">\n  <div class=\"item1\">One</div>\n  <div class=\"item2\">Two</div>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n.grid > * {\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\n.item1 {\n  background-color: rgb(74 102 112 / 70%);\n  border: 5px solid rgb(74 102 112 / 100%);\n}\n\n.item2 {\n  background-color: rgb(214 162 173 / 70%);\n  border: 5px solid rgb(214 162 173 / 100%);\n}\n\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr 1fr;\n  grid-template-rows: 100px 100px 100px;\n  gap: 10px;\n}\n\n.item1 {\n  /* Add styles here */\n}\n\n.item2 {\n  /* Add styles here */\n}\n"} height="340px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<div class="grid">
-  <div class="item1">One</div>
-  <div class="item2">Two</div>
-</div>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-.grid > * {
-  border-radius: 0.5em;
-  color: white;
-  padding: 0.5em;
-}
-
-.item1 {
-  background-color: rgb(74 102 112 / 70%);
-  border: 5px solid rgb(74 102 112 / 100%);
-}
-
-.item2 {
-  background-color: rgb(214 162 173 / 70%);
-  border: 5px solid rgb(214 162 173 / 100%);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 100px 100px 100px;
-  gap: 10px;
-}
-
-.item1 {
-  /* Add styles here */
-}
-
-.item2 {
-  /* Add styles here */
-}
-```
+<Sandbox id="02-html-css/03-layout/04-test-grid/grid2" title="Your solution" html={"<div class=\"grid\">\n  <div class=\"item1\">One</div>\n  <div class=\"item2\">Two</div>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n.grid > * {\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\n.item1 {\n  background-color: rgb(74 102 112 / 70%);\n  border: 5px solid rgb(74 102 112 / 100%);\n}\n\n.item2 {\n  background-color: rgb(214 162 173 / 70%);\n  border: 5px solid rgb(214 162 173 / 100%);\n}\n\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr 1fr;\n  grid-template-rows: 100px 100px 100px;\n  gap: 10px;\n}\n\n.item1 {\n  /* Add styles here */\n}\n\n.item2 {\n  /* Add styles here */\n}\n"} solution={{"html":"<div class=\"grid\">\n  <div class=\"item1\">One</div>\n  <div class=\"item2\">Two</div>\n</div>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n.grid > * {\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\n.item1 {\n  background-color: rgb(74 102 112 / 70%);\n  border: 5px solid rgb(74 102 112 / 100%);\n}\n\n.item2 {\n  background-color: rgb(214 162 173 / 70%);\n  border: 5px solid rgb(214 162 173 / 100%);\n}\n\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr 1fr;\n  grid-template-rows: 100px 100px 100px;\n  gap: 10px;\n}\n\n.item1 {\n  /* Add styles here */\n}\n\n.item2 {\n  /* Add styles here */\n}\n.item1 {\n  grid-column: 1 / 4;\n  grid-row: 1 / 3;\n}\n\n.item2 {\n  grid-column: 2 / 5;\n  grid-row: 2 / 4;\n}\n.item1 {\n  order: 1;\n}\n"}} />
 
 The layout should look like this after you complete the task:
 
@@ -168,39 +95,9 @@ Another valid solution is to use `z-index`:
 
 In this task, the grid contains four direct children. They are currently auto-placed in the grid.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<div class=\"grid\">\n  <div class=\"one\">One</div>\n  <div class=\"two\">Two</div>\n  <div class=\"three\">Three</div>\n  <div class=\"four\">Four</div>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n.grid > * {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 10px;\n}\n"} height="200px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<div class="grid">
-  <div class="one">One</div>
-  <div class="two">Two</div>
-  <div class="three">Three</div>
-  <div class="four">Four</div>
-</div>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-.grid > * {
-  background-color: #4d7298;
-  border: 2px solid #77a6b6;
-  border-radius: 0.5em;
-  color: white;
-  padding: 0.5em;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 10px;
-}
-```
+<Sandbox id="02-html-css/03-layout/04-test-grid/grid3" title="Your solution" html={"<div class=\"grid\">\n  <div class=\"one\">One</div>\n  <div class=\"two\">Two</div>\n  <div class=\"three\">Three</div>\n  <div class=\"four\">Four</div>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n.grid > * {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 10px;\n}\n"} solution={{"html":"<div class=\"grid\">\n  <div class=\"one\">One</div>\n  <div class=\"two\">Two</div>\n  <div class=\"three\">Three</div>\n  <div class=\"four\">Four</div>\n</div>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n.grid > * {\n  background-color: #4d7298;\n  border: 2px solid #77a6b6;\n  border-radius: 0.5em;\n  color: white;\n  padding: 0.5em;\n}\n\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 10px;\n}\n.grid {\n  display: grid;\n  gap: 20px;\n  grid-template-columns: 1fr 2fr;\n  grid-template-areas:\n    \"aa aa\"\n    \"bb cc\"\n    \". dd\";\n}\n\n.one {\n  grid-area: aa;\n}\n\n.two {\n  grid-area: bb;\n}\n\n.three {\n  grid-area: cc;\n}\n\n.four {\n  grid-area: dd;\n}\n"}} />
 
 To complete this task, use the `grid-area` and `grid-template-areas` properties to lay out the items as shown here:
 
@@ -245,102 +142,9 @@ Each part of the layout needs a name using the `grid-area` property and `grid-te
 
 In this task, you will need to use both grid layout and flexbox to recreate the finished layout. The gap between the column and row tracks should be `10px`. You don't need to change the HTML to achieve this.
 
-The starting point of the task looks like this:
+Solve the task here:
 
-<LiveExample html={"<div class=\"container\">\n  <div class=\"card\">\n    <img\n      alt=\"a single red balloon\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons1.jpg\" />\n    <ul class=\"tags\">\n      <li>balloon</li>\n      <li>red</li>\n      <li>sky</li>\n      <li>blue</li>\n      <li>Hot air balloon</li>\n    </ul>\n  </div>\n  <div class=\"card\">\n    <img\n      alt=\"balloons over some houses\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons2.jpg\" />\n    <ul class=\"tags\">\n      <li>balloons</li>\n      <li>houses</li>\n      <li>train</li>\n      <li>harborside</li>\n    </ul>\n  </div>\n  <div class=\"card\">\n    <img\n      alt=\"close-up of balloons inflating\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons3.jpg\" />\n    <ul class=\"tags\">\n      <li>balloons</li>\n      <li>inflating</li>\n      <li>green</li>\n      <li>blue</li>\n    </ul>\n  </div>\n  <div class=\"card\">\n    <img\n      alt=\"a balloon in the sun\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons4.jpg\" />\n    <ul class=\"tags\">\n      <li>balloon</li>\n      <li>sun</li>\n      <li>sky</li>\n      <li>summer</li>\n      <li>bright</li>\n    </ul>\n  </div>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.card {\n  display: grid;\n  grid-template-rows: 200px min-content;\n}\n\n.card > img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n\n.tags {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n\n.tags > * {\n  background-color: #999999;\n  color: white;\n  padding: 0.2em 0.8em;\n  border-radius: 0.2em;\n  font-size: 80%;\n  margin: 5px;\n}\n\n.container {\n  /* Add styles here */\n}\n\n.tags {\n  /* Add styles here */\n}\n"} height="400px" />
-
-Here's the underlying code for this starting point:
-
-```html
-<div class="container">
-  <div class="card">
-    <img
-      alt="a single red balloon"
-      src="https://mdn.github.io/shared-assets/images/examples/balloons1.jpg" />
-    <ul class="tags">
-      <li>balloon</li>
-      <li>red</li>
-      <li>sky</li>
-      <li>blue</li>
-      <li>Hot air balloon</li>
-    </ul>
-  </div>
-  <div class="card">
-    <img
-      alt="balloons over some houses"
-      src="https://mdn.github.io/shared-assets/images/examples/balloons2.jpg" />
-    <ul class="tags">
-      <li>balloons</li>
-      <li>houses</li>
-      <li>train</li>
-      <li>harborside</li>
-    </ul>
-  </div>
-  <div class="card">
-    <img
-      alt="close-up of balloons inflating"
-      src="https://mdn.github.io/shared-assets/images/examples/balloons3.jpg" />
-    <ul class="tags">
-      <li>balloons</li>
-      <li>inflating</li>
-      <li>green</li>
-      <li>blue</li>
-    </ul>
-  </div>
-  <div class="card">
-    <img
-      alt="a balloon in the sun"
-      src="https://mdn.github.io/shared-assets/images/examples/balloons4.jpg" />
-    <ul class="tags">
-      <li>balloon</li>
-      <li>sun</li>
-      <li>sky</li>
-      <li>summer</li>
-      <li>bright</li>
-    </ul>
-  </div>
-</div>
-```
-
-```css
-body {
-  font: 1.2em / 1.5 sans-serif;
-}
-
-.card {
-  display: grid;
-  grid-template-rows: 200px min-content;
-}
-
-.card > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.tags {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.tags > * {
-  background-color: #999999;
-  color: white;
-  padding: 0.2em 0.8em;
-  border-radius: 0.2em;
-  font-size: 80%;
-  margin: 5px;
-}
-
-.container {
-  /* Add styles here */
-}
-
-.tags {
-  /* Add styles here */
-}
-```
+<Sandbox id="02-html-css/03-layout/04-test-grid/grid4" title="Your solution" html={"<div class=\"container\">\n  <div class=\"card\">\n    <img\n      alt=\"a single red balloon\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons1.jpg\" />\n    <ul class=\"tags\">\n      <li>balloon</li>\n      <li>red</li>\n      <li>sky</li>\n      <li>blue</li>\n      <li>Hot air balloon</li>\n    </ul>\n  </div>\n  <div class=\"card\">\n    <img\n      alt=\"balloons over some houses\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons2.jpg\" />\n    <ul class=\"tags\">\n      <li>balloons</li>\n      <li>houses</li>\n      <li>train</li>\n      <li>harborside</li>\n    </ul>\n  </div>\n  <div class=\"card\">\n    <img\n      alt=\"close-up of balloons inflating\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons3.jpg\" />\n    <ul class=\"tags\">\n      <li>balloons</li>\n      <li>inflating</li>\n      <li>green</li>\n      <li>blue</li>\n    </ul>\n  </div>\n  <div class=\"card\">\n    <img\n      alt=\"a balloon in the sun\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons4.jpg\" />\n    <ul class=\"tags\">\n      <li>balloon</li>\n      <li>sun</li>\n      <li>sky</li>\n      <li>summer</li>\n      <li>bright</li>\n    </ul>\n  </div>\n</div>\n"} css={"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.card {\n  display: grid;\n  grid-template-rows: 200px min-content;\n}\n\n.card > img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n\n.tags {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n\n.tags > * {\n  background-color: #999999;\n  color: white;\n  padding: 0.2em 0.8em;\n  border-radius: 0.2em;\n  font-size: 80%;\n  margin: 5px;\n}\n\n.container {\n  /* Add styles here */\n}\n\n.tags {\n  /* Add styles here */\n}\n"} solution={{"html":"<div class=\"container\">\n  <div class=\"card\">\n    <img\n      alt=\"a single red balloon\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons1.jpg\" />\n    <ul class=\"tags\">\n      <li>balloon</li>\n      <li>red</li>\n      <li>sky</li>\n      <li>blue</li>\n      <li>Hot air balloon</li>\n    </ul>\n  </div>\n  <div class=\"card\">\n    <img\n      alt=\"balloons over some houses\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons2.jpg\" />\n    <ul class=\"tags\">\n      <li>balloons</li>\n      <li>houses</li>\n      <li>train</li>\n      <li>harborside</li>\n    </ul>\n  </div>\n  <div class=\"card\">\n    <img\n      alt=\"close-up of balloons inflating\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons3.jpg\" />\n    <ul class=\"tags\">\n      <li>balloons</li>\n      <li>inflating</li>\n      <li>green</li>\n      <li>blue</li>\n    </ul>\n  </div>\n  <div class=\"card\">\n    <img\n      alt=\"a balloon in the sun\"\n      src=\"https://mdn.github.io/shared-assets/images/examples/balloons4.jpg\" />\n    <ul class=\"tags\">\n      <li>balloon</li>\n      <li>sun</li>\n      <li>sky</li>\n      <li>summer</li>\n      <li>bright</li>\n    </ul>\n  </div>\n</div>\n","css":"body {\n  font: 1.2em / 1.5 sans-serif;\n}\n\n.card {\n  display: grid;\n  grid-template-rows: 200px min-content;\n}\n\n.card > img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n\n.tags {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n\n.tags > * {\n  background-color: #999999;\n  color: white;\n  padding: 0.2em 0.8em;\n  border-radius: 0.2em;\n  font-size: 80%;\n  margin: 5px;\n}\n\n.container {\n  /* Add styles here */\n}\n\n.tags {\n  /* Add styles here */\n}\n.container {\n  display: grid;\n  gap: 10px;\n  grid-template-columns: 1fr 1fr 1fr;\n}\n\n.tags {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n}\n"}} />
 
 The layout should look like this after you complete the task:
 

@@ -1,14 +1,15 @@
-import { describeTrack, matchesTrack, type TrackSelection } from '@hafifa/shared';
+import { describeTrack, matchesTrack, type TrackRequirement } from '@hafifa/shared';
 import React, { type ReactNode } from 'react';
 
 import { useTracks } from '@site/src/tracks/TrackContext';
 
 import styles from './styles.module.css';
 
-type TrackOnlyProps = TrackSelection & { children: ReactNode };
+type TrackOnlyProps = TrackRequirement & { children: ReactNode };
 
 /**
- * Content for a specific track only, e.g. <TrackOnly frontend="react">.
+ * Content for a specific track only, e.g. <TrackOnly frontend="react">, or for several options
+ * of a dimension, e.g. <TrackOnly team={['team-1', 'team-3']}>.
  * Hidden when the trainee picked a different track; shown with a label otherwise.
  */
 export function TrackOnly({ children, ...requiredTrack }: TrackOnlyProps) {

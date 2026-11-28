@@ -10,6 +10,8 @@ const RESOURCE_TYPE_LABELS = {
   video: 'Video',
   course: 'Course',
   interactive: 'Interactive',
+  game: 'Game',
+  quiz: 'Quiz',
   tool: 'Tool',
 } as const;
 

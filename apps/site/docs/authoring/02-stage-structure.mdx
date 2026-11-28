@@ -52,6 +52,26 @@ title: Git & GitLab
 </Milestone>
 ```
 
+## Page kinds
+
+Big stages split their material into pages, grouped into sections (one folder per section, see
+`stages/02-html-css`). Give every page a kind in its front matter. The sidebar shows it as an icon:
+
+<PageKindLegend />
+
+```mdx
+---
+title: 'Quiz: CSS'
+sidebar_custom_props: { kind: quiz }
+---
+```
+
+The kinds are `reading`, `video`, `game`, `practice`, `quiz` and `milestone`. They are defined in
+`src/pageKinds/pageKinds.ts`. To add one, add it there and give it an icon in `pageKinds.css`.
+
+A section usually starts with a video or reading, has games and practice in between, and ends with
+a short [quiz](./components#quiz). The stage ends with a milestone page.
+
 ## Tips for good content
 
 - **Prefer short and focused material over long and complete.** Link to the docs for the details.

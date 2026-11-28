@@ -1,0 +1,1170 @@
+---
+title: "Practice: Angular basics"
+sidebar_custom_props: { kind: practice }
+---
+
+{/* Imported by tools/import-docs from the Angular documentation - do not edit the text by hand. */}
+
+Each exercise below is a step of the official Angular tutorial. To do them, create a
+practice app with `ng new practice`, then replace the files the exercise shows in `src/app/`.
+Run `ng serve` and check the result in the browser.
+
+## Components in Angular
+
+Components are the foundational building blocks for any Angular application. Each component has three parts:
+
+- TypeScript class
+- HTML template
+- CSS styles
+
+:::note
+
+Learn more about components in the essentials guide.
+
+:::
+
+In this activity, you'll learn how to update the template and styles of a component.
+
+This is a great opportunity for you to get started with Angular.
+
+**1. Update the component template**
+
+Update the `template` property to read `Hello Universe`
+
+```ts
+template: `
+  Hello Universe
+`,
+```
+
+When you changed the HTML template, the preview updated with your message. Let's go one step further: change the color of the text.
+
+**2. Update the component styles**
+
+Update the styles value and change the `color` property from `blue` to `#a144eb`.
+
+```ts
+styles: `
+  :host {
+    color: #a144eb;
+  }
+`,
+```
+
+When you check the preview, you'll find that the text color will be changed.
+
+In Angular, you can use all the browser supported CSS and HTML that's available. If you'd like, you can store your template and styles in separate files.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: ` Hello `,
+  styles: `
+    :host {
+      color: blue;
+    }
+  `,
+})
+export class App {}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: ` Hello Universe `,
+  styles: `
+    :host {
+      color: #a144eb;
+    }
+  `,
+})
+export class App {}
+```
+
+</Solution>
+
+</Exercise>
+
+## Updating the Component Class
+
+In Angular, the component's logic and behavior are defined in the component's TypeScript class.
+
+:::note
+
+Learn more about showing dynamic text in the essentials guide.
+
+:::
+
+In this activity, you'll learn how to update the component class and how to use interpolation.
+
+**1. Add a property called `city`**
+
+Update the component class by adding a property called `city` to the `App` class.
+
+```ts
+export class App {
+  city = 'San Francisco';
+}
+```
+
+The `city` property is of type `string` but you can omit the type because of type inference in TypeScript. The `city` property can be used in the `App` class and can be referenced in the component template.
+
+<br />
+
+To use a class property in a template, you have to use the `{{ }}` syntax.
+
+**2. Update the component template**
+
+Update the `template` property to match the following HTML:
+
+```ts
+template: `Hello {{ city }}`,
+```
+
+This is an example of interpolation and is a part of Angular template syntax. It enables you to do much more than put dynamic text in a template. You can also use this syntax to call functions, write expressions and more.
+
+**3. More practice with interpolation**
+
+Try this - add another set of `{{ }}` with the contents being `1 + 1`:
+
+```ts
+template: `Hello {{ city }}, {{ 1 + 1 }}`,
+```
+
+Angular evaluates the contents of the `{{ }}` and renders the output in the template.
+
+This is just the beginning of what's possible with Angular templates, keep on learning to find out more.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: ` Hello `,
+})
+export class App {}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: ` Hello {{ city }}, {{ 1 + 1 }} `,
+})
+export class App {
+  city = 'San Francisco';
+}
+```
+
+</Solution>
+
+</Exercise>
+
+## Composing Components
+
+You've learned to update the component template, component logic, and component styles, but how do you use a component in your application?
+
+The `selector` property of the component configuration gives you a name to use when referencing the component in another template. You use the `selector` like an HTML tag, for example `app-user` would be `<app-user />` in the template.
+
+:::note
+
+Learn more about using components in the essentials guide.
+
+:::
+
+In this activity, you'll learn how to compose components.
+
+In this example, there are two components `User` and `App`.
+
+**1. Add a reference to `User`**
+
+Update the `App` template to include a reference to the `User` which uses the selector `app-user`. Be sure to add `User` to the imports array of `App`, this makes it available for use in the `App` template.
+
+```html
+template: `<app-user />`, imports: [User]
+```
+
+The component now displays the message `Username: youngTech`. You can update the template code to include more markup.
+
+**2. Add more markup**
+
+Because you can use any HTML markup that you want in a template, try updating the template for `App` to also include more HTML elements. This example will add a `<section>` element as the parent of the `<app-user>` element.
+
+```html
+template: `
+<section><app-user /></section>
+`,
+```
+
+You can use as much HTML markup and as many components as you need to bring your app idea to reality. You can even have multiple copies of your component on the same page.
+
+That's a great segue, how would you conditionally show a component based on data? Head to the next section to find out.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-user',
+  template: ` Username: {{ username }} `,
+})
+export class User {
+  username = 'youngTech';
+}
+
+@Component({
+  selector: 'app-root',
+  template: ``,
+  imports: [],
+})
+export class App {}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-user',
+  template: ` Username: {{ username }} `,
+})
+export class User {
+  username = 'youngTech';
+}
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <section>
+      <app-user />
+    </section>
+  `,
+  imports: [User],
+})
+export class App {}
+```
+
+</Solution>
+
+</Exercise>
+
+## Control Flow in Components - `@if`
+
+Deciding what to display on the screen for a user is a common task in application development. Many times, the decision is made programmatically using conditions.
+
+To express conditional displays in templates, Angular uses the `@if` template syntax.
+
+:::note
+
+Learn more about control flow in the essentials guide.
+
+:::
+
+In this activity, you'll learn how to use conditionals in templates.
+
+The syntax that enables the conditional display of elements in a template is `@if`.
+
+Here's an example of how to use the `@if` syntax in a component:
+
+```ts
+@Component({
+  ...
+  template: `
+    @if (isLoggedIn) {
+      <p>Welcome back, Friend!</p>
+    }
+  `,
+})
+export class App {
+  isLoggedIn = true;
+}
+```
+
+Two things to take note of:
+
+- There is an `@` prefix for the `if` because it is a special type of syntax called Angular template syntax
+- For applications that still use `*ngIf`, please refer to the Angular documentation for NgIf for more information.
+
+**1. Create a property called `isServerRunning`**
+
+In the `App` class, add a `boolean` property called `isServerRunning`, set the initial value to `true`.
+
+**2. Use `@if` in the template**
+
+Update the template to display the message `Yes, the server is running` if the value of `isServerRunning` is `true`.
+
+**3. Use `@else` in the template**
+
+Now Angular supports native template syntax for defining the else case with the `@else` syntax. Update the template to display the message `No, the server is not running` as the else case.
+
+Here's an example:
+
+```html
+template: `
+@if (isServerRunning) {
+  ...
+} @else {
+  ...
+}
+`;
+```
+
+Add your code to fill in the missing markup.
+
+This type of functionality is called conditional control flow. Next you'll learn how to repeat items in a template.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: ` <span>Yes, the server is running</span> `,
+})
+export class App {
+  // add the boolean property here
+}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    @if (isServerRunning) {
+      <span>Yes, the server is running</span>
+    } @else {
+      <span>No, the server is not running</span>
+    }
+  `,
+})
+export class App {
+  isServerRunning = true;
+}
+```
+
+</Solution>
+
+</Exercise>
+
+## Control Flow in Components - `@for`
+
+Often when building web applications, you need to repeat some code a specific number of times - for example, given an array of names, you may want to display each name in a `<p>` tag.
+
+:::note
+
+Learn more about control flow in the essentials guide.
+
+:::
+
+In this activity, you'll learn how to use `@for` to repeat elements in a template.
+
+The syntax that enables repeating elements in a template is `@for`.
+
+Here's an example of how to use the `@for` syntax in a component:
+
+```ts
+@Component({
+  ...
+  template: `
+    @for (os of operatingSystems; track os.id) {
+      {{ os.name }}
+    }
+  `,
+})
+export class App {
+  operatingSystems = [{id: 'win', name: 'Windows'}, {id: 'osx', name: 'macOS'}, {id: 'linux', name: 'Linux'}];
+}
+```
+
+Two things to take note of:
+
+- There is an `@` prefix for the `for` because it is a special syntax called Angular template syntax
+- For applications that still use `*ngFor`, please refer to the Angular documentation for NgFor
+
+**1. Add the `users` property**
+
+In the `App` class, add a property called `users` that contains users and their names.
+
+```ts
+[
+  {id: 0, name: 'Sarah'},
+  {id: 1, name: 'Amy'},
+  {id: 2, name: 'Rachel'},
+  {id: 3, name: 'Jessica'},
+  {id: 4, name: 'Poornima'},
+];
+```
+
+**2. Update the template**
+
+Update the template to display each user name in a `p` element using the `@for` template syntax.
+
+```html
+@for (user of users; track user.id) {
+  <p>{{ user.name }}</p>
+}
+```
+
+:::note
+
+the use of `track` is required, you may use the `id` or some other unique identifier.
+
+:::
+
+This type of functionality is called control flow. Next, you'll learn to customize and communicate with components.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: ``,
+})
+export class App {}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    @for (user of users; track user.id) {
+      <p>{{ user.name }}</p>
+    }
+  `,
+})
+export class App {
+  users = [
+    {id: 0, name: 'Sarah'},
+    {id: 1, name: 'Amy'},
+    {id: 2, name: 'Rachel'},
+    {id: 3, name: 'Jessica'},
+    {id: 4, name: 'Poornima'},
+  ];
+}
+```
+
+</Solution>
+
+</Exercise>
+
+## Property Binding in Angular
+
+Property binding in Angular enables you to set values for properties of HTML elements, Angular components and more.
+
+Use property binding to dynamically set values for properties and attributes. You can do things such as toggle button features, set image paths programmatically, and share values between components.
+
+:::note
+
+Learn more about setting dynamic properties and attributes in the essentials guide.
+
+:::
+
+In this activity, you'll learn how to use property binding in templates.
+
+To bind to an element's attribute, wrap the attribute name in square brackets. Here's an example:
+
+```html
+<img alt="photo" [src]="imageURL" />
+```
+
+In this example, the value of the `src` attribute will be bound to the class property `imageURL`. Whatever value `imageURL` has will be set as the `src` attribute of the `img` tag.
+
+**1. Add a property called `isEditable`**
+
+Update the code in `app.ts` by adding a property to the `App` class called `isEditable` with the initial value set to `true`.
+
+```ts {2}
+export class App {
+  isEditable = true;
+}
+```
+
+**2. Bind to `contentEditable`**
+
+Next, bind the `contentEditable` attribute of the `div` to the `isEditable` property by using the `[]` syntax.
+
+```ts {3}
+@Component({
+  ...
+  template: `<div [contentEditable]="isEditable"></div>`,
+})
+```
+
+The div is now editable. Nice work
+
+Property binding is one of Angular's many powerful features. If you'd like to learn more checkout the Angular documentation.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  styleUrls: ['app.css'],
+  template: ` <div contentEditable="false"></div> `,
+})
+export class App {}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  styleUrls: ['app.css'],
+  template: ` <div [contentEditable]="isEditable"></div> `,
+})
+export class App {
+  isEditable = true;
+}
+```
+
+</Solution>
+
+</Exercise>
+
+## Event handling
+
+Event handling enables interactive features on web apps. It gives you the ability as a developer to respond to user actions like button presses, form submissions and more.
+
+:::note
+
+Learn more about handling user interaction in the essentials guide.
+
+:::
+
+In this activity, you'll learn how to add an event handler.
+
+In Angular you bind to events with the parentheses syntax `()`. On a given element, wrap the event you want to bind to with parentheses and set an event handler. Consider this `button` example:
+
+```ts
+@Component({
+  ...
+  template: `<button (click)="greet()">`
+})
+export class App {
+  greet() {
+    console.log('Hello, there');
+  }
+}
+```
+
+In this example, the `greet()` function will run every time the button is clicked. Take note that the `greet()` syntax includes the trailing parenthesis.
+
+Alright, your turn to give this a try:
+
+**1. Add an event handler**
+
+In the `App` class, fill in the body of the existing `showSecretMessage()` method with the following code:
+
+```ts
+this.message = 'Way to go';
+```
+
+**2. Bind to the template event**
+
+Update the template code in `app.ts` to bind to the `mouseover` event of the `section` element.
+
+```html
+<section (mouseover)="showSecretMessage()">
+```
+
+And with a few steps in the code you've created your first event handler in Angular. Seems like you are getting pretty good at this, keep up the good work.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <section>
+      There's a secret message for you, hover to reveal 👀
+      {{ message }}
+    </section>
+  `,
+})
+export class App {
+  message = '';
+
+  showSecretMessage() {}
+}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <section (mouseover)="showSecretMessage()">
+      There's a secret message for you, hover to reveal:
+      {{ message }}
+    </section>
+  `,
+})
+export class App {
+  message = '';
+
+  showSecretMessage() {
+    this.message = 'Way to go 🚀';
+  }
+}
+```
+
+</Solution>
+
+</Exercise>
+
+## Component input properties
+
+Sometimes app development requires you to send data into a component. This data can be used to customize a component or perhaps send information from a parent component to a child component.
+
+Angular uses a concept called `input`. This is similar to `props` in other frameworks. To create an `input` property, use the `input()` function.
+
+:::note
+
+Learn more about accepting data with input properties in the inputs guide.
+
+:::
+
+In this activity, you'll learn how to use the `input()` function to send information to components.
+
+To create an `input` property, add the `input()` function to initialize a property of a component class:
+
+```ts title="user.ts"
+class User {
+  occupation = input<string>();
+}
+```
+
+When you are ready to pass in a value through an `input`, values can be set in templates using the attribute syntax. Here's an example:
+
+```ts title="app.ts" {3}
+@Component({
+  ...
+  template: `<app-user occupation="Angular Developer"></app-user>`
+})
+export class App {}
+```
+
+The `input` function returns an `InputSignal`. You can read the value by calling the signal.
+
+```ts title="user.ts"
+@Component({
+  ...
+  template: `<p>The user's occupation is {{occupation()}}</p>`
+})
+```
+
+**1. Define an `input()` property**
+
+Update the code in `user.ts` to define an `input` property on the `User` called `name` and specify the `string` type. For now, don't set an initial value and invoke `input()` without arguments. Be sure to update the template to invoke and interpolate the `name` property at the end of the sentence.
+
+**2. Pass a value to the `input` property**
+
+Update the code in `app.ts` to send in the `name` property with a value of `"Simran"`.
+<br />
+
+When the code has been successfully updated, the app will display `The user's name is Simran`.
+
+While this is great, it is only one direction of the component communication. What if you want to send information and data to a parent component from a child component? Check out the next lesson to find out.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/user.ts"
+import {Component, input} from '@angular/core';
+
+@Component({
+  selector: 'app-user',
+  template: ` <p>The user's name is</p> `,
+})
+export class User {}
+```
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {User} from './user';
+
+@Component({
+  selector: 'app-root',
+  template: ` <app-user /> `,
+  imports: [User],
+})
+export class App {}
+```
+
+<Solution>
+
+```ts title="src/app/user.ts"
+import {Component, input} from '@angular/core';
+
+@Component({
+  selector: 'app-user',
+  template: ` <p>The user's name is {{ name() }}</p> `,
+})
+export class User {
+  readonly name = input<string>();
+}
+```
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {User} from './user';
+
+@Component({
+  selector: 'app-root',
+  template: ` <app-user name="Simran" /> `,
+  imports: [User],
+})
+export class App {}
+```
+
+</Solution>
+
+</Exercise>
+
+## Component output properties
+
+When working with components it may be required to notify other components that something has happened. Perhaps a button has been clicked, an item has been added/removed from a list or some other important update has occurred. In this scenario components need to communicate with parent components.
+
+Angular uses the `output()` function to enable this type of behavior.
+
+:::note
+
+Learn more about custom events in the outputs guide.
+
+:::
+
+In this activity, you'll learn how to use the `output()` function to communicate with components.
+
+To create the communication path from child to parent components, use the `output` function to initialize a class property.
+
+```ts title="child.ts"
+@Component({...})
+class Child {
+  incrementCountEvent = output<number>();
+}
+```
+
+Now the component can generate events that can be listened to by the parent component. Trigger events by calling the `emit` method:
+
+```ts title="child.ts"
+class Child {
+  ...
+
+  onClick() {
+    this.count++;
+    this.incrementCountEvent.emit(this.count);
+  }
+}
+```
+
+The emit function will generate an event with the same type as defined by the `output`.
+
+Alright, your turn to give this a try. Complete the code by following these tasks:
+
+**1. Add an `output()` property**
+
+Update `child.ts` by adding an output property called `addItemEvent`, be sure to set the output type to be `string`.
+
+**2. Complete `addItem` method**
+
+In `child.ts` update the `addItem` method; use the following code as the logic:
+
+```ts title="child.ts" {2}
+addItem() {
+  this.addItemEvent.emit('');
+}
+```
+
+**3. Update the `App` template**
+
+In `app.ts` update the template to listen to the emitted event by adding the following code:
+
+```html
+<app-child (addItemEvent)="addItem($event)" />
+```
+
+Now, the "Add Item" button adds a new item to the list every time the button is clicked.
+
+Wow, at this point you've completed the component fundamentals - impressive
+
+Keep learning to unlock more of Angular's great features.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/child.ts"
+import {Component, output} from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  styles: `
+    .btn {
+      padding: 5px;
+    }
+  `,
+  template: ` <button class="btn" (click)="addItem()">Add Item</button> `,
+})
+export class Child {
+  addItem() {}
+}
+```
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {Child} from './child';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <app-child />
+    <p>🐢 all the way down {{ items.length }}</p>
+  `,
+  imports: [Child],
+})
+export class App {
+  items = new Array();
+
+  addItem(item: string) {
+    this.items.push(item);
+  }
+}
+```
+
+<Solution>
+
+```ts title="src/app/child.ts"
+import {Component, output} from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  styles: `
+    .btn {
+      padding: 5px;
+    }
+  `,
+  template: ` <button class="btn" (click)="addItem()">Add Item</button> `,
+})
+export class Child {
+  readonly addItemEvent = output<string>();
+
+  addItem() {
+    this.addItemEvent.emit('🐢');
+  }
+}
+```
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {Child} from './child';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <app-child (addItemEvent)="addItem($event)" />
+    <p>🐢 all the way down {{ items.length }}</p>
+  `,
+  imports: [Child],
+})
+export class App {
+  items = new Array();
+
+  addItem(item: string) {
+    this.items.push(item);
+  }
+}
+```
+
+</Solution>
+
+</Exercise>
+
+## Creating an injectable service
+
+Dependency injection (DI) in Angular is one of the framework's most powerful features. Consider dependency injection to be the ability for Angular to _provide_ resources you need for your application at runtime. A dependency could be a service or some other resources.
+
+:::note
+
+Learn more about dependency injection in the essentials guide.
+
+:::
+
+In this activity, you'll learn how to create an `injectable` service.
+
+One way to use a service is to act as a way to interact with data and APIs. To make a service reusable you should keep the logic in the service and share it throughout the application when it is needed.
+
+To make a class eligible to be injected by the DI system, use the `@Service` decorator. For example:
+
+```ts {1}
+@Service()
+class UserService {
+  // methods to retrieve and return data
+}
+```
+
+The `@Service` decorator marks the class as a service and notifies the DI system that `UserService` can be accessed anywhere in your application. By default, Angular provides the service across your entire application, so you don't need to write any extra configuration.
+
+:::note
+
+By default, `@Service` provides the class at the root injector. If you want to provide it manually, for example, to scope it to a specific route or component, set `autoProvided: false`. Learn more in the guide on creating and using services.
+
+:::
+
+Alright, you try:
+
+**1. Add the `@Service` decorator**
+
+Update the code in `car.service.ts` by adding the `@Service()` decorator to the `CarService` class.
+
+:::tip
+
+Use the above example to find the correct syntax.
+
+:::
+
+Well, done that service is now `injectable` and can participate in the fun. Now that the service is `injectable`, let's try injecting it into a component
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/car.service.ts"
+import {Service} from '@angular/core';
+
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+
+  getCar(id: number) {
+    return this.cars[id];
+  }
+}
+```
+
+```ts title="src/app/app.ts"
+import {Component, inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  selector: 'app-root',
+  template: '<p> {{ carService.getCars() }} </p>',
+})
+export class App {
+  carService = inject(CarService);
+}
+```
+
+<Solution>
+
+```ts title="src/app/car.service.ts"
+import {Service} from '@angular/core';
+
+@Service()
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+
+  getCar(id: number) {
+    return this.cars[id];
+  }
+}
+```
+
+```ts title="src/app/app.ts"
+import {Component, inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  selector: 'app-root',
+  template: '<p> {{ carService.getCars() }} </p>',
+})
+export class App {
+  carService = inject(CarService);
+}
+```
+
+</Solution>
+
+</Exercise>
+
+## Inject-based dependency injection
+
+Creating an injectable service is the first part of the dependency injection (DI) system in Angular. How do you inject a service into a component? Angular has a convenient function called `inject()` that can be used in the proper context.
+
+:::note
+
+Injection contexts are beyond the scope of this tutorial, but you can learn more in the dependency injection (DI) essentials guide and DI context guide.
+
+:::
+
+In this activity, you'll learn how to inject a service and use it in a component.
+
+It is often helpful to initialize class properties with values provided by the DI system. Here's an example:
+
+```ts {3}
+@Component({...})
+class PetCareDashboard {
+  petRosterService = inject(PetRosterService);
+}
+```
+
+**1. Inject the `CarService`**
+
+In `app.ts`, using the `inject()` function inject the `CarService` and assign it to a property called `carService`
+
+:::note
+
+Notice the difference between the property `carService` and the class `CarService`.
+
+:::
+
+**2. Use the `carService` instance**
+
+Calling `inject(CarService)` gave you an instance of the `CarService` that you can use in your application, stored in the `carService` property.
+
+Initialize the `display` property with the following implementation:
+
+```ts
+display = this.carService.getCars().join(' ⭐️ ');
+```
+
+**3. Update the `App` template**
+
+Update the component template in `app.ts` with the following code:
+
+```ts
+template: `<p>Car Listing: {{ display }}</p>`,
+```
+
+You've just injected your first service into a component - fantastic effort.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component, inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  selector: 'app-root',
+  template: ``,
+})
+export class App {
+  display = '';
+}
+```
+
+```ts title="src/app/car.service.ts"
+import {Service} from '@angular/core';
+
+@Service()
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+
+  getCar(id: number) {
+    return this.cars[id];
+  }
+}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component, inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  selector: 'app-root',
+  template: ` <p>Car Listing: {{ display }}</p> `,
+})
+export class App {
+  carService = inject(CarService);
+
+  display = this.carService.getCars().join(' ⭐️ ');
+}
+```
+
+```ts title="src/app/car.service.ts"
+import {Service} from '@angular/core';
+
+@Service()
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+
+  getCar(id: number) {
+    return this.cars[id];
+  }
+}
+```
+
+</Solution>
+
+</Exercise>
+
+<SourceAttribution source="angular" title="Learn Angular in your browser" url="https://angular.dev/tutorials/learn-angular" />

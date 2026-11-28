@@ -63,10 +63,118 @@ A list of learning materials. The available `type`s are `article`, `docs`, `vide
 A video from the media mount. `src` is the path on the mount. See [Tracks and media](./tracks-and-media).
 
 ```mdx
-<Video src="git/branching.mp4" title="Branching explained" duration="12 min" />
+<Video
+  src="git/branching.mp4"
+  subtitles="git/branching.vtt"
+  title="Branching explained"
+  duration="12 min"
+/>
 ```
 
 <Video src="examples/sample.mp4" title="Branching explained" duration="12 min" />
+
+`subtitles` is optional, and must be a WebVTT (`.vtt`) file. To convert `.srt` subtitles, run
+`node tools/media/srt-to-vtt.mjs path/to/file.srt`.
+
+## Quiz
+
+A short quiz, shown one question at a time. After every answer the trainee sees whether it was
+right and an explanation, then moves on. Results are saved in the browser.
+
+Write the questions in a data file next to the page, and pass it to the component:
+
+```mdx title="quiz.mdx"
+---
+title: 'Quiz: CSS'
+sidebar_custom_props: { kind: quiz }
+---
+
+import quiz from './quiz.data';
+
+<Quiz quiz={quiz} />
+```
+
+```ts title="quiz.data.ts"
+import { defineQuiz } from '@site/src/components/Quiz';
+
+export default defineQuiz({
+  id: 'html-css/css', // unique - results are saved under it
+  title: 'CSS',
+  questions: [
+    // one of the question types below
+  ],
+});
+```
+
+There are four question types. In every text, `` `backticks` `` render as code.
+
+| `type`     | The trainee...                  | Answer fields                                 |
+| ---------- | ------------------------------- | --------------------------------------------- |
+| `choice`   | picks one option                | `options`, `answer` (index, from 0)           |
+| `multi`    | picks all options that apply    | `options`, `answers` (indexes, from 0)        |
+| `find-bug` | clicks the line with the bug    | `code`, `bugLine` (line number, from 1)       |
+| `fill-in`  | types the missing parts (`___`) | `code`, `blanks` (accepted answers per blank) |
+
+Every question also has a `prompt` and an `explanation`, and can show `code` under the prompt. An
+option can be code too, for "which fix is right?" questions:
+
+```ts
+{
+  type: 'choice',
+  prompt: 'Which rule centers the image horizontally?',
+  options: [
+    { language: 'css', code: 'img { display: block; margin: 0 auto; }' },
+    { language: 'css', code: 'img { text-align: center; }' },
+  ],
+  answer: 0,
+  explanation: 'Auto margins split the free space. `text-align` aligns the content of the element, not the element.',
+}
+```
+
+Mistakes in the data, like an `answer` that is not an option or a wrong number of blanks, fail
+the build with a message that says which question to fix.
+
+Keep quizzes **short (4-5 questions)** and ask about what matters in the project. A good
+explanation says _why_ the answer is right, and what the wrong answers would do.
+
+export const exampleQuiz = {
+  id: 'authoring/example',
+  title: 'Example',
+  questions: [
+    {
+      type: 'find-bug',
+      prompt: 'The text is not red. Find the bug.',
+      code: { language: 'css', code: 'p {\n  colour: red;\n}' },
+      bugLine: 2,
+      explanation: 'CSS uses American spelling: `color`. Browsers ignore unknown properties.',
+    },
+    {
+      type: 'fill-in',
+      prompt: 'Make the text bold.',
+      code: { language: 'css', code: 'p {\n  font-weight: ___;\n}' },
+      blanks: [['bold', '700']],
+      explanation: '`bold` and `700` are the same weight.',
+    },
+  ],
+};
+
+<Quiz quiz={exampleQuiz} />
+
+## GameFrame
+
+Embeds one of the games we host in `static/games/`. Put it on its own page, with kind `game`. The
+credit line is required by the game's license.
+
+```mdx
+<GameFrame
+  src="/games/flexbox-froggy/index.html"
+  title="Flexbox Froggy"
+  credit="Thomas Park (MIT license)"
+/>
+```
+
+To add a game, copy it to `static/games/<name>/` with its license, and remove anything that loads
+from the internet (analytics, fonts, CDNs). See `static/games/*/OFFLINE.md` for examples.
 
 ## Exercise, Hint and Solution
 
@@ -173,6 +281,41 @@ next to the code. Show the code itself in normal code blocks above it.
   css={'.btn { padding: 0.5rem 1rem; border-radius: 4px; }'}
   height="80px"
 />
+
+Trainees can click **Edit the code** to turn any example into a [Sandbox](#sandbox) and play with
+it.
+
+## Sandbox
+
+A code editor next to a live result, for exercises. The result updates as the trainee types. Pass
+`css` or `scss` (SCSS is compiled in the browser), and optionally `js`. Leave a part out to hide
+its tab.
+
+- `id` saves the trainee's code in the browser. It must be unique across the site, so start it
+  with the stage, e.g. `html-css/post-card`. Without an `id`, the code is not saved.
+- `solution` adds a **Show solution** button. It replaces only the parts you give, so for most
+  tasks `{ css: ... }` is enough.
+- `height` sets the height, e.g. `"30rem"`. Trainees can also open it full screen.
+
+```mdx
+<Sandbox
+  id="html-css/center-the-button"
+  html={'<button class="btn">Click me</button>'}
+  css={'.btn {\n  /* Center the button */\n}\n'}
+  solution={{ css: '.btn {\n  display: block;\n  margin: 0 auto;\n}\n' }}
+  height="18rem"
+/>
+```
+
+<Sandbox
+  html={'<button class="btn">Click me</button>'}
+  css={'.btn {\n  /* Center the button */\n}\n'}
+  solution={{ css: '.btn {\n  display: block;\n  margin: 0 auto;\n}\n' }}
+  height="18rem"
+/>
+
+The importer turns MDN's "Test your skills" tasks into sandboxes automatically. There is also a
+free [Playground](/resources/playground) for trying things out.
 
 ## SourceAttribution
 

@@ -1,0 +1,673 @@
+---
+title: "Practice: Routing and forms"
+sidebar_custom_props: { kind: practice }
+---
+
+{/* Imported by tools/import-docs from the Angular documentation - do not edit the text by hand. */}
+
+Each exercise below is a step of the official Angular tutorial. To do them, create a
+practice app with `ng new practice`, then replace the files the exercise shows in `src/app/`.
+Run `ng serve` and check the result in the browser.
+
+## Routing Overview
+
+For most apps, there comes a point where the app requires more than a single page. When that time inevitably comes, routing becomes a big part of the performance story for users.
+
+:::note
+
+Learn more about routing in the in-depth guide.
+
+:::
+
+In this activity, you'll learn how to set up and configure your app to use Angular Router.
+
+**1. Create an app.routes.ts file**
+
+Inside `app.routes.ts`, make the following changes:
+
+1. Import `Routes` from the `@angular/router` package.
+2. Export a constant called `routes` of type `Routes`, assign it `[]` as the value.
+
+```ts
+import {Routes} from '@angular/router';
+
+export const routes: Routes = [];
+```
+
+**2. Add routing to provider**
+
+In `app.config.ts`, configure the app to Angular Router with the following steps:
+
+1. Import the `provideRouter` function from `@angular/router`.
+1. Import `routes` from the `./app.routes.ts`.
+1. Call the `provideRouter` function with `routes` passed in as an argument in the `providers` array.
+
+```ts {2,3,6}
+import {ApplicationConfig} from '@angular/core';
+import {provideRouter} from '@angular/router';
+import {routes} from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes)],
+};
+```
+
+**3. Import `RouterOutlet` in the component**
+
+Finally, to make sure your app is ready to use the Angular Router, you need to tell the app where you expect the router to display the desired content. Accomplish that by using the `RouterOutlet` directive from `@angular/router`.
+
+Update the template for `App` by adding `<router-outlet />`
+
+```ts {9}
+@Component({
+...
+template: `
+    <nav>
+      <a href="/">Home</a>
+      |
+      <a href="/user">User</a>
+    </nav>
+    <router-outlet />
+  `,
+imports: [RouterOutlet],
+})
+export class App {}
+```
+
+Your app is now set up to use Angular Router. Nice work!
+
+Keep the momentum going to learn the next step of defining the routes for our app.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.routes.ts"
+
+```
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <nav>
+      <a href="/">Home</a>
+      |
+      <a href="/user">User</a>
+    </nav>
+  `,
+  imports: [RouterOutlet],
+})
+export class App {}
+```
+
+```ts title="src/app/app.config.ts"
+import {ApplicationConfig} from '@angular/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [],
+};
+```
+
+<Solution>
+
+```ts title="src/app/app.routes.ts"
+import {Routes} from '@angular/router';
+
+export const routes: Routes = [];
+```
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <nav>
+      <a href="/">Home</a>
+      |
+      <a href="/user">User</a>
+    </nav>
+    <router-outlet />
+  `,
+  imports: [RouterOutlet],
+})
+export class App {}
+```
+
+```ts title="src/app/app.config.ts"
+import {ApplicationConfig} from '@angular/core';
+import {provideRouter} from '@angular/router';
+
+import {routes} from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes)],
+};
+```
+
+</Solution>
+
+</Exercise>
+
+## Define a Route
+
+Now that you've set up the app to use Angular Router, you need to define the routes.
+
+:::note
+
+Learn more about defining a basic route in the in-depth guide.
+
+:::
+
+In this activity, you'll learn how to add and configure routes with your app.
+
+**1. Define a route in `app.routes.ts`**
+
+In your app, there are two pages to display: (1) Home Page and (2) User Page.
+
+To define a route, add a route object to the `routes` array in `app.routes.ts` that contains:
+
+- The `path` of the route (which automatically starts at the root path (i.e., `/`))
+- The `component` that you want the route to display
+
+```ts
+import {Routes} from '@angular/router';
+import {Home} from './home/home';
+
+export const routes: Routes = [
+  {
+    path: '',
+    component: Home,
+  },
+];
+```
+
+The code above is an example of how `Home` can be added as a route. Now go ahead and implement this along with the `User` in the playground.
+
+Use `'user'` for the path of `User`.
+
+**2. Add title to route definition**
+
+In addition to defining the routes correctly, Angular Router also enables you to set the page title whenever users are navigating by adding the `title` property to each route.
+
+In `app.routes.ts`, add the `title` property to the default route (`path: ''`) and the `user` route. Here's an example:
+
+```ts {7}
+import {Routes} from '@angular/router';
+import {Home} from './home/home';
+
+export const routes: Routes = [
+  {
+    path: '',
+    title: 'App Home Page',
+    component: Home,
+  },
+];
+```
+
+In the activity, you've learned how to define and configure routes in your Angular app. Nice work.
+
+The journey to fully enabling routing in your app is almost complete, keep going.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.routes.ts"
+import {Routes} from '@angular/router';
+import {Home} from './home/home';
+import {User} from './user/user';
+
+export const routes: Routes = [];
+```
+
+```ts title="src/app/home/home.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  template: ` <div>Home Page</div> `,
+})
+export class Home {}
+```
+
+```ts title="src/app/user/user.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-user',
+  template: ` <div>Username: {{ username }}</div> `,
+})
+export class User {
+  username = 'youngTech';
+}
+```
+
+<Solution>
+
+```ts title="src/app/app.routes.ts"
+import {Routes} from '@angular/router';
+
+import {Home} from './home/home';
+import {User} from './user/user';
+
+export const routes: Routes = [
+  {
+    path: '',
+    title: 'App Home Page',
+    component: Home,
+  },
+  {
+    path: 'user',
+    title: 'App User Page',
+    component: User,
+  },
+];
+```
+
+```ts title="src/app/home/home.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  template: ` <div>Home Page</div> `,
+})
+export class Home {}
+```
+
+```ts title="src/app/user/user.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-user',
+  template: ` <div>Username: {{ username }}</div> `,
+})
+export class User {
+  username = 'youngTech';
+}
+```
+
+</Solution>
+
+</Exercise>
+
+## Use RouterLink for Navigation
+
+In the app's current state, the entire page refreshes when we click on an internal link that exists within the app. While this may not seem significant with a small app, this can have performance implications for larger pages with more content where users have to redownload assets and run calculations again.
+
+:::note
+
+Learn more about adding routes to your application in the in-depth guide.
+
+:::
+
+In this activity, you'll learn how to leverage the `RouterLink` directive to make the most use of Angular Router.
+
+**1. Import `RouterLink` directive**
+
+In `app.ts` add the `RouterLink` directive import to the existing import statement from `@angular/router` and add it to the `imports` array of your component decorator.
+
+```ts
+...
+import { RouterLink, RouterOutlet } from '@angular/router';
+
+@Component({
+  imports: [RouterLink, RouterOutlet],
+  ...
+})
+```
+
+**2. Add a `routerLink` to template**
+
+To use the `RouterLink` directive, replace the `href` attributes with `routerLink`. Update the template with this change.
+
+```ts
+import { RouterLink, RouterOutlet } from '@angular/router';
+
+@Component({
+  ...
+  template: `
+    ...
+    <a routerLink="/">Home</a>
+    <a routerLink="/user">User</a>
+    ...
+  `,
+  imports: [RouterLink, RouterOutlet],
+})
+```
+
+When you click on the links in the navigation now, you should not see any blinking and only the content of the page itself (i.e., `router-outlet`) being changed
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <nav>
+      <a href="/">Home</a>
+      |
+      <a href="/user">User</a>
+    </nav>
+    <router-outlet />
+  `,
+  imports: [RouterOutlet],
+})
+export class App {}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {RouterOutlet, RouterLink} from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <nav>
+      <a routerLink="/">Home</a>
+      |
+      <a routerLink="/user">User</a>
+    </nav>
+    <router-outlet />
+  `,
+  imports: [RouterOutlet, RouterLink],
+})
+export class App {}
+```
+
+</Solution>
+
+</Exercise>
+
+## Reactive Forms
+
+When you want to manage your forms programmatically instead of relying purely on the template, reactive forms are the answer.
+
+:::note
+
+Learn more about reactive forms in the in-depth guide.
+
+:::
+
+In this activity, you'll learn how to set up reactive forms.
+
+**1. Import `ReactiveForms` module**
+
+In `app.ts`, import `ReactiveFormsModule` from `@angular/forms` and add it to the `imports` array of the component.
+
+```ts
+import { ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <form>
+      <label>Name
+        <input type="text" />
+      </label>
+      <label>Email
+        <input type="email" />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule],
+})
+```
+
+**2. Create the `FormGroup` object with FormControls**
+
+Reactive forms use the `FormControl` class to represent the form controls (e.g., inputs). Angular provides the `FormGroup` class to serve as a grouping of form controls into a helpful object that makes handling large forms more convenient for developers.
+
+Add `FormControl` and `FormGroup` to the import from `@angular/forms` so that you can create a FormGroup for each form, with the properties `name` and `email` as FormControls.
+
+```ts
+import {ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
+...
+export class App {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+  });
+}
+```
+
+**3. Link the FormGroup and FormControls to the form**
+
+Each `FormGroup` should be attached to a form using the `[formGroup]` directive.
+
+In addition, each `FormControl` can be attached with the `formControlName` directive and assigned to the corresponding property. Update the template with the following form code:
+
+```html
+<form [formGroup]="profileForm">
+  <label>
+    Name
+    <input type="text" formControlName="name" />
+  </label>
+  <label>
+    Email
+    <input type="email" formControlName="email" />
+  </label>
+  <button type="submit">Submit</button>
+</form>
+```
+
+**4. Handle update to the form**
+
+When you want to access data from the `FormGroup`, it can be done by accessing the value of the `FormGroup`. Update the `template` to display the form values:
+
+```html
+...
+<h2>Profile Form</h2>
+<p>Name: {{ profileForm.value.name }}</p>
+<p>Email: {{ profileForm.value.email }}</p>
+```
+
+**5. Access FormGroup values**
+
+Add a new method to the component class called `handleSubmit` that you'll later use to handle the form submission.
+This method will display values from the form, you can access the values from the FormGroup.
+
+In the component class, add the `handleSubmit()` method to handle the form submission.
+
+```ts
+handleSubmit() {
+  alert(
+    this.profileForm.value.name + ' | ' + this.profileForm.value.email
+  );
+}
+```
+
+**6. Add `ngSubmit` to the form**
+
+You have access to the form values, now it is time to handle the submission event and use the `handleSubmit` method.
+Angular has an event handler for this specific purpose called `ngSubmit`. Update the form element to call the `handleSubmit` method when the form is submitted.
+
+```html {1}
+<form [formGroup]="profileForm" (ngSubmit)="handleSubmit()"></form>
+```
+
+And just like that, you know how to work with reactive forms in Angular.
+
+Fantastic job with this activity. Keep going to learn about form validation.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <form>
+      <label>
+        Name
+        <input type="text" formControlName="name" />
+      </label>
+      <label>
+        Email
+        <input type="email" formControlName="email" />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [],
+})
+export class App {}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
+      <input type="text" formControlName="name" />
+      <input type="email" formControlName="email" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <h2>Profile Form</h2>
+    <p>Name: {{ profileForm.value.name }}</p>
+    <p>Email: {{ profileForm.value.email }}</p>
+  `,
+  imports: [ReactiveFormsModule],
+})
+export class App {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+  });
+
+  handleSubmit() {
+    alert(this.profileForm.value.name + ' | ' + this.profileForm.value.email);
+  }
+}
+```
+
+</Solution>
+
+</Exercise>
+
+## Validating forms
+
+Another common scenario when working with forms is the need to validate the inputs to ensure the correct data is submitted.
+
+:::note
+
+Learn more about validating form input in the in-depth guide.
+
+:::
+
+In this activity, you'll learn how to validate forms with reactive forms.
+
+**1. Import Validators**
+
+Angular provides a set of validation tools. To use them, first update the component to import `Validators` from `@angular/forms`.
+
+```ts {1}
+import {ReactiveFormsModule, Validators} from '@angular/forms';
+
+@Component({...})
+export class App {}
+```
+
+**2. Add validation to form**
+
+Every `FormControl` can be passed the `Validators` you want to use for validating the `FormControl` values. For example, if you want to make the `name` field in `profileForm` required then use `Validators.required`.
+For the `email` field in our Angular form, we want to ensure it's not left empty and follows a valid email address structure. We can achieve this by combining the `Validators.required` and `Validators.email` validators in an array.
+Update the `name` and `email` `FormControl`:
+
+```ts
+profileForm = new FormGroup({
+  name: new FormControl('', Validators.required),
+  email: new FormControl('', [Validators.required, Validators.email]),
+});
+```
+
+**3. Check form validation in template**
+
+To determine if a form is valid, the `FormGroup` class has a `valid` property.
+You can use this property to dynamically bind attributes. Update the submit `button` to be enabled based on the validity of the form.
+
+```html
+<button type="submit" [disabled]="!profileForm.valid">Submit</button>
+```
+
+You now know the basics around how validation works with reactive forms.
+
+<Exercise title="Do it in your practice app">
+
+Start from these files:
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" formControlName="name" name="name" />
+      <input type="email" formControlName="email" name="email" />
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule],
+})
+export class App {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+  });
+}
+```
+
+<Solution>
+
+```ts title="src/app/app.ts"
+import {Component} from '@angular/core';
+import {FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" formControlName="name" name="name" />
+      <input type="email" formControlName="email" name="email" />
+      <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule],
+})
+export class App {
+  profileForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
+}
+```
+
+</Solution>
+
+</Exercise>
+
+<SourceAttribution source="angular" title="Learn Angular in your browser" url="https://angular.dev/tutorials/learn-angular" />

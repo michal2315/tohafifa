@@ -14,14 +14,23 @@
     "@docusaurus/types": "^3.10.2"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.8.1",
+    "@codemirror/lang-css": "^6.3.1",
+    "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/lang-javascript": "^6.2.4",
+    "@codemirror/lang-sass": "^6.0.2",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.0",
     "@docusaurus/core": "^3.10.2",
     "@docusaurus/preset-classic": "^3.10.2",
     "@easyops-cn/docusaurus-search-local": "^0.55.3",
+    "@hafifa/shared": "*",
     "@mdx-js/react": "^3.1.1",
     "clsx": "^2.1.1",
+    "codemirror": "^6.0.2",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "@hafifa/shared": "*"
+    "sass": "^1.108.2"
   }
 }

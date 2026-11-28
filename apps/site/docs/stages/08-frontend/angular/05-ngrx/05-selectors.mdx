@@ -1,0 +1,218 @@
+---
+title: "Selectors"
+sidebar_custom_props: { kind: reading }
+---
+
+{/* Imported by tools/import-docs from the NgRx documentation - do not edit the text by hand. */}
+
+Selectors are pure functions used for obtaining slices of store state. @ngrx/store provides a few helper functions for optimizing this selection. Selectors provide many features when selecting slices of state:
+
+- Portability
+- Memoization
+- Composition
+- Testability
+- Type Safety
+
+When using the `createSelector` and `createFeatureSelector` functions @ngrx/store keeps track of the latest arguments in which your selector function was invoked. Because selectors are pure functions, the last result can be returned when the arguments match without reinvoking your selector function. This can provide performance benefits, particularly with selectors that perform expensive computation. This practice is known as memoization.
+
+### Using a selector for one piece of state
+
+```ts title="index.ts"
+import { createSelector } from '@ngrx/store';
+
+export interface FeatureState {
+  counter: number;
+}
+
+export interface AppState {
+  feature: FeatureState;
+}
+
+export const selectFeature = (state: AppState) => state.feature;
+
+export const selectFeatureCount = createSelector(
+  selectFeature,
+  (state: FeatureState) => state.counter
+);
+```
+
+### Using selectors for multiple pieces of state
+
+The `createSelector` can be used to select some data from the state based on several slices of the same state.
+
+The `createSelector` function can take up to 8 selector functions for more complete state selections.
+
+For example, imagine you have a `selectedUser` object in the state. You also have an `allBooks` array of book objects.
+
+And you want to show all books for the current user.
+
+You can use `createSelector` to achieve just that. Your visible books will always be up to date even if you update them in `allBooks`. They will always show the books that belong to your user if there is one selected and will show all the books when there is no user selected.
+
+The result will be just some of your state filtered by another section of the state. And it will be always up to date.
+
+```ts title="index.ts"
+import { createSelector } from '@ngrx/store';
+
+export interface User {
+  id: number;
+  name: string;
+}
+
+export interface Book {
+  id: number;
+  userId: number;
+  name: string;
+}
+
+export interface AppState {
+  selectedUser: User;
+  allBooks: Book[];
+}
+
+export const selectUser = (state: AppState) => state.selectedUser;
+export const selectAllBooks = (state: AppState) => state.allBooks;
+
+export const selectVisibleBooks = createSelector(
+  selectUser,
+  selectAllBooks,
+  (selectedUser: User, allBooks: Book[]) => {
+    if (selectedUser && allBooks) {
+      return allBooks.filter(
+        (book: Book) => book.userId === selectedUser.id
+      );
+    } else {
+      return allBooks;
+    }
+  }
+);
+```
+
+The `createSelector` function also provides the ability to pass a dictionary of selectors without a projector.
+In this case, `createSelector` will generate a projector function that maps the results of the input selectors to a dictionary.
+
+```ts
+// result type - { books: Book[]; query: string }
+const selectBooksPageViewModel = createSelector({
+  books: selectBooks, // result type - Book[]
+  query: selectQuery, // result type - string
+});
+```
+
+### Using selectors with props
+
+:::danger
+
+Selectors with props are deprecated and will be removed in v23.
+
+:::
+
+To select a piece of state based on data that isn't available in the store you can pass `props` to the selector function. These `props` gets passed through every selector and the projector function.
+To do so we must specify these `props` when we use the selector inside our component.
+
+For example if we have a counter and we want to multiply its value, we can add the multiply factor as a `prop`:
+
+The last argument of a selector or a projector is the `props` argument, for our example it looks as follows:
+
+```ts title="index.ts"
+export const selectCount = createSelector(
+  selectCounterValue,
+  (counter, props) => counter * props.multiply
+);
+```
+
+Inside the component we can define the `props`:
+
+```ts title="app.component.ts"
+ngOnInit() {
+  this.counter = this.store.select(fromRoot.selectCount, { multiply: 2 })
+}
+```
+
+Keep in mind that a selector only keeps the previous input arguments in its cache. If you reuse this selector with another multiply factor, the selector would always have to re-evaluate its value. This is because it's receiving both of the multiply factors (e.g. one time `2`, the other time `4`). In order to correctly memoize the selector, wrap the selector inside a factory function to create different instances of the selector.
+
+The following is an example of using multiple counters differentiated by `id`.
+
+```ts title="index.ts"
+export const selectCount = () =>
+  createSelector(
+    (state, props) => state.counter[props.id],
+    (counter, props) => counter * props.multiply
+  );
+```
+
+The component's selectors are now calling the factory function to create different selector instances:
+
+```ts title="app.component.ts"
+ngOnInit() {
+  this.counter2 = this.store.select(fromRoot.selectCount(), { id: 'counter2', multiply: 2 });
+  this.counter4 = this.store.select(fromRoot.selectCount(), { id: 'counter4', multiply: 4 });
+  this.counter6 = this.store.select(fromRoot.selectCount(), { id: 'counter6', multiply: 6 });
+}
+```
+
+## Selecting Feature States
+
+The `createFeatureSelector` is a convenience method for returning a top level feature state. It returns a typed selector function for a feature slice of state.
+
+```ts title="index.ts"
+import { createSelector, createFeatureSelector } from '@ngrx/store';
+
+export const featureKey = 'feature';
+
+export interface FeatureState {
+  counter: number;
+}
+
+export const selectFeature =
+  createFeatureSelector<FeatureState>(featureKey);
+
+export const selectFeatureCount = createSelector(
+  selectFeature,
+  (state: FeatureState) => state.counter
+);
+```
+
+:::note
+
+Using a Feature Creator generates the top-level selector and child selectors for each feature state property.
+
+:::
+
+## Using Signal Selector
+
+The `selectSignal` method expects a selector as an input argument and returns a signal of the selected state slice. It has a similar signature to the `select` method, but unlike `select`, `selectSignal` returns a signal instead of an observable.
+
+### Example Usage in Components
+
+```ts
+import { Component, inject } from '@angular/core';
+import { NgFor } from '@angular/common';
+import { Store } from '@ngrx/store';
+
+import { selectUsers } from './users.selectors';
+
+@Component({
+  standalone: true,
+  imports: [NgFor],
+  template: `
+    <h1>Users</h1>
+    <ul>
+      <li *ngFor="let user of users()">
+        {{ user.name }}
+      </li>
+    </ul>
+  `,
+})
+export class UsersComponent {
+  private readonly store = inject(Store);
+
+  // type: Signal<User[]>
+  readonly users = this.store.selectSignal(selectUsers);
+}
+```
+
+### Selecting with Equality Function
+
+Similar to the `computed` function, the `selectSignal` method also accepts the equality function to stop the recomputation of the deeper dependency chain if two values are determined to be equal.
+
+<SourceAttribution source="ngrx" title="Selectors" url="https://ngrx.io/guide/store/selectors" />
